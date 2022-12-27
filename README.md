@@ -1,4 +1,4 @@
-# SKELETON FOR CREATING A DOCKER REACT SYMFONY PROJECT
+# DigiWiki
 
 ## Folder Structure
 
