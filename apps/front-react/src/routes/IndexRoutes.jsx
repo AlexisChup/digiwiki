@@ -15,6 +15,7 @@ import PrivacyAndCookies from "../common/generic/privacy-and-cookies/PrivacyAndC
 import TermsOfService from "../common/generic/terms-of-service/TermsOfService";
 import TestFront from "../common/test-front/TestFront";
 import Categories from "../common/categories/Categories";
+import SubCategories from "../common/sub-categories/SubCategories";
 
 export default function IndexRoutes() {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -24,7 +25,7 @@ export default function IndexRoutes() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="explorer" element={<Categories />} />
-        <Route path="explorer/:category" element={<Categories />} />
+        <Route path="explorer/:category" element={<SubCategories />} />
         <Route path="test-front" element={<TestFront />} />
         <Route path="about" element={<About />} />
         <Route path="contact" element={<Contact />} />
