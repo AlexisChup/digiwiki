@@ -1,0 +1,14 @@
+.home {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-row {
+  height: 100%;
+  align-content: center;
+}
+
+.home-col {
+}
