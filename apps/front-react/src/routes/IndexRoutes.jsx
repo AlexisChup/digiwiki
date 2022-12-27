@@ -17,6 +17,7 @@ import Categories from "../common/categories/Categories";
 import SubCategories from "../common/sub-categories/SubCategories";
 import Tools from "../common/tools/Tools";
 import Tool from "../common/tool/Tool";
+import Auth from "../common/generic/auth/Auth";
 
 export default function IndexRoutes() {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -34,8 +35,16 @@ export default function IndexRoutes() {
         />
         <Route path="about" element={<About />} />
         <Route path="contact" element={<Contact />} />
-        <Route path="signup" element={<Signup />} />
-        <Route path="login" element={<Login />} />
+        <Route
+          path="auth"
+          element={
+            isAuthenticated ? (
+              <Navigate to="/dashboard" state="From Auth" />
+            ) : (
+              <Auth />
+            )
+          }
+        />
         <Route
           path="dashboard"
           element={
