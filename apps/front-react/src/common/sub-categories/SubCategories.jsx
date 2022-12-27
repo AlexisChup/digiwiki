@@ -1,8 +1,8 @@
 import React from "react";
 import "./SubCategories.css";
 import { useNavigate, useLocation } from "react-router-dom";
-import SubCategoriesItems from "./sub-categories-items/SubCategoriesItems";
 import Button from "react-bootstrap/Button";
+import SubCategoriesItems from "./sub-categories-items/SubCategoriesItems";
 
 export default function SubCategories() {
   let navigate = useNavigate();
@@ -39,6 +39,7 @@ export default function SubCategories() {
           {subCategories.slice(0, 3).map((subCategory, index) => {
             return (
               <SubCategoriesItems
+                category={category}
                 key={subCategory.id}
                 subCategory={subCategory}
               />
@@ -54,6 +55,7 @@ export default function SubCategories() {
             .map((subCategory, index) => {
               return (
                 <SubCategoriesItems
+                  category={category}
                   key={subCategory.id}
                   subCategory={subCategory}
                 />
@@ -75,6 +77,7 @@ export default function SubCategories() {
           {subCategories.slice(3, 6).map((subCategory, index) => {
             return (
               <SubCategoriesItems
+                category={category}
                 key={subCategory.id}
                 subCategory={subCategory}
               />
@@ -90,6 +93,7 @@ export default function SubCategories() {
             .map((subCategory, index) => {
               return (
                 <SubCategoriesItems
+                  category={category}
                   key={subCategory.id}
                   subCategory={subCategory}
                 />
@@ -111,6 +115,7 @@ export default function SubCategories() {
           {subCategories.slice(6, 9).map((subCategory, index) => {
             return (
               <SubCategoriesItems
+                category={category}
                 key={subCategory.id}
                 subCategory={subCategory}
               />
@@ -126,6 +131,7 @@ export default function SubCategories() {
             .map((subCategory, index) => {
               return (
                 <SubCategoriesItems
+                  category={category}
                   key={subCategory.id}
                   subCategory={subCategory}
                 />
