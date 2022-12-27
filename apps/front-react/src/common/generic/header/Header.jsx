@@ -1,7 +1,6 @@
 import "./Header.css";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
-import LogoutModal from "../logout/logout-modal/LogoutModal";
 
 export default function Header() {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -28,16 +27,6 @@ export default function Header() {
               }
             >
               Explorer
-            </NavLink>
-          </div>
-          <div className="ml-2">
-            <NavLink
-              to="test-front"
-              className={({ isActive }) =>
-                isActive ? "navbar-navlink-active" : "navbar-navlink"
-              }
-            >
-              Test Front
             </NavLink>
           </div>
           <div className="ml-2">
