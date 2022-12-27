@@ -23,7 +23,7 @@
 
 ## Installation
 
-- `git clone https://github.com/AlexisChup/skeleton-docker-react-symfony.git`
+- `git clone https://github.com/AlexisChup/digiwiki.git`
 
 ## Usage
 
