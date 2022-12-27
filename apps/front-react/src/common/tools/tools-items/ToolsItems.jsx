@@ -13,7 +13,25 @@ export default function ToolsItems(props) {
           <p className="my-0">{props.tool.name}</p>
         </div>
         <div>
-          <Button onClick={() => navigate("/explorer/")}>
+          <Button
+            onClick={() =>
+              navigate(
+                "/explorer/" +
+                  props.category.name +
+                  "/" +
+                  props.subCategory.name +
+                  "/" +
+                  props.tool.name,
+                {
+                  state: {
+                    category: props.category,
+                    subCategory: props.subCategory,
+                    tool: props.tool,
+                  },
+                }
+              )
+            }
+          >
             {props.tool.id}
           </Button>
         </div>

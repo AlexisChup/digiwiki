@@ -12,23 +12,28 @@ export default function Tools() {
   const tools = [
     {
       id: 0,
-      name: "Tools1",
+      name: "Tool1",
+      description: "La 1ère plateforme pour acheter des cryptomonnaies",
     },
     {
       id: 1,
-      name: "Tools2",
+      name: "Tool2",
+      description: "La 1ère plateforme pour acheter des cryptomonnaies",
     },
     {
       id: 2,
-      name: "Tools3",
+      name: "Tool3",
+      description: "La 1ère plateforme pour acheter des cryptomonnaies",
     },
     {
       id: 3,
-      name: "Tools4",
+      name: "Tool4",
+      description: "La 1ère plateforme pour acheter des cryptomonnaies",
     },
     {
       id: 4,
-      name: "Tools5",
+      name: "Tool5",
+      description: "La 1ère plateforme pour acheter des cryptomonnaies",
     },
   ];
 
@@ -53,7 +58,12 @@ export default function Tools() {
         </div>
         <div className="row justify-content-center flex-column">
           {tools.map((tool, index) => (
-            <ToolsItems tool={tool} key={tool.id} />
+            <ToolsItems
+              category={category}
+              subCategory={subCategory}
+              tool={tool}
+              key={tool.id}
+            />
           ))}
         </div>
       </div>
