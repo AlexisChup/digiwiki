@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +23,7 @@ class UserController extends AbstractController
     {
     }
 
-    #[Route('/register', name: 'user_register')]
+    #[Route('/register', name: 'user_register', methods: 'POST')]
     public function register(UserRepository $userRepo, Request $request, UserPasswordHasherInterface $passwordHasher, JWTTokenManagerInterface $JWTManager): Response
     {
         $data = json_decode($request->getContent(), true);
@@ -38,8 +39,7 @@ class UserController extends AbstractController
         $user->setPassword($hashedPassword);
         $user->setEmail($data["email"]);
         $user->setRoles(["ROLE_USER"]);
-
-
+        $user->setCreatedAt(new DateTimeImmutable());
 
         $userRepo->save($user, true);
         $res = $this->serializer->normalize($user, 'json');
@@ -48,7 +48,7 @@ class UserController extends AbstractController
         return $this->json($res);
     }
 
-    #[Route('/profile', name: 'profile')]
+    #[Route('/profile', name: 'profile', methods: 'GET')]
     public function getUserInfo(Request $request) {
         $user = $this->getUser();
         $res = $this->serializer->normalize($user, 'json');
@@ -56,7 +56,7 @@ class UserController extends AbstractController
         return $this->json($res);
     }
 
-    #[Route('/reset-password', name: 'reset-password')]
+    #[Route('/reset-password', name: 'reset-password', methods: 'POST')]
     public function resetPassword(UserRepository $userRepo, Request $request, UserPasswordHasherInterface $passwordHasher) {
         $data = json_decode($request->getContent(), true);
         $user = $this->getUser();

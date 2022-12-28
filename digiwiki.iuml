@@ -11,7 +11,8 @@ entity User {
 entity "Category" as c01 {
   *id: number
   --
-  name: string
+  *name: string
+  *url: string
   logo: string
 }
 
@@ -19,21 +20,22 @@ entity "SubCategory" as sc02 {
   *id:number
   --
   *name: string
+  *url: string
+  *categories: array<int>
   logo: string
-  *parent_category: array<int>
 }
 
-entity "Tools" as t03 {
+entity "Tool" as t03 {
   *id: number
   --
   *name: string
-  *logo: string  
-  *parent_subcategory: array<int>
-  *affiliate_ref: string
+  *url: string
+  *sub_categories: array<int>
   *short_description: string
-  *description: string
-  *features: string
+  *description: text
+  *affiliate_ref: string
   *code_promo: string
+  logo: string
 }
 
 c01 |o..o{  sc02

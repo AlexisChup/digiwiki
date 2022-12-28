@@ -1,35 +1,29 @@
 import React from "react";
-import "./SubCategoriesItems.css";
+import "./CategoryItem.css";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
-export default function CategoriesItems(props) {
+export default function CategoryItem(props) {
   let navigate = useNavigate();
 
   return (
     <div className="col col-4 ">
       <div className="d-flex rounded my-1 justify-content-between align-content-center align-self-center shadow py-3 px-3">
         <div className="d-flex align-items-center">
-          <p className="my-0">{props.subCategory.name}</p>
+          <h3 className="my-0">{props.category.name}</h3>
         </div>
         <div>
           <Button
             onClick={() =>
-              navigate(
-                "/explorer/" +
-                  props.category.name +
-                  "/" +
-                  props.subCategory.name,
-                {
-                  state: {
-                    category: props.category,
-                    subCategory: props.subCategory,
-                  },
-                }
-              )
+              navigate("/explorer/" + props.category.url, {
+                state: {
+                  category: props.category,
+                  categories: props.categories,
+                },
+              })
             }
           >
-            {props.subCategory.id}
+            {props.category.id}
           </Button>
         </div>
       </div>
