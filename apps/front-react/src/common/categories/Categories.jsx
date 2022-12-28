@@ -1,46 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Categories.css";
+import { AXIOS } from "../../app/axios-http";
+import Spinner from "../generic/spinner/Spinner";
 import CategoriesItems from "./categories-items/CategoriesItems";
 
 export default function Categories() {
-  const categories = [
-    {
-      id: 0,
-      name: "Données et Analytiques",
-    },
-    {
-      id: 1,
-      name: "Graphiques et designs",
-    },
-    {
-      id: 2,
-      name: "Marketing",
-    },
-    {
-      id: 3,
-      name: "Productivité",
-    },
-    {
-      id: 4,
-      name: "Finances",
-    },
-    {
-      id: 5,
-      name: "Programmation",
-    },
-    {
-      id: 6,
-      name: "AI",
-    },
-    {
-      id: 7,
-      name: "Cryptomonnaies",
-    },
-    {
-      id: 8,
-      name: "Bourses",
-    },
-  ];
+  let [isRequesting, setIsRequesting] = useState(false);
+  let [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    setIsRequesting(true);
+    AXIOS.get("/public/category/all")
+      .then((res) => {
+        setCategories(res.data);
+      })
+      .catch((e) => console.log(e))
+      .finally(() => setIsRequesting(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const renderFirstRow = () => {
     if (categories.length > 2) {
@@ -117,9 +94,9 @@ export default function Categories() {
           <h1>Categories</h1>
         </div>
       </div>
-      {renderFirstRow()}
-      {renderSecondRow()}
-      {renderThirdRow()}
+      {isRequesting ? <Spinner /> : renderFirstRow()}
+      {isRequesting ? null : renderSecondRow()}
+      {isRequesting ? null : renderThirdRow()}
     </div>
   );
 }

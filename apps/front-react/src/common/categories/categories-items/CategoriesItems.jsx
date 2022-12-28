@@ -15,7 +15,7 @@ export default function CategoriesItems(props) {
         <div>
           <Button
             onClick={() =>
-              navigate("/explorer/" + props.category.name, {
+              navigate("/explorer/" + props.category.url, {
                 state: { category: props.category },
               })
             }

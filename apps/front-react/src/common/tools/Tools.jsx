@@ -48,7 +48,7 @@ export default function Tools() {
             variant="outline-primary"
             className="mb-2"
             onClick={() =>
-              navigate("/explorer/" + category.name, {
+              navigate("/explorer/" + category.url, {
                 state: { category: category },
               })
             }

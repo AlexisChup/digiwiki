@@ -16,7 +16,7 @@ export default function Tool() {
             variant="outline-primary"
             className="mb-2"
             onClick={() =>
-              navigate("/explorer/" + category.name + "/" + subCategory.name, {
+              navigate("/explorer/" + category.url + "/" + subCategory.name, {
                 state: {
                   category: category,
                   subCategory: subCategory,
@@ -46,7 +46,7 @@ export default function Tool() {
                 className="mb-2"
                 onClick={() =>
                   navigate(
-                    "/explorer/" + category.name + "/" + subCategory.name,
+                    "/explorer/" + category.url + "/" + subCategory.name,
                     {
                       state: {
                         category: category,
