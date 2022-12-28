@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,17 +10,17 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/api/admin', name: 'app_admin')]
-class AdminController extends AbstractController
+#[Route('/api/admin/user', name: 'api_admin_user')]
+class AdminUserController extends AbstractController
 {
-    #[Route('/users', name: 'admin_all_users', methods: 'GET')]
+    #[Route('/all', name: 'admin_all_users', methods: 'GET')]
     public function getAllUsers(UserRepository $userRepo): Response
     {
         $users = $userRepo->findAll();
         return $this->json($users);
     }
 
-    #[Route('/user/edit', name: 'admin_edit_user', methods: 'POST')]
+    #[Route('/edit', name: 'admin_edit_user', methods: 'POST')]
     public function editUser(UserRepository $userRepo, Request $request, UserPasswordHasherInterface $passwordHasher): Response
     {
         $data = json_decode($request->getContent(), true);

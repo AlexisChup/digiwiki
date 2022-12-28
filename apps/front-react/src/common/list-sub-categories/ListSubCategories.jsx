@@ -144,6 +144,18 @@ export default function ListSubCategories() {
           </Button>
         </div>
       </div>
+      {category.subCategories.length === 0 ? (
+        <div className="row flex-grow-1">
+          <div className="col p-0">
+            <div className="d-flex rounded my-1 justify-content-between align-content-center align-self-center shadow py-3 px-3">
+              <div className="d-flex align-items-center">
+                <p className="my-0">Pas encore de sous catégories</p>
+              </div>
+              <div></div>
+            </div>
+          </div>{" "}
+        </div>
+      ) : null}
       {renderFirstRow()}
       {renderSecondRow()}
       {renderThirdRow()}
