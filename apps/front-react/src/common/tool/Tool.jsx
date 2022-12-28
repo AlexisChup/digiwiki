@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 export default function Tool() {
   let navigate = useNavigate();
   const location = useLocation();
-  const { category, subCategory, tool } = location.state;
+  const { tool } = location.state;
 
   return (
     <div className="container h-100 d-flex flex-column">
@@ -15,13 +15,15 @@ export default function Tool() {
           <Button
             variant="outline-primary"
             className="mb-2"
-            onClick={() =>
-              navigate("/explorer/" + category.url + "/" + subCategory.name, {
-                state: {
-                  category: category,
-                  subCategory: subCategory,
-                },
-              })
+            onClick={
+              () => navigate(-1)
+              // onClick={() =>
+              //   navigate("/explorer/" + category.url + "/" + subCategory.name, {
+              //     state: {
+              //       category: category,
+              //       subCategory: subCategory,
+              //     },
+              //   })
             }
           >
             Retour
@@ -44,17 +46,7 @@ export default function Tool() {
               <Button
                 variant="outline-primary"
                 className="mb-2"
-                onClick={() =>
-                  navigate(
-                    "/explorer/" + category.url + "/" + subCategory.name,
-                    {
-                      state: {
-                        category: category,
-                        subCategory: subCategory,
-                      },
-                    }
-                  )
-                }
+                onClick={() => navigate(-1)}
               >
                 Retour
               </Button>

@@ -5,8 +5,9 @@ namespace App\DataFixtures;
 use App\Entity\Category;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class CategoryFixtures extends Fixture
+class CategoryFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -55,6 +56,30 @@ class CategoryFixtures extends Fixture
         $category9->setUrl("stock-market");
         $manager->persist($category9);
 
+        //references
+        $category1->addSubCategory($this->getReference("subCategory1_1"));
+        $category1->addSubCategory($this->getReference("subCategory1_2"));
+        $category1->addSubCategory($this->getReference("subCategory1_3"));
+        $category1->addSubCategory($this->getReference("subCategory1_4"));
+        $category1->addSubCategory($this->getReference("subCategory1_5"));
+        $category1->addSubCategory($this->getReference("subCategory1_6"));
+        $category1->addSubCategory($this->getReference("subCategory1_7"));
+        $category1->addSubCategory($this->getReference("subCategory1_8"));
+
+        $category2->addSubCategory($this->getReference("subCategory2_1"));
+        $category2->addSubCategory($this->getReference("subCategory2_2"));
+        $category2->addSubCategory($this->getReference("subCategory2_3"));
+        $category2->addSubCategory($this->getReference("subCategory2_4"));
+        $category2->addSubCategory($this->getReference("subCategory2_5"));
+        $category2->addSubCategory($this->getReference("subCategory2_6"));
+
         $manager->flush();
+    }
+
+    public function getDependencies(): array
+    {
+        return [
+            SubCategoryFixtures::class
+        ];
     }
 }

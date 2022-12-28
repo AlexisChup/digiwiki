@@ -1,22 +1,29 @@
 import React, { useEffect, useState } from "react";
 import "./Categories.css";
 import { AXIOS } from "../../app/axios-http";
+import { useLocation } from "react-router-dom";
 import Spinner from "../generic/spinner/Spinner";
 import CategoriesItems from "./categories-items/CategoriesItems";
 
 export default function Categories() {
   let [isRequesting, setIsRequesting] = useState(false);
   let [categories, setCategories] = useState([]);
+  const location = useLocation();
 
   useEffect(() => {
-    setIsRequesting(true);
-    AXIOS.get("/public/category/all")
-      .then((res) => {
-        setCategories(res.data);
-      })
-      .catch((e) => console.log(e))
-      .finally(() => setIsRequesting(false));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (location.state !== null) {
+      if (location.state.hasOwnProperty("loadedCategories")) {
+        setCategories(location.state.loadedCategories);
+      }
+    } else {
+      setIsRequesting(true);
+      AXIOS.get("/public/category/all")
+        .then((res) => {
+          setCategories(res.data);
+        })
+        .catch((e) => console.log(e))
+        .finally(() => setIsRequesting(false));
+    }
   }, []);
 
   const renderFirstRow = () => {
@@ -24,7 +31,13 @@ export default function Categories() {
       return (
         <div className="row flex-grow-1">
           {categories.slice(0, 3).map((category, index) => {
-            return <CategoriesItems key={category.id} category={category} />;
+            return (
+              <CategoriesItems
+                categories={categories}
+                key={category.id}
+                category={category}
+              />
+            );
           })}
         </div>
       );
@@ -32,7 +45,13 @@ export default function Categories() {
       return (
         <div className="row flex-grow-1">
           {categories.slice(0, categories.length).map((category, index) => {
-            return <CategoriesItems key={category.id} category={category} />;
+            return (
+              <CategoriesItems
+                categories={categories}
+                key={category.id}
+                category={category}
+              />
+            );
           })}
         </div>
       );
@@ -48,7 +67,13 @@ export default function Categories() {
       return (
         <div className="row flex-grow-1">
           {categories.slice(3, 6).map((category, index) => {
-            return <CategoriesItems key={category.id} category={category} />;
+            return (
+              <CategoriesItems
+                categories={categories}
+                key={category.id}
+                category={category}
+              />
+            );
           })}
         </div>
       );
@@ -56,7 +81,13 @@ export default function Categories() {
       return (
         <div className="row flex-grow-1">
           {categories.slice(3, categories.length).map((category, index) => {
-            return <CategoriesItems key={category.id} category={category} />;
+            return (
+              <CategoriesItems
+                categories={categories}
+                key={category.id}
+                category={category}
+              />
+            );
           })}
         </div>
       );
@@ -72,7 +103,13 @@ export default function Categories() {
       return (
         <div className="row flex-grow-1">
           {categories.slice(6, 9).map((category, index) => {
-            return <CategoriesItems key={category.id} category={category} />;
+            return (
+              <CategoriesItems
+                categories={categories}
+                key={category.id}
+                category={category}
+              />
+            );
           })}
         </div>
       );
@@ -80,7 +117,13 @@ export default function Categories() {
       return (
         <div className="row flex-grow-1">
           {categories.slice(6, categories.length).map((category, index) => {
-            return <CategoriesItems key={category.id} category={category} />;
+            return (
+              <CategoriesItems
+                categories={categories}
+                key={category.id}
+                category={category}
+              />
+            );
           })}
         </div>
       );

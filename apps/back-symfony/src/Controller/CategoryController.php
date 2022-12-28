@@ -37,6 +37,20 @@ class CategoryController extends AbstractController
         return $this->json($category);
     }
 
+    #[Route('/sub-categories/{id}', name: 'category_show_sub-categories', methods: 'GET')]
+    public function showSubCategories(CategoryRepository $categoryRepository, int $id): Response
+    {
+        $category = $categoryRepository->find($id);
+
+        if (!$category) {
+            throw $this->createNotFoundException(
+                'No category found for id '.$id
+            );
+        }
+
+        return($this->json($category->getSubCategories()));
+    }
+
     #[Route('/create', name: 'create_category', methods: 'POST')]
     public function createCategory(CategoryRepository $categoryRepository, Request $request): Response
     {

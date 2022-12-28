@@ -7,7 +7,7 @@ import ToolsItems from "./tools-items/ToolsItems";
 export default function Tools() {
   let navigate = useNavigate();
   const location = useLocation();
-  const { category, subCategory } = location.state;
+  const { urlCategory, subCategory } = location.state;
 
   const tools = [
     {
@@ -47,11 +47,7 @@ export default function Tools() {
           <Button
             variant="outline-primary"
             className="mb-2"
-            onClick={() =>
-              navigate("/explorer/" + category.url, {
-                state: { category: category },
-              })
-            }
+            onClick={() => navigate(-1)}
           >
             Retour
           </Button>
@@ -59,8 +55,8 @@ export default function Tools() {
         <div className="row justify-content-center flex-column">
           {tools.map((tool, index) => (
             <ToolsItems
-              category={category}
-              subCategory={subCategory}
+              urlCategory={urlCategory}
+              urlSubCategory={subCategory.url}
               tool={tool}
               key={tool.id}
             />

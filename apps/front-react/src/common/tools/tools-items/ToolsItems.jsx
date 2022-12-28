@@ -17,15 +17,13 @@ export default function ToolsItems(props) {
             onClick={() =>
               navigate(
                 "/explorer/" +
-                  props.category.url +
+                  props.urlCategory +
                   "/" +
-                  props.subCategory.name +
+                  props.urlSubCategory +
                   "/" +
                   props.tool.name,
                 {
                   state: {
-                    category: props.category,
-                    subCategory: props.subCategory,
                     tool: props.tool,
                   },
                 }

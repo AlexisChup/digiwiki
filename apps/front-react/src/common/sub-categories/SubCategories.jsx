@@ -7,39 +7,16 @@ import SubCategoriesItems from "./sub-categories-items/SubCategoriesItems";
 export default function SubCategories() {
   let navigate = useNavigate();
   const location = useLocation();
-  const { category } = location.state;
-
-  const subCategories = [
-    {
-      id: 0,
-      name: "Marketplace ",
-    },
-    {
-      id: 1,
-      name: "Classement crypto",
-    },
-    {
-      id: 2,
-      name: "NFT",
-    },
-    {
-      id: 3,
-      name: "Portefeuille",
-    },
-    {
-      id: 4,
-      name: "Formation",
-    },
-  ];
+  const { category, categories } = location.state;
 
   const renderFirstRow = () => {
-    if (subCategories.length > 2) {
+    if (category.subCategories.length > 2) {
       return (
         <div className="row flex-grow-1">
-          {subCategories.slice(0, 3).map((subCategory, index) => {
+          {category.subCategories.slice(0, 3).map((subCategory, index) => {
             return (
               <SubCategoriesItems
-                category={category}
+                urlCategory={category.url}
                 key={subCategory.id}
                 subCategory={subCategory}
               />
@@ -50,12 +27,12 @@ export default function SubCategories() {
     } else {
       return (
         <div className="row flex-grow-1">
-          {subCategories
-            .slice(0, subCategories.length)
+          {category.subCategories
+            .slice(0, category.subCategories.length)
             .map((subCategory, index) => {
               return (
                 <SubCategoriesItems
-                  category={category}
+                  urlCategory={category.url}
                   key={subCategory.id}
                   subCategory={subCategory}
                 />
@@ -67,17 +44,17 @@ export default function SubCategories() {
   };
 
   const renderSecondRow = () => {
-    if (subCategories.length <= 3) {
+    if (category.subCategories.length <= 3) {
       return <div className="row flex-grow-1"></div>;
     }
 
-    if (subCategories.length > 5) {
+    if (category.subCategories.length > 5) {
       return (
         <div className="row flex-grow-1">
-          {subCategories.slice(3, 6).map((subCategory, index) => {
+          {category.subCategories.slice(3, 6).map((subCategory, index) => {
             return (
               <SubCategoriesItems
-                category={category}
+                urlCategory={category.url}
                 key={subCategory.id}
                 subCategory={subCategory}
               />
@@ -88,12 +65,12 @@ export default function SubCategories() {
     } else {
       return (
         <div className="row flex-grow-1">
-          {subCategories
-            .slice(3, subCategories.length)
+          {category.subCategories
+            .slice(3, category.subCategories.length)
             .map((subCategory, index) => {
               return (
                 <SubCategoriesItems
-                  category={category}
+                  urlCategory={category.url}
                   key={subCategory.id}
                   subCategory={subCategory}
                 />
@@ -105,17 +82,17 @@ export default function SubCategories() {
   };
 
   const renderThirdRow = () => {
-    if (subCategories.length <= 6) {
+    if (category.subCategories.length <= 6) {
       return <div className="row flex-grow-1"></div>;
     }
 
-    if (subCategories.length > 8) {
+    if (category.subCategories.length > 8) {
       return (
         <div className="row flex-grow-1">
-          {subCategories.slice(6, 9).map((subCategory, index) => {
+          {category.subCategories.slice(6, 9).map((subCategory, index) => {
             return (
               <SubCategoriesItems
-                category={category}
+                urlCategory={category.url}
                 key={subCategory.id}
                 subCategory={subCategory}
               />
@@ -126,12 +103,12 @@ export default function SubCategories() {
     } else {
       return (
         <div className="row flex-grow-1">
-          {subCategories
-            .slice(6, subCategories.length)
+          {category.subCategories
+            .slice(6, category.subCategories.length)
             .map((subCategory, index) => {
               return (
                 <SubCategoriesItems
-                  category={category}
+                  urlCategory={category.url}
                   key={subCategory.id}
                   subCategory={subCategory}
                 />
@@ -152,7 +129,9 @@ export default function SubCategories() {
           <Button
             variant="outline-primary"
             className="mb-2"
-            onClick={() => navigate("/explorer")}
+            onClick={() =>
+              navigate("/explorer", { state: { loadedCategories: categories } })
+            }
           >
             Retour
           </Button>

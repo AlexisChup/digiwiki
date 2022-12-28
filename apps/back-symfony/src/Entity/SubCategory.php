@@ -3,14 +3,14 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
-use App\Repository\CategoryRepository;
+use App\Repository\SubCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[ORM\Entity(repositoryClass: SubCategoryRepository::class)]
 #[ApiResource]
-class Category
+class SubCategory
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -23,12 +23,9 @@ class Category
     #[ORM\Column(length: 255)]
     private ?string $url = null;
 
-    #[ORM\ManyToMany(targetEntity: SubCategory::class)]
-    private Collection $subCategories;
-
     public function __construct()
     {
-        $this->subCategories = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -56,30 +53,6 @@ class Category
     public function setUrl(string $url): self
     {
         $this->url = $url;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, SubCategory>
-     */
-    public function getSubCategories(): Collection
-    {
-        return $this->subCategories;
-    }
-
-    public function addSubCategory(SubCategory $subCategory): self
-    {
-        if (!$this->subCategories->contains($subCategory)) {
-            $this->subCategories->add($subCategory);
-        }
-
-        return $this;
-    }
-
-    public function removeSubCategory(SubCategory $subCategory): self
-    {
-        $this->subCategories->removeElement($subCategory);
 
         return $this;
     }

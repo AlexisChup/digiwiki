@@ -35,7 +35,7 @@ class UserFixtures extends Fixture {
         $user->setCreatedAt(new DateTimeImmutable());
         $manager->persist($user);
 
-        for($i=0; $i<10;$i++)
+        for($i=0; $i<4;$i++)
         {
             $user = new User();
             $user->setEmail('user'.$i.'@gmail.com');
