@@ -29,7 +29,7 @@ export default function HandleUsers() {
 
   const fetchAllUsers = () => {
     setIsRequesting(true);
-    AXIOS.get("/admin/users")
+    AXIOS.get("/admin/user/all")
       .then((res) => {
         setUsers(res.data);
       })

@@ -1,14 +1,14 @@
 import "./Header.css";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
-import LogoutModal from "../logout/logout-modal/LogoutModal";
+import { FaUserCircle } from "react-icons/fa";
 
 export default function Header() {
   const { isAuthenticated } = useSelector((state) => state.auth);
 
   return (
     <header>
-      <nav className="d-flex justify-content-between flex-row p-3 shadow mb-3">
+      <nav className="d-flex justify-content-between align-content-center flex-row p-3 shadow mb-3">
         <div className="ml-3">
           <NavLink
             to=""
@@ -28,16 +28,6 @@ export default function Header() {
               }
             >
               Explorer
-            </NavLink>
-          </div>
-          <div className="ml-2">
-            <NavLink
-              to="test-front"
-              className={({ isActive }) =>
-                isActive ? "navbar-navlink-active" : "navbar-navlink"
-              }
-            >
-              Test Front
             </NavLink>
           </div>
           <div className="ml-2">
@@ -69,29 +59,19 @@ export default function Header() {
                   isActive ? "navbar-navlink-active" : "navbar-navlink"
                 }
               >
-                Dashboard
+                <FaUserCircle className="mb-1" />
               </NavLink>
             </div>
           ) : (
             <>
               <div className="ml-2">
                 <NavLink
-                  to="signup"
+                  to="auth"
                   className={({ isActive }) =>
                     isActive ? "navbar-navlink-active" : "navbar-navlink"
                   }
                 >
-                  Signup
-                </NavLink>
-              </div>
-              <div className="ml-2">
-                <NavLink
-                  to="login"
-                  className={({ isActive }) =>
-                    isActive ? "navbar-navlink-active" : "navbar-navlink"
-                  }
-                >
-                  Login
+                  <FaUserCircle className="mb-1" />
                 </NavLink>
               </div>
             </>

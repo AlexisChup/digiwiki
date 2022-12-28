@@ -61,58 +61,53 @@ export default function Signup() {
   };
 
   return (
-    <Container>
+    <div>
       <Row className="justify-content-center">
-        <Col md={6}>
-          <div>
-            <h2>Signup</h2>
-          </div>
-          <Form>
-            <Form.Group>
-              <Form.Label htmlFor="register-email">Email address</Form.Label>
-              <Form.Control
-                type="email"
-                className="form-control"
-                id="register-email"
-                aria-describedby="register-email-help"
-                placeholder="Enter email"
-                onChange={(e) => handleFormLogin("email", e.target.value)}
-                value={formLogin.email}
-              />
-              <small id="register-email-help" className="form-text text-muted">
-                user@gmail.com
-              </small>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label htmlFor="register-password">Password</Form.Label>
-              <Form.Control
-                type="password"
-                autoComplete="on"
-                className="form-control"
-                id="register-password"
-                aria-describedby="register-password-help"
-                placeholder="Password"
-                onChange={(e) => handleFormLogin("password", e.target.value)}
-                value={formLogin.password}
-              />
-              <small
-                id="register-password-help"
-                className="form-text text-muted"
-              >
-                user
-              </small>
-            </Form.Group>
-            <Button
-              type="submit"
-              onClick={(e) => handleSubmit(e)}
-              disabled={isRequesting}
-              size="sm"
-            >
-              Submit
-            </Button>
-          </Form>
-        </Col>
+        <div>
+          <h2>Signup</h2>
+        </div>
+        <Form>
+          <Form.Group>
+            <Form.Label htmlFor="register-email">Email address</Form.Label>
+            <Form.Control
+              type="email"
+              className="form-control"
+              id="register-email"
+              aria-describedby="register-email-help"
+              placeholder="Enter email"
+              onChange={(e) => handleFormLogin("email", e.target.value)}
+              value={formLogin.email}
+            />
+            <small id="register-email-help" className="form-text text-muted">
+              user@gmail.com
+            </small>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label htmlFor="register-password">Password</Form.Label>
+            <Form.Control
+              type="password"
+              autoComplete="on"
+              className="form-control"
+              id="register-password"
+              aria-describedby="register-password-help"
+              placeholder="Password"
+              onChange={(e) => handleFormLogin("password", e.target.value)}
+              value={formLogin.password}
+            />
+            <small id="register-password-help" className="form-text text-muted">
+              user
+            </small>
+          </Form.Group>
+          <Button
+            type="submit"
+            onClick={(e) => handleSubmit(e)}
+            disabled={isRequesting}
+            size="sm"
+          >
+            Submit
+          </Button>
+        </Form>
       </Row>
-    </Container>
+    </div>
   );
 }
