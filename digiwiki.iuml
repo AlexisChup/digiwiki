@@ -25,7 +25,7 @@ entity "SubCategory" as sc02 {
   logo: string
 }
 
-entity "Tools" as t03 {
+entity "Tool" as t03 {
   *id: number
   --
   *name: string

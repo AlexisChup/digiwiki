@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import "./Categories.css";
+import "./ListCategories.css";
 import { AXIOS } from "../../app/axios-http";
 import { useLocation } from "react-router-dom";
 import Spinner from "../generic/spinner/Spinner";
-import CategoriesItems from "./categories-items/CategoriesItems";
+import CategoryItem from "./category-item/CategoryItem";
 
-export default function Categories() {
+export default function ListCategories() {
   let [isRequesting, setIsRequesting] = useState(false);
   let [categories, setCategories] = useState([]);
   const location = useLocation();
@@ -32,7 +32,7 @@ export default function Categories() {
         <div className="row flex-grow-1">
           {categories.slice(0, 3).map((category, index) => {
             return (
-              <CategoriesItems
+              <CategoryItem
                 categories={categories}
                 key={category.id}
                 category={category}
@@ -46,7 +46,7 @@ export default function Categories() {
         <div className="row flex-grow-1">
           {categories.slice(0, categories.length).map((category, index) => {
             return (
-              <CategoriesItems
+              <CategoryItem
                 categories={categories}
                 key={category.id}
                 category={category}
@@ -68,7 +68,7 @@ export default function Categories() {
         <div className="row flex-grow-1">
           {categories.slice(3, 6).map((category, index) => {
             return (
-              <CategoriesItems
+              <CategoryItem
                 categories={categories}
                 key={category.id}
                 category={category}
@@ -82,7 +82,7 @@ export default function Categories() {
         <div className="row flex-grow-1">
           {categories.slice(3, categories.length).map((category, index) => {
             return (
-              <CategoriesItems
+              <CategoryItem
                 categories={categories}
                 key={category.id}
                 category={category}
@@ -104,7 +104,7 @@ export default function Categories() {
         <div className="row flex-grow-1">
           {categories.slice(6, 9).map((category, index) => {
             return (
-              <CategoriesItems
+              <CategoryItem
                 categories={categories}
                 key={category.id}
                 category={category}
@@ -118,7 +118,7 @@ export default function Categories() {
         <div className="row flex-grow-1">
           {categories.slice(6, categories.length).map((category, index) => {
             return (
-              <CategoriesItems
+              <CategoryItem
                 categories={categories}
                 key={category.id}
                 category={category}
@@ -134,7 +134,7 @@ export default function Categories() {
     <div className="container h-100 d-flex flex-column">
       <div className="row justify-content-center">
         <div>
-          <h1>Categories</h1>
+          <h1>Liste des catégories</h1>
         </div>
       </div>
       {isRequesting ? <Spinner /> : renderFirstRow()}

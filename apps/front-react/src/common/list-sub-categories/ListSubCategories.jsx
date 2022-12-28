@@ -1,10 +1,11 @@
 import React from "react";
-import "./SubCategories.css";
+import "./ListSubCategories.css";
 import { useNavigate, useLocation } from "react-router-dom";
+import { AXIOS } from "../../app/axios-http";
 import Button from "react-bootstrap/Button";
-import SubCategoriesItems from "./sub-categories-items/SubCategoriesItems";
+import SubCategoryItem from "./sub-category-item/SubCategoryItem";
 
-export default function SubCategories() {
+export default function ListSubCategories() {
   let navigate = useNavigate();
   const location = useLocation();
   const { category, categories } = location.state;
@@ -15,7 +16,8 @@ export default function SubCategories() {
         <div className="row flex-grow-1">
           {category.subCategories.slice(0, 3).map((subCategory, index) => {
             return (
-              <SubCategoriesItems
+              <SubCategoryItem
+                tools={subCategory.tools}
                 urlCategory={category.url}
                 key={subCategory.id}
                 subCategory={subCategory}
@@ -31,7 +33,8 @@ export default function SubCategories() {
             .slice(0, category.subCategories.length)
             .map((subCategory, index) => {
               return (
-                <SubCategoriesItems
+                <SubCategoryItem
+                  tools={subCategory.tools}
                   urlCategory={category.url}
                   key={subCategory.id}
                   subCategory={subCategory}
@@ -53,7 +56,8 @@ export default function SubCategories() {
         <div className="row flex-grow-1">
           {category.subCategories.slice(3, 6).map((subCategory, index) => {
             return (
-              <SubCategoriesItems
+              <SubCategoryItem
+                tools={subCategory.tools}
                 urlCategory={category.url}
                 key={subCategory.id}
                 subCategory={subCategory}
@@ -69,7 +73,8 @@ export default function SubCategories() {
             .slice(3, category.subCategories.length)
             .map((subCategory, index) => {
               return (
-                <SubCategoriesItems
+                <SubCategoryItem
+                  tools={subCategory.tools}
                   urlCategory={category.url}
                   key={subCategory.id}
                   subCategory={subCategory}
@@ -91,7 +96,8 @@ export default function SubCategories() {
         <div className="row flex-grow-1">
           {category.subCategories.slice(6, 9).map((subCategory, index) => {
             return (
-              <SubCategoriesItems
+              <SubCategoryItem
+                tools={subCategory.tools}
                 urlCategory={category.url}
                 key={subCategory.id}
                 subCategory={subCategory}
@@ -107,7 +113,8 @@ export default function SubCategories() {
             .slice(6, category.subCategories.length)
             .map((subCategory, index) => {
               return (
-                <SubCategoriesItems
+                <SubCategoryItem
+                  tools={subCategory.tools}
                   urlCategory={category.url}
                   key={subCategory.id}
                   subCategory={subCategory}
@@ -123,7 +130,7 @@ export default function SubCategories() {
     <div className="container h-100 d-flex flex-column">
       <div className="row justify-content-center">
         <div>
-          <h1>Sous-Categories - {category.name}</h1>
+          <h1>Liste des sous catégories de {category.name}</h1>
         </div>
         <div>
           <Button

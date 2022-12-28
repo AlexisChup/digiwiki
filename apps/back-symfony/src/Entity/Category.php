@@ -23,7 +23,7 @@ class Category
     #[ORM\Column(length: 255)]
     private ?string $url = null;
 
-    #[ORM\ManyToMany(targetEntity: SubCategory::class)]
+    #[ORM\ManyToMany(targetEntity: SubCategory::class, mappedBy: 'category')]
     private Collection $subCategories;
 
     public function __construct()
@@ -72,6 +72,7 @@ class Category
     {
         if (!$this->subCategories->contains($subCategory)) {
             $this->subCategories->add($subCategory);
+            $subCategory->addCategory($this);
         }
 
         return $this;
@@ -79,7 +80,9 @@ class Category
 
     public function removeSubCategory(SubCategory $subCategory): self
     {
-        $this->subCategories->removeElement($subCategory);
+        if ($this->subCategories->removeElement($subCategory)) {
+            $subCategory->removeCategory($this);
+        }
 
         return $this;
     }
