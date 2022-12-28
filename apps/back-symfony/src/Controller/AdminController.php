@@ -13,14 +13,14 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/api/admin', name: 'app_admin')]
 class AdminController extends AbstractController
 {
-    #[Route('/users', name: 'admin_all_users')]
+    #[Route('/users', name: 'admin_all_users', methods: 'GET')]
     public function getAllUsers(UserRepository $userRepo): Response
     {
         $users = $userRepo->findAll();
         return $this->json($users);
     }
 
-    #[Route('/user/edit', name: 'admin_edit_user')]
+    #[Route('/user/edit', name: 'admin_edit_user', methods: 'POST')]
     public function editUser(UserRepository $userRepo, Request $request, UserPasswordHasherInterface $passwordHasher): Response
     {
         $data = json_decode($request->getContent(), true);
