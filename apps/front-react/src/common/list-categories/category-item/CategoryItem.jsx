@@ -1,18 +1,10 @@
 import React from "react";
 import "./CategoryItem.css";
 import { useNavigate } from "react-router-dom";
-import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
-
-// const path = "../../../assets/png/categories/ai.png";
-
-// import AIFFF from path;
 
 export default function CategoryItem(props) {
   let navigate = useNavigate();
-  const titleImage = "ai";
-  const path = `../../../assets/png/categories/${titleImage}.png`;
-  const path2 = `../../../assets/png/categories/${titleImage}.png`;
 
   return (
     <div className="col col-4 ">
@@ -35,24 +27,10 @@ export default function CategoryItem(props) {
         <div>
           <div className="d-flex align-items-center" style={{ height: "80px" }}>
             <Image
-              src={props.imageSrc}
-              // src={require(path2)}
-              // src={require("../../../assets/png/categories/ai.png")}
+              src={require(`../../../assets/png/categories/${props.category.url}.png`)}
               style={{ height: "80%", width: "auto" }}
             />
           </div>
-          {/* <Button
-            onClick={() =>
-              navigate("/explorer/" + props.category.url, {
-                state: {
-                  category: props.category,
-                  categories: props.categories,
-                },
-              })
-            }
-          >
-            {props.category.id}
-          </Button> */}
         </div>
       </div>
     </div>
