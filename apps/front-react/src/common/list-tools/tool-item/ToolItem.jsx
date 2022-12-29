@@ -1,7 +1,6 @@
 import React from "react";
 import "./ToolItem.css";
 import { useNavigate } from "react-router-dom";
-import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 import "../../list-categories/ListCategories.css";
 
