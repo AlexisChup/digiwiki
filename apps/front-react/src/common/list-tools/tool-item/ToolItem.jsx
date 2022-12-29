@@ -3,6 +3,7 @@ import "./ToolItem.css";
 import { useNavigate } from "react-router-dom";
 import Image from "react-bootstrap/Image";
 import "../../list-categories/ListCategories.css";
+import EditTool from "../admin/EditTool";
 
 export default function ToolItem(props) {
   let navigate = useNavigate();
@@ -48,10 +49,15 @@ export default function ToolItem(props) {
             <div>{props.tool.shortDescription}</div>
           </div>
         </div>
-        <div className="d-flex align-items-center">
-          <div></div>
-        </div>
+        <div className="d-flex align-items-center"></div>
       </div>
+      {props.isAuthenticated && props.user.roles.includes("ROLE_ADMIN") ? (
+        <EditTool
+          updateTools={props.updateTools}
+          tool={props.tool}
+          subCategoryId={props.subCategoryId}
+        />
+      ) : null}
     </div>
   );
 }

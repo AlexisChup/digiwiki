@@ -1,51 +1,56 @@
 import React, { useState } from "react";
-import "./AddTool.css";
+import "./EditTool.css";
 import { toast } from "react-toastify";
 import { AXIOS } from "../../../app/axios-http";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import AddToolForm from "../../tool/form/AddToolForm";
 
-export default function AddTool(props) {
-  const initialStateFormAddTool = {
-    name: "",
-    url: "",
-    shortDescription: "",
-    description: "",
-    affiliateRef: "",
-    codePromo: "",
-    imgUrl: "",
+export default function EditTool(props) {
+  const initialStateFormEditTool = {
+    name: props.tool.name,
+    url: props.tool.url,
+    shortDescription: props.tool.shortDescription,
+    description: props.tool.description,
+    affiliateRef: props.tool.affiliateRef,
+    codePromo: props.tool.codePromo,
+    imgUrl: props.tool.imgUrl,
   };
 
-  const [formAddTool, setformAddTool] = useState(initialStateFormAddTool);
+  const [formEditTool, setformEditTool] = useState(initialStateFormEditTool);
 
-  const handleFormAddTool = (key, value) => {
-    setformAddTool({ ...formAddTool, [key]: value });
+  const handleFormEditTool = (key, value) => {
+    setformEditTool({ ...formEditTool, [key]: value });
   };
 
   const [show, setShow] = useState(false);
 
   const handleClose = (isConfirmed) => {
     if (isConfirmed) {
-      const payload = {
-        ...formAddTool,
+      let payload = {
+        ...formEditTool,
         subCategoriesIds: [props.subCategoryId],
       };
 
       const id = toast.loading("Please wait...");
-      AXIOS.post("/admin/tool/create", payload)
+      AXIOS.put("/admin/tool/" + props.tool.id + "/edit", payload)
         .then((response) => {
           toast.update(id, {
-            render: "Post successfully !",
+            render: "Edit successfully !",
             type: "success",
             isLoading: false,
             autoClose: 3000,
             closeOnClick: true,
           });
-          props.updateTools(payload, "ADD");
+          payload = {
+            ...payload,
+            id: response.data.id,
+          };
+          props.updateTools(payload, "EDIT");
           setShow(false);
         })
         .catch((err) => {
+          console.log(err);
           toast.update(id, {
             render: err.response.data.message,
             type: "error",
@@ -53,7 +58,6 @@ export default function AddTool(props) {
             autoClose: 3000,
             closeOnClick: true,
           });
-          console.log(err);
         })
         .finally(() => {});
     } else {
@@ -66,7 +70,7 @@ export default function AddTool(props) {
 
   const isFormIsValid = () => {
     const { name, url, shortDescription, description, affiliateRef } =
-      formAddTool;
+      formEditTool;
 
     return (
       name.length &&
@@ -79,27 +83,19 @@ export default function AddTool(props) {
 
   return (
     <div>
-      <div className="d-flex justify-content-between align-items-center">
-        <div>
-          <h2 className="font-weight-bold my-0">Admin</h2>
-        </div>
-        <div>
-          <div>
-            <Button variant="success" onClick={handleShow}>
-              Ajouter
-            </Button>
-          </div>
-        </div>
+      <div>
+        <Button variant="warning" onClick={handleShow}>
+          Modifier
+        </Button>
       </div>
-      <hr className="solid" />
       <Modal show={show} onHide={() => handleClose(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Ajouter un nouveau outil</Modal.Title>
+          <Modal.Title>Editer {props.tool.name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <AddToolForm
-            handleFormAddTool={handleFormAddTool}
-            formAddTool={formAddTool}
+            handleFormAddTool={handleFormEditTool}
+            formAddTool={formEditTool}
           />
         </Modal.Body>
         <Modal.Footer>

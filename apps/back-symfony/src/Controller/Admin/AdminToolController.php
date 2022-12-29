@@ -48,7 +48,7 @@ class AdminToolController extends AbstractController
         }
 
         if(isset($data["codePromo"])) {
-            $tool->setAffiliateRef($data["codePromo"]);
+            $tool->setCodePromo($data["codePromo"]);
         }
         if(isset($data["subCategoriesIds"]))
         {
@@ -93,7 +93,7 @@ class AdminToolController extends AbstractController
 
         if(isset($data["codePromo"]))
         {
-            $tool->setAffiliateRef($data["codePromo"]);
+            $tool->setCodePromo($data["codePromo"]);
         }
 
         if(isset($data["subCategoriesIds"]))
@@ -105,7 +105,7 @@ class AdminToolController extends AbstractController
             }
         }
 
-        $toolRepository->getEntityManager()->flush();
+        $toolRepository->save($tool, true);
 
         $content = $this->serializeCircular->serialize($tool, 'json');
         $response = new Response($content);

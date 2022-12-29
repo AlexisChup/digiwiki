@@ -15,16 +15,27 @@ export default function ListTools() {
     location.state;
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
-  const addNewTool = (tool) => {
-    tools.push(tool);
-    // PAS BEAU OUI
+  // PAS BEAU OUI
+  const updateTools = (tool, method) => {
+    //adding new tool
+    if (method === "ADD") {
+      tools.push(tool);
+    } else if (method === "EDIT") {
+      // tool edited
+      for (let index = 0; index < tools.length; index++) {
+        if (tools[index].id === tool.id) {
+          tools[index] = tool;
+        }
+      }
+    }
+
     setReRender(!reRender);
   };
 
   return (
     <div className="container h-100 d-flex flex-column">
       {isAuthenticated && user.roles.includes("ROLE_ADMIN") ? (
-        <AddTool subCategoryId={subCategoryId} addNewTool={addNewTool} />
+        <AddTool subCategoryId={subCategoryId} updateTools={updateTools} />
       ) : null}
       <div className="row justify-content-center">
         <div className="d-flex flex-row align-content-center">
@@ -60,6 +71,10 @@ export default function ListTools() {
               urlSubCategory={urlSubCategory}
               tool={tool}
               key={tool.id}
+              isAuthenticated={isAuthenticated}
+              user={user}
+              subCategoryId={subCategoryId}
+              updateTools={updateTools}
             />
           ))}
         </div>
