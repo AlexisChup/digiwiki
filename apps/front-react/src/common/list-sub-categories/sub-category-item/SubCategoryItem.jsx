@@ -45,6 +45,7 @@ export default function SubCategoryItem(props) {
                 urlSubCategory: props.subCategory.url,
                 nameSubCategory: props.subCategory.name,
                 tools: props.tools,
+                subCategoryId: props.subCategory.id,
               },
             }
           )

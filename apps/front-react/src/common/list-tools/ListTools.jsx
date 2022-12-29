@@ -1,18 +1,31 @@
 import React, { useState } from "react";
 import "./ListTools.css";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import ToolItem from "./tool-item/ToolItem";
+import AddTool from "./admin/AddTool";
 
 export default function ListTools() {
+  const [reRender, setReRender] = useState(true);
   let navigate = useNavigate();
   const location = useLocation();
-  const { urlCategory, urlSubCategory, nameSubCategory, tools } =
+  let { urlCategory, urlSubCategory, nameSubCategory, tools, subCategoryId } =
     location.state;
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
+
+  const addNewTool = (tool) => {
+    tools.push(tool);
+    // PAS BEAU OUI
+    setReRender(!reRender);
+  };
 
   return (
     <div className="container h-100 d-flex flex-column">
+      {isAuthenticated && user.roles.includes("ROLE_ADMIN") ? (
+        <AddTool subCategoryId={subCategoryId} addNewTool={addNewTool} />
+      ) : null}
       <div className="row justify-content-center">
         <div className="d-flex flex-row align-content-center">
           <div className="d-flex align-items-center mr-3">
