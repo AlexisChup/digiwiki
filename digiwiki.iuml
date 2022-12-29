@@ -13,7 +13,7 @@ entity "Category" as c01 {
   --
   *name: string
   *url: string
-  logo: string
+  *sub_categories: array<SubCategory>
 }
 
 entity "SubCategory" as sc02 {
@@ -21,8 +21,8 @@ entity "SubCategory" as sc02 {
   --
   *name: string
   *url: string
-  *categories: array<int>
-  logo: string
+  *categories: array<Category>
+  *tools: array<Tool>
 }
 
 entity "Tool" as t03 {
@@ -30,14 +30,14 @@ entity "Tool" as t03 {
   --
   *name: string
   *url: string
-  *sub_categories: array<int>
+  *sub_categories: array<SubCategory>
   *short_description: string
   *description: text
-  *affiliate_ref: string
-  *code_promo: string
-  logo: string
+  affiliate_ref: string
+  code_promo: string
+  img_url: string
 }
 
-c01 |o..o{  sc02
-sc02 |o..o{  t03
+c01 }o..o{  sc02
+sc02 }o..o{  t03
 @enduml

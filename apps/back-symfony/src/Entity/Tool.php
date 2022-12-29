@@ -39,6 +39,9 @@ class Tool
     #[ORM\ManyToMany(targetEntity: SubCategory::class, mappedBy: 'tools')]
     private Collection $subCategories;
 
+    #[ORM\Column(length: 1024, nullable: true)]
+    private ?string $img_url = null;
+
     public function __construct()
     {
         $this->subCategories = new ArrayCollection();
@@ -144,6 +147,18 @@ class Tool
         if ($this->subCategories->removeElement($subCategory)) {
             $subCategory->removeTool($this);
         }
+
+        return $this;
+    }
+
+    public function getImgUrl(): ?string
+    {
+        return $this->img_url;
+    }
+
+    public function setImgUrl(?string $img_url): self
+    {
+        $this->img_url = $img_url;
 
         return $this;
     }
