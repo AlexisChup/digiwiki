@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./ListTools.css";
 import { useNavigate, useLocation } from "react-router-dom";
-import { AXIOS } from "../../app/axios-http";
+import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import ToolItem from "./tool-item/ToolItem";
 
@@ -14,40 +14,52 @@ export default function ListTools() {
   return (
     <div className="container h-100 d-flex flex-column">
       <div className="row justify-content-center">
-        <div>
-          <h1>Outils - {nameSubCategory}</h1>
-        </div>
-        <div>
-          <Button
-            variant="outline-primary"
-            className="mb-2"
-            onClick={() => navigate(-1)}
+        <div className="d-flex flex-row align-content-center">
+          <div className="d-flex align-items-center mr-3">
+            <Button
+              variant="outline-primary"
+              className=""
+              onClick={() => navigate(-1)}
+            >
+              Retour
+            </Button>
+          </div>
+          <div
+            className="d-flex align-items-center mr-3"
+            style={{ height: "80px" }}
           >
-            Retour
-          </Button>
+            <Image
+              src={require(`../../assets/png/sub-categories/${urlSubCategory}.png`)}
+              style={{ height: "80%", width: "auto" }}
+            />
+          </div>
+          <div className="d-flex align-items-center">
+            <h1 className="font-weight-bold my-0">{nameSubCategory}</h1>
+          </div>
         </div>
-        {tools.length > 0 ? (
-          <div className="row justify-content-center flex-column">
-            {tools.map((tool, index) => (
-              <ToolItem
-                urlCategory={urlCategory}
-                urlSubCategory={urlSubCategory}
-                tool={tool}
-                key={tool.id}
-              />
-            ))}
-          </div>
-        ) : (
-          <div className="col p-0">
-            <div className="d-flex rounded my-1 justify-content-between align-content-center align-self-center shadow py-3 px-3">
-              <div className="d-flex align-items-center">
-                <p className="my-0">Pas encore d'outil</p>
-              </div>
-              <div></div>
-            </div>
-          </div>
-        )}
       </div>
+      <hr className="solid" />
+      {tools.length > 0 ? (
+        <div className="row justify-content-center flex-column">
+          {tools.map((tool, index) => (
+            <ToolItem
+              urlCategory={urlCategory}
+              urlSubCategory={urlSubCategory}
+              tool={tool}
+              key={tool.id}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="col p-0">
+          <div className="d-flex rounded my-1 justify-content-between align-content-center align-self-center shadow py-3 px-3">
+            <div className="d-flex align-items-center">
+              <p className="my-0">Pas encore d'outil</p>
+            </div>
+            <div></div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
