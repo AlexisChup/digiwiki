@@ -1,8 +1,8 @@
 import React from "react";
 import "./ListSubCategories.css";
 import { useNavigate, useLocation } from "react-router-dom";
-import { AXIOS } from "../../app/axios-http";
 import Button from "react-bootstrap/Button";
+import Image from "react-bootstrap/Image";
 import SubCategoryItem from "./sub-category-item/SubCategoryItem";
 
 export default function ListSubCategories() {
@@ -129,21 +129,35 @@ export default function ListSubCategories() {
   return (
     <div className="container h-100 d-flex flex-column">
       <div className="row justify-content-center">
-        <div>
-          <h1>Liste des sous catégories de {category.name}</h1>
-        </div>
-        <div>
-          <Button
-            variant="outline-primary"
-            className="mb-2"
-            onClick={() =>
-              navigate("/explorer", { state: { loadedCategories: categories } })
-            }
+        <div className="d-flex flex-row align-content-center">
+          <div className="d-flex align-items-center mr-3">
+            <Button
+              variant="outline-primary"
+              className=""
+              onClick={() =>
+                navigate("/explorer", {
+                  state: { loadedCategories: categories },
+                })
+              }
+            >
+              Retour
+            </Button>
+          </div>
+          <div
+            className="d-flex align-items-center mr-3"
+            style={{ height: "80px" }}
           >
-            Retour
-          </Button>
+            <Image
+              src={require(`../../assets/png/categories/${category.url}.png`)}
+              style={{ height: "80%", width: "auto" }}
+            />
+          </div>
+          <div className="d-flex align-items-center">
+            <h1 className="my-0 font-weight-bold">{category.name}</h1>
+          </div>
         </div>
       </div>
+      <hr className="solid" />
       {category.subCategories.length === 0 ? (
         <div className="row flex-grow-1">
           <div className="col p-0">

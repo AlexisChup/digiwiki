@@ -132,11 +132,12 @@ export default function ListCategories() {
 
   return (
     <div className="container h-100 d-flex flex-column">
-      <div className="row justify-content-center">
-        <div>
-          <h1>Liste des catégories</h1>
+      <div className="row justify-content-center" style={{ height: "80px" }}>
+        <div className="d-flex align-items-center">
+          <h1 className="font-weight-bold">Choisir une catégorie</h1>
         </div>
       </div>
+      <hr className="solid" />
       {isRequesting ? <Spinner /> : renderFirstRow()}
       {isRequesting ? null : renderSecondRow()}
       {isRequesting ? null : renderThirdRow()}
