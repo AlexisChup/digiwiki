@@ -3,7 +3,9 @@
 namespace App\Controller\Public;
 
 use App\Entity\Category;
+use App\Entity\SubCategory;
 use App\Repository\CategoryRepository;
+use App\Repository\SubCategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,11 +33,29 @@ class PublicCategoryController extends AbstractController
     }
 
     #[Route('/all', name: 'category_show_all', methods: 'GET')]
-    public function showAll(CategoryRepository $categoryRepository): Response
+    public function showAll(CategoryRepository $categoryRepository, SubCategoryRepository $subCategoryRepository): Response
     {
         $categories = $categoryRepository->findAll();
 
         $content = $this->serializeCircular->serialize($categories, 'json');
+        $response = new Response($content);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
+
+    #[Route('/{categoryUrl}/sub-categories', name: 'category_show_sub_catgories', methods: 'GET')]
+    public function showSubCategoriesByCategoryUrl(CategoryRepository $categoryRepository, string $categoryUrl): Response
+    {
+        $category = $categoryRepository->findOneBy(array("url" => $categoryUrl));
+
+        if (!$category) {
+            throw $this->createNotFoundException(
+                'No category found for url '.$categoryUrl
+            );
+        }
+
+        $content = $this->serializeCircular->serialize($category, 'json');
         $response = new Response($content);
         $response->headers->set('Content-Type', 'application/json');
 
