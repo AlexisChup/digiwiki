@@ -1,34 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./Dashboard.css";
-import { Outlet, NavLink, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Outlet, NavLink } from "react-router-dom";
 import { FaUserCircle, FaWrench, FaUsers } from "react-icons/fa";
-import { AXIOS } from "../../app/axios-http";
-import Spinner from "../generic/spinner/Spinner";
 
 export default function Dashboard() {
-  let [isRequesting, setIsRequesting] = useState(false);
-  let navigate = useNavigate();
-
-  const initialStateProfil = {
-    id: null,
-    email: "",
-    userIdentifier: "",
-    roles: [],
-  };
-
-  let [profile, setProfile] = useState(initialStateProfil);
-
-  useEffect(() => {
-    setIsRequesting(true);
-    AXIOS.get("/user/profile")
-      .then((res) => {
-        setProfile(res.data);
-        navigate("/dashboard/profile", { state: { profile: res.data } });
-      })
-      .catch((e) => console.log(e))
-      .finally(() => setIsRequesting(false));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { user } = useSelector((state) => state.auth);
 
   return (
     <div className="container">
@@ -38,7 +15,6 @@ export default function Dashboard() {
           <div className="mr-2">
             <NavLink
               to="profile"
-              state={{ profile }}
               className={({ isActive }) =>
                 isActive ? "dashboard-navlink-active" : "dashboard-navlink"
               }
@@ -58,7 +34,7 @@ export default function Dashboard() {
               Settings
             </NavLink>
           </div>
-          {profile.roles.includes("ROLE_ADMIN") ? (
+          {user.roles.includes("ROLE_ADMIN") ? (
             <div className="mr-2">
               <NavLink
                 to="handle-users"
@@ -73,7 +49,7 @@ export default function Dashboard() {
           ) : null}
         </div>
         <hr className="solid" />
-        {isRequesting ? <Spinner /> : <Outlet />}
+        <Outlet />
       </div>
     </div>
   );
