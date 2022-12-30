@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import "./EditTool.css";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { setCategories } from "../../../features/categories/categoriesSlice";
 import { AXIOS } from "../../../app/axios-http";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import AddToolForm from "../../tool/form/AddToolForm";
 
 export default function EditTool(props) {
+  const dispatch = useDispatch();
+  const [show, setShow] = useState(false);
+
   const initialStateFormEditTool = {
     name: props.tool.name,
     url: props.tool.url,
@@ -16,14 +21,6 @@ export default function EditTool(props) {
     codePromo: props.tool.codePromo,
     imgUrl: props.tool.imgUrl,
   };
-
-  const [formEditTool, setformEditTool] = useState(initialStateFormEditTool);
-
-  const handleFormEditTool = (key, value) => {
-    setformEditTool({ ...formEditTool, [key]: value });
-  };
-
-  const [show, setShow] = useState(false);
 
   const handleClose = (isConfirmed) => {
     if (isConfirmed) {
@@ -35,6 +32,7 @@ export default function EditTool(props) {
       const id = toast.loading("Please wait...");
       AXIOS.put("/admin/tool/" + props.tool.id + "/edit", payload)
         .then((response) => {
+          dispatch(setCategories(response.data));
           toast.update(id, {
             render: "Edit successfully !",
             type: "success",
@@ -42,11 +40,6 @@ export default function EditTool(props) {
             autoClose: 3000,
             closeOnClick: true,
           });
-          payload = {
-            ...payload,
-            id: response.data.id,
-          };
-          props.updateTools(payload, "EDIT");
           setShow(false);
         })
         .catch((err) => {
@@ -64,8 +57,15 @@ export default function EditTool(props) {
       setShow(false);
     }
   };
+
   const handleShow = (user) => {
     setShow(true);
+  };
+
+  const [formEditTool, setformEditTool] = useState(initialStateFormEditTool);
+
+  const handleFormEditTool = (key, value) => {
+    setformEditTool({ ...formEditTool, [key]: value });
   };
 
   const isFormIsValid = () => {

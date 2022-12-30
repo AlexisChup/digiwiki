@@ -1,132 +1,110 @@
 import React, { useEffect, useState } from "react";
 import "./ListCategories.css";
 import { AXIOS } from "../../app/axios-http";
+import { useDispatch, useSelector } from "react-redux";
+import { setCategories } from "../../features/categories/categoriesSlice";
 import { useLocation } from "react-router-dom";
 import Spinner from "../generic/spinner/Spinner";
 import CategoryItem from "./category-item/CategoryItem";
 
 export default function ListCategories() {
+  const dispatch = useDispatch();
   let [isRequesting, setIsRequesting] = useState(false);
-  let [categories, setCategories] = useState([]);
-  const location = useLocation();
+  const { categories } = useSelector((state) => state.categories);
 
   useEffect(() => {
-    if (location.state !== null) {
-      if (location.state.hasOwnProperty("loadedCategories")) {
-        setCategories(location.state.loadedCategories);
-      }
-    } else {
+    if (!categories) {
       setIsRequesting(true);
       AXIOS.get("/public/category/all")
         .then((res) => {
-          setCategories(res.data);
+          dispatch(setCategories(res.data));
         })
-        .catch((e) => console.log(e))
-        .finally(() => setIsRequesting(false));
+        .catch((e) => {
+          console.log(e);
+        })
+        .finally(() => {
+          setIsRequesting(false);
+        });
     }
   }, []);
 
   const renderFirstRow = () => {
-    if (categories.length > 2) {
-      return (
-        <div className="row flex-grow-1">
-          {categories.slice(0, 3).map((category, index) => {
-            return (
-              <CategoryItem
-                categories={categories}
-                key={category.id}
-                category={category}
-              />
-            );
-          })}
-        </div>
-      );
+    if (categories) {
+      if (categories.length > 2) {
+        return (
+          <div className="row flex-grow-1">
+            {categories.slice(0, 3).map((category, index) => {
+              return <CategoryItem key={category.id} category={category} />;
+            })}
+          </div>
+        );
+      } else {
+        return (
+          <div className="row flex-grow-1">
+            {categories.slice(0, categories.length).map((category, index) => {
+              return <CategoryItem key={category.id} category={category} />;
+            })}
+          </div>
+        );
+      }
     } else {
-      return (
-        <div className="row flex-grow-1">
-          {categories.slice(0, categories.length).map((category, index) => {
-            return (
-              <CategoryItem
-                categories={categories}
-                key={category.id}
-                category={category}
-              />
-            );
-          })}
-        </div>
-      );
+      return null;
     }
   };
 
   const renderSecondRow = () => {
-    if (categories.length <= 3) {
-      return null;
-    }
+    if (categories) {
+      if (categories.length <= 3) {
+        return null;
+      }
 
-    if (categories.length > 5) {
-      return (
-        <div className="row flex-grow-1">
-          {categories.slice(3, 6).map((category, index) => {
-            return (
-              <CategoryItem
-                categories={categories}
-                key={category.id}
-                category={category}
-              />
-            );
-          })}
-        </div>
-      );
+      if (categories.length > 5) {
+        return (
+          <div className="row flex-grow-1">
+            {categories.slice(3, 6).map((category, index) => {
+              return <CategoryItem key={category.id} category={category} />;
+            })}
+          </div>
+        );
+      } else {
+        return (
+          <div className="row flex-grow-1">
+            {categories.slice(3, categories.length).map((category, index) => {
+              return <CategoryItem key={category.id} category={category} />;
+            })}
+          </div>
+        );
+      }
     } else {
-      return (
-        <div className="row flex-grow-1">
-          {categories.slice(3, categories.length).map((category, index) => {
-            return (
-              <CategoryItem
-                categories={categories}
-                key={category.id}
-                category={category}
-              />
-            );
-          })}
-        </div>
-      );
+      return null;
     }
   };
 
   const renderThirdRow = () => {
-    if (categories.length <= 6) {
-      return null;
-    }
+    if (categories) {
+      if (categories.length <= 6) {
+        return null;
+      }
 
-    if (categories.length > 8) {
-      return (
-        <div className="row flex-grow-1">
-          {categories.slice(6, 9).map((category, index) => {
-            return (
-              <CategoryItem
-                categories={categories}
-                key={category.id}
-                category={category}
-              />
-            );
-          })}
-        </div>
-      );
+      if (categories.length > 8) {
+        return (
+          <div className="row flex-grow-1">
+            {categories.slice(6, 9).map((category, index) => {
+              return <CategoryItem key={category.id} category={category} />;
+            })}
+          </div>
+        );
+      } else {
+        return (
+          <div className="row flex-grow-1">
+            {categories.slice(6, categories.length).map((category, index) => {
+              return <CategoryItem key={category.id} category={category} />;
+            })}
+          </div>
+        );
+      }
     } else {
-      return (
-        <div className="row flex-grow-1">
-          {categories.slice(6, categories.length).map((category, index) => {
-            return (
-              <CategoryItem
-                categories={categories}
-                key={category.id}
-                category={category}
-              />
-            );
-          })}
-        </div>
-      );
+      return null;
     }
   };
 
@@ -138,9 +116,9 @@ export default function ListCategories() {
         </div>
       </div>
       <hr className="solid" />
-      {isRequesting ? <Spinner /> : renderFirstRow()}
-      {isRequesting ? null : renderSecondRow()}
-      {isRequesting ? null : renderThirdRow()}
+      {!categories ? <Spinner /> : renderFirstRow()}
+      {!categories ? null : renderSecondRow()}
+      {!categories ? null : renderThirdRow()}
     </div>
   );
 }

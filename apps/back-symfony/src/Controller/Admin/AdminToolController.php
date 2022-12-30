@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Tool;
+use App\Repository\CategoryRepository;
 use App\Repository\SubCategoryRepository;
 use App\Repository\ToolRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,7 +32,7 @@ class AdminToolController extends AbstractController
     }
 
     #[Route('/create', name: 'create_tool', methods: 'POST')]
-    public function createTool(SubCategoryRepository $subCategoryRepository, ToolRepository $toolRepository, Request $request): Response
+    public function createTool(CategoryRepository $categoryRepository, SubCategoryRepository $subCategoryRepository, ToolRepository $toolRepository, Request $request): Response
     {
         $data = json_decode($request->getContent(), true);
 
@@ -61,7 +62,9 @@ class AdminToolController extends AbstractController
 
         $toolRepository->save($tool, true);
 
-        $content = $this->serializeCircular->serialize($tool, 'json');
+        $categories = $categoryRepository->findAll();
+
+        $content = $this->serializeCircular->serialize($categories, 'json');
         $response = new Response($content);
         $response->headers->set('Content-Type', 'application/json');
 
@@ -69,7 +72,7 @@ class AdminToolController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'edit_tool', methods: 'PUT')]
-    public function editTool(SubCategoryRepository $subCategoryRepository, ToolRepository $toolRepository, Request $request, int $id): Response
+    public function editTool(CategoryRepository $categoryRepository, SubCategoryRepository $subCategoryRepository, ToolRepository $toolRepository, Request $request, int $id): Response
     {
         $tool = $toolRepository->find($id);
 
@@ -107,7 +110,9 @@ class AdminToolController extends AbstractController
 
         $toolRepository->save($tool, true);
 
-        $content = $this->serializeCircular->serialize($tool, 'json');
+        $categories = $categoryRepository->findAll();
+
+        $content = $this->serializeCircular->serialize($categories, 'json');
         $response = new Response($content);
         $response->headers->set('Content-Type', 'application/json');
 
@@ -115,7 +120,7 @@ class AdminToolController extends AbstractController
     }
 
     #[Route('/{id}/remove', name: 'tool_remove', methods: 'DELETE')]
-    public function removeById(ToolRepository $toolRepository, Request $request, int $id)
+    public function removeById(CategoryRepository $categoryRepository, ToolRepository $toolRepository, Request $request, int $id)
     {
         $tool = $toolRepository->find($id);
 
@@ -127,7 +132,9 @@ class AdminToolController extends AbstractController
 
         $toolRepository->remove($tool, true);
 
-        $content = $this->serializeCircular->serialize($tool, 'json');
+        $categories = $categoryRepository->findAll();
+
+        $content = $this->serializeCircular->serialize($categories, 'json');
         $response = new Response($content);
         $response->headers->set('Content-Type', 'application/json');
 

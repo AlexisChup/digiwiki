@@ -8,42 +8,41 @@ import ToolItem from "./tool-item/ToolItem";
 import AddTool from "./admin/AddTool";
 
 export default function ListTools() {
-  const [reRender, setReRender] = useState(true);
-  let navigate = useNavigate();
-  const location = useLocation();
-  let { urlCategory, urlSubCategory, nameSubCategory, tools, subCategoryId } =
-    location.state;
+  const { categories } = useSelector((state) => state.categories);
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
-  // PAS BEAU OUI, MAS à venir avec redux
-  const updateTools = (tool, method) => {
-    //adding new tool
-    if (method === "ADD") {
-      tools.push(tool);
-    } else if (method === "EDIT") {
-      // tool edited
-      for (let index = 0; index < tools.length; index++) {
-        if (tools[index].id === tool.id) {
-          tools[index] = tool;
-          break;
-        }
-      }
-    } else if (method === "REMOVE") {
-      for (let index = 0; index < tools.length; index++) {
-        if (tools[index].id === tool.id) {
-          tools.splice(index, index);
-          break;
+  let navigate = useNavigate();
+  const location = useLocation();
+
+  const urlSplitted = location.pathname.split("/");
+  const urlCategory = urlSplitted[urlSplitted.length - 2];
+  const urlSubCategory = urlSplitted[urlSplitted.length - 1];
+
+  const findTools = () => {
+    for (let catIndex = 0; catIndex < categories.length; catIndex++) {
+      if (categories[catIndex].url === urlCategory) {
+        for (
+          let subIndex = 0;
+          subIndex < categories[catIndex].subCategories.length;
+          subIndex++
+        ) {
+          if (
+            categories[catIndex].subCategories[subIndex].url === urlSubCategory
+          ) {
+            return categories[catIndex].subCategories[subIndex];
+          }
         }
       }
     }
-
-    setReRender(!reRender);
   };
+
+  let subCategory = findTools();
+  const { tools } = subCategory;
 
   return (
     <div className="container h-100 d-flex flex-column">
       {isAuthenticated && user.roles.includes("ROLE_ADMIN") ? (
-        <AddTool subCategoryId={subCategoryId} updateTools={updateTools} />
+        <AddTool subCategoryId={subCategory.id} />
       ) : null}
       <div className="row justify-content-center">
         <div className="d-flex flex-row align-content-center">
@@ -66,7 +65,7 @@ export default function ListTools() {
             />
           </div>
           <div className="d-flex align-items-center">
-            <h1 className="font-weight-bold my-0">{nameSubCategory}</h1>
+            <h1 className="font-weight-bold my-0">{subCategory.name}</h1>
           </div>
         </div>
       </div>
@@ -81,8 +80,7 @@ export default function ListTools() {
               key={tool.id}
               isAuthenticated={isAuthenticated}
               user={user}
-              subCategoryId={subCategoryId}
-              updateTools={updateTools}
+              subCategoryId={subCategory.id}
             />
           ))}
         </div>

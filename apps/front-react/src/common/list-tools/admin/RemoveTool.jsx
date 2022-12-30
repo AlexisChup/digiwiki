@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import "./RemoveTool.css";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { setCategories } from "../../../features/categories/categoriesSlice";
 import { AXIOS } from "../../../app/axios-http";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
 export default function RemoveTool(props) {
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
 
   const handleClose = (isConfirmed) => {
@@ -13,6 +16,7 @@ export default function RemoveTool(props) {
       const id = toast.loading("Please wait...");
       AXIOS.delete("/admin/tool/" + props.tool.id + "/remove")
         .then((response) => {
+          dispatch(setCategories(response.data));
           toast.update(id, {
             render: "Remove successfully !",
             type: "success",
@@ -20,7 +24,6 @@ export default function RemoveTool(props) {
             autoClose: 3000,
             closeOnClick: true,
           });
-          props.updateTools(props.tool, "REMOVE");
           setShow(false);
         })
         .catch((err) => {
@@ -38,6 +41,7 @@ export default function RemoveTool(props) {
       setShow(false);
     }
   };
+
   const handleShow = () => {
     setShow(true);
   };
