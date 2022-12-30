@@ -19,12 +19,7 @@ export default function ToolItem(props) {
               "/" +
               props.urlSubCategory +
               "/" +
-              props.tool.name,
-            {
-              state: {
-                tool: props.tool,
-              },
-            }
+              props.tool.url
           )
         }
       >

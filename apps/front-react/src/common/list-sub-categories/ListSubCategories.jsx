@@ -38,6 +38,7 @@ export default function ListSubCategories() {
               isFound = true;
               setIsSubCategoriesFound(true);
               setCategory(res.data[index]);
+              break;
             }
           }
           if (!isFound) {
@@ -54,6 +55,7 @@ export default function ListSubCategories() {
           setCategory(categories[index]);
           setIsSubCategoriesFound(true);
           isFound = true;
+          break;
         }
       }
       if (!isFound) {
