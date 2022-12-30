@@ -3,43 +3,64 @@ import "./ListSubCategories.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AXIOS } from "../../app/axios-http";
+import { setCategories } from "../../features/categories/categoriesSlice";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 import SubCategoryItem from "./sub-category-item/SubCategoryItem";
 import Spinner from "../generic/spinner/Spinner";
 
 export default function ListSubCategories() {
-  let navigate = useNavigate();
+  const { categories } = useSelector((state) => state.categories);
+
   const location = useLocation();
   const urlSplitted = location.pathname.split("/");
   const urlCategory = urlSplitted[urlSplitted.length - 1];
 
-  const { categories } = useSelector((state) => state.categories);
+  const [isSubCategoriesFound, setIsSubCategoriesFound] = useState(false);
+  const [category, setCategory] = useState(false);
+
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    findSubCatetegories();
+  }, []);
 
   const findSubCatetegories = () => {
-    for (let index = 0; index < categories.length; index++) {
-      if (categories[index].url === urlCategory) {
-        return categories[index];
+    let isFound = false;
+    if (!categories) {
+      AXIOS.get("/public/category/all")
+        .then((res) => {
+          dispatch(setCategories(res.data));
+
+          for (let index = 0; index < res.data.length; index++) {
+            if (res.data[index].url === urlCategory) {
+              isFound = true;
+              setIsSubCategoriesFound(true);
+              setCategory(res.data[index]);
+            }
+          }
+          if (!isFound) {
+            navigate("/explorer");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        })
+        .finally(() => {});
+    } else {
+      for (let index = 0; index < categories.length; index++) {
+        if (categories[index].url === urlCategory) {
+          setCategory(categories[index]);
+          setIsSubCategoriesFound(true);
+          isFound = true;
+        }
+      }
+      if (!isFound) {
+        navigate("/explorer");
       }
     }
   };
-
-  // let [category, setCategory] = useState();
-
-  // useEffect(() => {
-  //   AXIOS.get("/public/category/" + urlCategory + "/sub-categories")
-  //     .then((res) => {
-  //       setCategory(res.data);
-  //     })
-  //     .catch((e) => console.log(e))
-  //     .finally(() => {});
-  // }, []);
-
-  // useEffect(() => {
-  //   const category = findSubCatetegories();
-  // }, []);
-
-  let category = findSubCatetegories();
 
   const renderFirstRow = () => {
     if (category.subCategories.length > 2) {
@@ -153,7 +174,7 @@ export default function ListSubCategories() {
 
   return (
     <div className="container h-100 d-flex flex-column">
-      {category ? (
+      {isSubCategoriesFound ? (
         <div className="row justify-content-center">
           <div className="d-flex flex-row align-content-center">
             <div className="d-flex align-items-center mr-3">
@@ -184,7 +205,7 @@ export default function ListSubCategories() {
       )}
 
       <hr className="solid" />
-      {category ? (
+      {isSubCategoriesFound ? (
         category.subCategories.length === 0 ? (
           <div className="row flex-grow-1">
             <div className="col p-0">
@@ -198,9 +219,9 @@ export default function ListSubCategories() {
           </div>
         ) : null
       ) : null}
-      {category ? renderFirstRow() : null}
-      {category ? renderSecondRow() : null}
-      {category ? renderThirdRow() : null}
+      {isSubCategoriesFound ? renderFirstRow() : null}
+      {isSubCategoriesFound ? renderSecondRow() : null}
+      {isSubCategoriesFound ? renderThirdRow() : null}
     </div>
   );
 }
