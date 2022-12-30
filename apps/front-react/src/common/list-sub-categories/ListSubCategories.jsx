@@ -10,16 +10,17 @@ import SubCategoryItem from "./sub-category-item/SubCategoryItem";
 import Spinner from "../generic/spinner/Spinner";
 
 export default function ListSubCategories() {
-  const [isSubCategoriesFound, setIsSubCategoriesFound] = useState(false);
-  const [category, setCategory] = useState(false);
-  let navigate = useNavigate();
-  const dispatch = useDispatch();
+  const { categories } = useSelector((state) => state.categories);
 
   const location = useLocation();
   const urlSplitted = location.pathname.split("/");
   const urlCategory = urlSplitted[urlSplitted.length - 1];
 
-  const { categories } = useSelector((state) => state.categories);
+  const [isSubCategoriesFound, setIsSubCategoriesFound] = useState(false);
+  const [category, setCategory] = useState(false);
+
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     findSubCatetegories();
@@ -50,9 +51,9 @@ export default function ListSubCategories() {
     } else {
       for (let index = 0; index < categories.length; index++) {
         if (categories[index].url === urlCategory) {
-          isFound = true;
-          setIsSubCategoriesFound(true);
           setCategory(categories[index]);
+          setIsSubCategoriesFound(true);
+          isFound = true;
         }
       }
       if (!isFound) {
