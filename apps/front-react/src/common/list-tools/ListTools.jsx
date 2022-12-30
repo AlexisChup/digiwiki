@@ -43,6 +43,7 @@ export default function ListTools() {
               urlSubCategory
             ) {
               setSubCategory(categories[catIndex].subCategories[subIndex]);
+              break;
             }
           }
         }
@@ -72,6 +73,7 @@ export default function ListTools() {
                   setSubCategory(res.data[catIndex].subCategories[subIndex]);
                   setIsToolsFound(true);
                   isFound = true;
+                  break;
                 }
               }
             }
@@ -100,6 +102,7 @@ export default function ListTools() {
               setSubCategory(categories[catIndex].subCategories[subIndex]);
               setIsToolsFound(true);
               isFound = true;
+              break;
             }
           }
         }
