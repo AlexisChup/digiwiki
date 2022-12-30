@@ -10,14 +10,7 @@ export default function CategoryItem(props) {
     <div className="col col-4 ">
       <div
         className="d-flex rounded noselect my-1 justify-content-between align-content-center align-self-center category-container  py-3 px-3"
-        onClick={() =>
-          navigate("/explorer/" + props.category.url, {
-            state: {
-              category: props.category,
-              categories: props.categories,
-            },
-          })
-        }
+        onClick={() => navigate("/explorer/" + props.category.url)}
       >
         <div className="d-flex align-items-center">
           <h3 className="my-0 small font-weight-bold text-uppercase">

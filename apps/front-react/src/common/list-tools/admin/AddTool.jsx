@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import "./AddTool.css";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { setCategories } from "../../../features/categories/categoriesSlice";
 import { AXIOS } from "../../../app/axios-http";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import AddToolForm from "../../tool/form/AddToolForm";
 
 export default function AddTool(props) {
+  const dispatch = useDispatch();
+  const [show, setShow] = useState(false);
+
   const initialStateFormAddTool = {
     name: "",
     url: "",
@@ -16,14 +21,6 @@ export default function AddTool(props) {
     codePromo: "",
     imgUrl: "",
   };
-
-  const [formAddTool, setformAddTool] = useState(initialStateFormAddTool);
-
-  const handleFormAddTool = (key, value) => {
-    setformAddTool({ ...formAddTool, [key]: value });
-  };
-
-  const [show, setShow] = useState(false);
 
   const handleClose = (isConfirmed) => {
     if (isConfirmed) {
@@ -35,6 +32,7 @@ export default function AddTool(props) {
       const id = toast.loading("Please wait...");
       AXIOS.post("/admin/tool/create", payload)
         .then((response) => {
+          dispatch(setCategories(response.data));
           toast.update(id, {
             render: "Post successfully !",
             type: "success",
@@ -42,7 +40,6 @@ export default function AddTool(props) {
             autoClose: 3000,
             closeOnClick: true,
           });
-          props.updateTools(response.data, "ADD");
           setShow(false);
         })
         .catch((err) => {
@@ -60,8 +57,15 @@ export default function AddTool(props) {
       setShow(false);
     }
   };
+
   const handleShow = (user) => {
     setShow(true);
+  };
+
+  const [formAddTool, setformAddTool] = useState(initialStateFormAddTool);
+
+  const handleFormAddTool = (key, value) => {
+    setformAddTool({ ...formAddTool, [key]: value });
   };
 
   const isFormIsValid = () => {
