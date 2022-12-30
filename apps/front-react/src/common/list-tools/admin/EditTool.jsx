@@ -82,7 +82,7 @@ export default function EditTool(props) {
   };
 
   return (
-    <div>
+    <div className="mr-3">
       <div>
         <Button variant="warning" onClick={handleShow}>
           Modifier

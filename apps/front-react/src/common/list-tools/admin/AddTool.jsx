@@ -42,7 +42,7 @@ export default function AddTool(props) {
             autoClose: 3000,
             closeOnClick: true,
           });
-          props.updateTools(payload, "ADD");
+          props.updateTools(response.data, "ADD");
           setShow(false);
         })
         .catch((err) => {

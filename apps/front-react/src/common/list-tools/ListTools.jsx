@@ -15,7 +15,7 @@ export default function ListTools() {
     location.state;
   const { isAuthenticated, user } = useSelector((state) => state.auth);
 
-  // PAS BEAU OUI
+  // PAS BEAU OUI, MAS à venir avec redux
   const updateTools = (tool, method) => {
     //adding new tool
     if (method === "ADD") {
@@ -25,6 +25,14 @@ export default function ListTools() {
       for (let index = 0; index < tools.length; index++) {
         if (tools[index].id === tool.id) {
           tools[index] = tool;
+          break;
+        }
+      }
+    } else if (method === "REMOVE") {
+      for (let index = 0; index < tools.length; index++) {
+        if (tools[index].id === tool.id) {
+          tools.splice(index, index);
+          break;
         }
       }
     }

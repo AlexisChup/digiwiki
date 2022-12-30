@@ -125,6 +125,8 @@ class AdminToolController extends AbstractController
             );
         }
 
+        $toolRepository->remove($tool, true);
+
         $content = $this->serializeCircular->serialize($tool, 'json');
         $response = new Response($content);
         $response->headers->set('Content-Type', 'application/json');
