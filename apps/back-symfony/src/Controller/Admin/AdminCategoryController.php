@@ -64,9 +64,11 @@ class AdminCategoryController extends AbstractController
         $category->setName($data["name"]);
         $category->setUrl($data["url"]);
 
-        $categoryRepository->getEntityManager()->flush();
+        $categoryRepository->save($category, true);
 
-        $content = $this->serializeCircular->serialize($category, 'json');
+        $categories = $categoryRepository->findAll();
+
+        $content = $this->serializeCircular->serialize($categories, 'json');
         $response = new Response($content);
         $response->headers->set('Content-Type', 'application/json');
 

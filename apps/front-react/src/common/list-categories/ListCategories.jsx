@@ -3,7 +3,6 @@ import "./ListCategories.css";
 import { AXIOS } from "../../app/axios-http";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategories } from "../../features/categories/categoriesSlice";
-import { useLocation } from "react-router-dom";
 import Spinner from "../generic/spinner/Spinner";
 import CategoryItem from "./category-item/CategoryItem";
 
