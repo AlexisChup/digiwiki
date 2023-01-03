@@ -17,6 +17,7 @@ class ToolFixtures extends Fixture
         $tool_2_3_1->setDescription("Icon Sax grande description !!!");
         $tool_2_3_1->setAffiliateRef("https://iconsax.io");
         $tool_2_3_1->setCodePromo("ICOSA22");
+        $tool_2_3_1->setImgUrl("https://iconsax.io/logo-vuesax.svg");
         $manager->persist($tool_2_3_1);
 
         $this->addReference("tool_2_3_1", $tool_2_3_1);

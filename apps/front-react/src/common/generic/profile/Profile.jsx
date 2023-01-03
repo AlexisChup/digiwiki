@@ -1,38 +1,61 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Profile.css";
-import { useLocation } from "react-router-dom";
+import { AXIOS } from "../../../app/axios-http";
+import Spinner from "../spinner/Spinner";
 
 export default function Profile() {
-  const location = useLocation();
-  const { profile } = location.state;
+  let [isRequesting, setIsRequesting] = useState(false);
+  const initialStateProfil = {
+    id: null,
+    email: "",
+    userIdentifier: "",
+    roles: [],
+  };
+
+  let [profile, setProfile] = useState(initialStateProfil);
+
+  useEffect(() => {
+    setIsRequesting(true);
+    AXIOS.get("/user/profile")
+      .then((res) => {
+        setProfile(res.data);
+      })
+      .catch((e) => console.log(e))
+      .finally(() => setIsRequesting(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="">
       <h2>Profile</h2>
-      <table className="table table-striped table-sm">
-        <thead>
-          <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Email</th>
-            <th scope="col">UserIdentifier</th>
-            <th scope="col">Roles</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th className="align-middle" scope="row">
-              {profile.id}
-            </th>
-            <td className="align-middle">{profile.email}</td>
-            <td className="align-middle">{profile.userIdentifier}</td>
-            <td className="align-middle">
-              {profile.roles.map((role, indexRole) => {
-                return <div key={indexRole}>{role}</div>;
-              })}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      {isRequesting ? (
+        <Spinner />
+      ) : (
+        <table className="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Email</th>
+              <th scope="col">UserIdentifier</th>
+              <th scope="col">Roles</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th className="align-middle" scope="row">
+                {profile.id}
+              </th>
+              <td className="align-middle">{profile.email}</td>
+              <td className="align-middle">{profile.userIdentifier}</td>
+              <td className="align-middle">
+                {profile.roles.map((role, indexRole) => {
+                  return <div key={indexRole}>{role}</div>;
+                })}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }

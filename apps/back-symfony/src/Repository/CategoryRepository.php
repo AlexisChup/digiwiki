@@ -39,6 +39,19 @@ class CategoryRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @return Category[] Returns an array of Category objects
+     */
+    public function findAllWithoutSubCategories(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c.id, c.name, c.url')
+            ->orderBy('c.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Category[] Returns an array of Category objects
 //     */

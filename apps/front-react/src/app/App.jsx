@@ -12,13 +12,13 @@ import "./App.css";
 export default function App() {
   return (
     <BrowserRouter>
+      <AuthVerify />
       <div id="app-content">
         <Header id="header-content" />
         <IndexRoutes />
         <Footer id="footer-content" />
         <ToastContainer autoClose={3000} position="bottom-right" />
       </div>
-      <AuthVerify />
     </BrowserRouter>
   );
 }
