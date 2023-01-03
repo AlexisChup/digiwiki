@@ -9,7 +9,7 @@ export default function CategoryItem(props) {
   return (
     <div className="col col-4 ">
       <div
-        className="d-flex rounded noselect my-1 justify-content-between align-content-center align-self-center category-container  py-3 px-3"
+        className="swing-in-bottom-fwd d-flex rounded noselect my-1 justify-content-between align-content-center align-self-center category-container  py-3 px-3"
         onClick={() => navigate("/explorer/" + props.category.url)}
       >
         <div className="d-flex align-items-center">
