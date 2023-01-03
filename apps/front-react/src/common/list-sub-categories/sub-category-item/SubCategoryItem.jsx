@@ -3,34 +3,10 @@ import "./SubCategoryItem.css";
 import "../../list-categories/ListCategories.css";
 import { useNavigate } from "react-router-dom";
 import Image from "react-bootstrap/Image";
+import { safeSrcImg } from "../../../utils/image";
 
 export default function SubCategoryItem(props) {
   let navigate = useNavigate();
-
-  const renderImage = () => {
-    let imgFromUrl = null;
-    let isImgExist = false;
-
-    try {
-      imgFromUrl = require(`../../../assets/png/sub-categories/${props.subCategory.url}.png`);
-      isImgExist = true;
-    } catch (error) {
-      console.log("No image for url :", console.log(props.subCategory.url));
-    }
-
-    if (isImgExist) {
-      return (
-        <Image src={imgFromUrl} style={{ height: "80%", width: "auto" }} />
-      );
-    } else {
-      return (
-        <Image
-          src={require(`../../../assets/png/common/default.png`)}
-          style={{ height: "80%", width: "auto" }}
-        />
-      );
-    }
-  };
 
   return (
     <div className="col col-4 ">
@@ -49,7 +25,10 @@ export default function SubCategoryItem(props) {
         </div>
         <div>
           <div className="d-flex align-items-center" style={{ height: "80px" }}>
-            {renderImage()}
+            <Image
+              src={safeSrcImg(props.subCategory.url, "sub-categories")}
+              style={{ height: "80%", width: "auto" }}
+            />
           </div>
         </div>
       </div>

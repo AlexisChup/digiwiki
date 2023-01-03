@@ -1,40 +1,37 @@
 import React, { useState } from "react";
-import "./AddTool.css";
+import "./EditCategory.css";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { setCategories } from "../../../features/categories/categoriesSlice";
 import { AXIOS } from "../../../app/axios-http";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import AddToolForm from "../../tool/form/AddToolForm";
+import CategoryForm from "../../list-categories/category/form/CategoryForm";
 
-export default function AddTool(props) {
+export default function EditCategory(props) {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
 
-  const initialStateFormAddTool = {
-    name: "",
-    url: "",
-    shortDescription: "",
-    description: "",
-    affiliateRef: "",
-    codePromo: "",
-    imgUrl: "",
+  const initialStateFormEditCategory = {
+    name: props.category.name,
+    url: props.category.url,
   };
+
+  const [formEditCategory, setFormEditCategory] = useState(
+    initialStateFormEditCategory
+  );
 
   const handleClose = (isConfirmed) => {
     if (isConfirmed) {
-      const payload = {
-        ...formAddTool,
-        subCategoriesIds: [props.subCategoryId],
-      };
-
       const id = toast.loading("Please wait...");
-      AXIOS.post("/admin/tool/create", payload)
+      AXIOS.put(
+        "/admin/category/" + props.category.id + "/edit",
+        formEditCategory
+      )
         .then((response) => {
           dispatch(setCategories(response.data));
           toast.update(id, {
-            render: "Post successfully !",
+            render: "Edit successfully !",
             type: "success",
             isLoading: false,
             autoClose: 3000,
@@ -43,6 +40,7 @@ export default function AddTool(props) {
           setShow(false);
         })
         .catch((err) => {
+          console.log(err);
           toast.update(id, {
             render: err.response.data.message,
             type: "error",
@@ -50,7 +48,6 @@ export default function AddTool(props) {
             autoClose: 3000,
             closeOnClick: true,
           });
-          console.log(err);
         })
         .finally(() => {});
     } else {
@@ -62,49 +59,29 @@ export default function AddTool(props) {
     setShow(true);
   };
 
-  const [formAddTool, setformAddTool] = useState(initialStateFormAddTool);
-
-  const handleFormAddTool = (key, value) => {
-    setformAddTool({ ...formAddTool, [key]: value });
+  const handleForm = (key, value) => {
+    setFormEditCategory({ ...formEditCategory, [key]: value });
   };
 
   const isFormIsValid = () => {
-    const { name, url, shortDescription, description, affiliateRef } =
-      formAddTool;
+    const { name, url } = formEditCategory;
 
-    return (
-      name.length &&
-      url.length &&
-      shortDescription.length &&
-      description.length &&
-      affiliateRef.length
-    );
+    return name.length && url.length;
   };
 
   return (
-    <div>
-      <div className="d-flex justify-content-between align-items-center">
-        <div>
-          <h2 className="font-weight-bold my-0">Admin</h2>
-        </div>
-        <div>
-          <div>
-            <Button variant="success" onClick={handleShow}>
-              Ajouter un outil
-            </Button>
-          </div>
-        </div>
+    <div className="mr-3">
+      <div>
+        <Button variant="warning" onClick={handleShow}>
+          Editer la catégorie
+        </Button>
       </div>
-      <hr className="solid" />
       <Modal show={show} onHide={() => handleClose(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Ajouter un nouveau outil</Modal.Title>
+          <Modal.Title>Editer {props.category.name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <AddToolForm
-            handleFormAddTool={handleFormAddTool}
-            formAddTool={formAddTool}
-          />
+          <CategoryForm category={formEditCategory} handleForm={handleForm} />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => handleClose(false)}>

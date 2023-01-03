@@ -9,6 +9,7 @@ import Button from "react-bootstrap/Button";
 import ToolItem from "./tool-item/ToolItem";
 import AddTool from "./admin/AddTool";
 import Spinner from "../generic/spinner/Spinner";
+import { safeSrcImg } from "../../utils/image";
 
 export default function ListTools() {
   const { categories } = useSelector((state) => state.categories);
@@ -29,6 +30,7 @@ export default function ListTools() {
     findTools();
   }, []);
 
+  // used when modifying tools
   useEffect(() => {
     if (categories) {
       for (let catIndex = 0; catIndex < categories.length; catIndex++) {
@@ -138,7 +140,7 @@ export default function ListTools() {
               style={{ height: "80px" }}
             >
               <Image
-                src={require(`../../assets/png/sub-categories/${urlSubCategory}.png`)}
+                src={safeSrcImg(subCategory.url, "sub-categories")}
                 style={{ height: "80%", width: "auto" }}
               />
             </div>
