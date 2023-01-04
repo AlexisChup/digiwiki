@@ -7,6 +7,7 @@ import { setCategories } from "../../features/categories/categoriesSlice";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 import Spinner from "../generic/spinner/Spinner";
+import { safeSrcImg } from "../../utils/image";
 
 export default function Tool() {
   const { categories } = useSelector((state) => state.categories);
@@ -143,12 +144,7 @@ export default function Tool() {
                 style={{ height: "80px" }}
               >
                 <Image
-                  src={
-                    tool.imgUrl
-                      ? tool.imgUrl
-                      : require(`../../assets/png/common/default.png`)
-                  }
-                  // src={require(`../../../assets/png/categories/${props.category.url}.png`)}
+                  src={safeSrcImg(tool.imgUrl, "tools")}
                   style={{ height: "80%", width: "auto" }}
                 />
               </div>

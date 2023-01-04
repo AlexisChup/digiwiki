@@ -1,8 +1,8 @@
 import React from "react";
-import "./AdminHeader.css";
+import "./AdminHeaderListSubCategories.css";
 import EditCategory from "./EditCategory";
 
-export default function AdminHeader(props) {
+export default function AdminHeaderListSubCategories(props) {
   return (
     <div>
       <div className="d-flex justify-content-between align-items-center">

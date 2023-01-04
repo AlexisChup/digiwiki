@@ -10,6 +10,7 @@ import ToolItem from "./tool-item/ToolItem";
 import AddTool from "./admin/AddTool";
 import Spinner from "../generic/spinner/Spinner";
 import { safeSrcImg } from "../../utils/image";
+import AdminHeaderListTools from "./admin/AdminHeaderListTools";
 
 export default function ListTools() {
   const { categories } = useSelector((state) => state.categories);
@@ -120,7 +121,7 @@ export default function ListTools() {
     <div className="container h-100 d-flex flex-column">
       {isToolsFound ? (
         isAuthenticated && user.roles.includes("ROLE_ADMIN") ? (
-          <AddTool subCategoryId={subCategory.id} />
+          <AdminHeaderListTools subCategory={subCategory} />
         ) : null
       ) : null}
       {isToolsFound ? (

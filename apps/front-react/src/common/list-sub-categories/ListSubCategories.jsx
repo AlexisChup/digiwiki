@@ -8,7 +8,7 @@ import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 import SubCategoryItem from "./sub-category-item/SubCategoryItem";
 import Spinner from "../generic/spinner/Spinner";
-import AdminHeader from "./admin/AdminHeader";
+import AdminHeaderListSubCategories from "./admin/AdminHeaderListSubCategories";
 import { safeSrcImg } from "../../utils/image";
 
 export default function ListSubCategories() {
@@ -193,7 +193,7 @@ export default function ListSubCategories() {
     <div className="container h-100 d-flex flex-column">
       {category ? (
         isAuthenticated && user.roles.includes("ROLE_ADMIN") ? (
-          <AdminHeader category={category} />
+          <AdminHeaderListSubCategories category={category} />
         ) : null
       ) : null}
       {isSubCategoriesFound ? (
