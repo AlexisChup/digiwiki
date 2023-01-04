@@ -12,22 +12,17 @@ export default function EditCategory(props) {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
 
-  const initialStateFormEditCategory = {
+  const initialStateFormCategory = {
     name: props.category.name,
     url: props.category.url,
   };
 
-  const [formEditCategory, setFormEditCategory] = useState(
-    initialStateFormEditCategory
-  );
+  const [formCategory, setFormCategory] = useState(initialStateFormCategory);
 
   const handleClose = (isConfirmed) => {
     if (isConfirmed) {
       const id = toast.loading("Please wait...");
-      AXIOS.put(
-        "/admin/category/" + props.category.id + "/edit",
-        formEditCategory
-      )
+      AXIOS.put("/admin/category/" + props.category.id + "/edit", formCategory)
         .then((response) => {
           dispatch(setCategories(response.data));
           toast.update(id, {
@@ -60,11 +55,11 @@ export default function EditCategory(props) {
   };
 
   const handleForm = (key, value) => {
-    setFormEditCategory({ ...formEditCategory, [key]: value });
+    setFormCategory({ ...formCategory, [key]: value });
   };
 
   const isFormIsValid = () => {
-    const { name, url } = formEditCategory;
+    const { name, url } = formCategory;
 
     return name.length && url.length;
   };
@@ -81,7 +76,7 @@ export default function EditCategory(props) {
           <Modal.Title>Editer {props.category.name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <CategoryForm category={formEditCategory} handleForm={handleForm} />
+          <CategoryForm formCategory={formCategory} handleForm={handleForm} />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => handleClose(false)}>

@@ -38,15 +38,20 @@ class AdminSubCategoryController extends AbstractController
 
         $subCategory->setName($data["name"]);
         $subCategory->setUrl($data["url"]);
-        $categoriesId = $data["categoriesId"];
-        for($i = 0; $i < count($categoriesId); $i++)
+        if(isset($data["categoriesIds"]))
         {
-            $subCategory->addCategory($categoryRepository->find($categoriesId[$i]));
+            $categoriesId = $data["categoriesIds"];
+            for($i = 0; $i < count($categoriesId); $i++)
+            {
+                $subCategory->addCategory($categoryRepository->find($categoriesId[$i]));
+            }
         }
 
         $subCategoryRepository->save($subCategory, true);
 
-        $content = $this->serializeCircular->serialize($subCategory, 'json');
+        $categories = $categoryRepository->findAll();
+
+        $content = $this->serializeCircular->serialize($categories, 'json');
         $response = new Response($content);
         $response->headers->set('Content-Type', 'application/json');
 
@@ -68,15 +73,21 @@ class AdminSubCategoryController extends AbstractController
 
         $subCategory->setName($data["name"]);
         $subCategory->setUrl($data["url"]);
-        $categoriesId = $data["categoriesId"];
-        for($i = 0; $i < count($categoriesId); $i++)
+
+        if(isset($data["categoriesId"]))
         {
-            $subCategory->addCategory($categoryRepository->find($categoriesId[$i]));
+            $categoriesId = $data["categoriesId"];
+            for($i = 0; $i < count($categoriesId); $i++)
+            {
+                $subCategory->addCategory($categoryRepository->find($categoriesId[$i]));
+            }
         }
 
-        $subCategoryRepository->getEntityManager()->flush();
+        $subCategoryRepository->save($subCategory, true);
 
-        $content = $this->serializeCircular->serialize($subCategory, 'json');
+        $categories = $categoryRepository->findAll();
+
+        $content = $this->serializeCircular->serialize($categories, 'json');
         $response = new Response($content);
         $response->headers->set('Content-Type', 'application/json');
 

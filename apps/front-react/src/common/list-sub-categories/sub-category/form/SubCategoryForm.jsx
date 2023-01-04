@@ -1,8 +1,8 @@
 import React from "react";
-import "./CategoryForm.css";
+import "./SubCategoryForm.css";
 import Form from "react-bootstrap/Form";
 
-export default function CategoryForm(props) {
+export default function SubCategoryForm(props) {
   return (
     <Form>
       <Form.Group>
@@ -11,8 +11,8 @@ export default function CategoryForm(props) {
           size="sm"
           className="mb-2"
           type="text"
-          placeholder="GeniusCategory"
-          value={props.formCategory.name}
+          placeholder="GeniusSubCategory"
+          value={props.formSubCategory.name}
           onChange={(e) => props.handleForm("name", e.target.value)}
         />
       </Form.Group>
@@ -22,8 +22,8 @@ export default function CategoryForm(props) {
           size="sm"
           className="mb-2"
           type="text"
-          placeholder="genius-category"
-          value={props.formCategory.url}
+          placeholder="genius-sub-category"
+          value={props.formSubCategory.url}
           onChange={(e) => props.handleForm("url", e.target.value)}
         />
       </Form.Group>

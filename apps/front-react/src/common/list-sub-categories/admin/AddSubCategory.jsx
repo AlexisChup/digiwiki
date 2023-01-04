@@ -1,36 +1,32 @@
 import React, { useState } from "react";
-import "./AddTool.css";
+import "./AddSubCategory.css";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { setCategories } from "../../../features/categories/categoriesSlice";
 import { AXIOS } from "../../../app/axios-http";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import AddToolForm from "../../tool/form/AddToolForm";
+import SubCategoryForm from "../sub-category/form/SubCategoryForm";
 
-export default function AddTool(props) {
+export default function AddSubCategory(props) {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
 
-  const initialStateFormAddTool = {
+  const initialStateFormAddSubCategory = {
     name: "",
     url: "",
-    shortDescription: "",
-    description: "",
-    affiliateRef: "",
-    codePromo: "",
-    imgUrl: "",
   };
 
   const handleClose = (isConfirmed) => {
     if (isConfirmed) {
       const payload = {
-        ...formAddTool,
-        subCategoriesIds: [props.subCategoryId],
+        ...formSubCategory,
+        categoriesIds: [props.categoryId],
       };
 
       const id = toast.loading("Please wait...");
-      AXIOS.post("/admin/tool/create", payload)
+      console.log("POST: ", payload);
+      AXIOS.post("/admin/sub-category/create", payload)
         .then((response) => {
           dispatch(setCategories(response.data));
           toast.update(id, {
@@ -62,40 +58,35 @@ export default function AddTool(props) {
     setShow(true);
   };
 
-  const [formAddTool, setformAddTool] = useState(initialStateFormAddTool);
+  const [formSubCategory, setformAddSubCategory] = useState(
+    initialStateFormAddSubCategory
+  );
 
-  const handleFormAddTool = (key, value) => {
-    setformAddTool({ ...formAddTool, [key]: value });
+  const handleForm = (key, value) => {
+    setformAddSubCategory({ ...formSubCategory, [key]: value });
   };
 
   const isFormIsValid = () => {
-    const { name, url, shortDescription, description, affiliateRef } =
-      formAddTool;
+    const { name, url } = formSubCategory;
 
-    return (
-      name.length &&
-      url.length &&
-      shortDescription.length &&
-      description.length &&
-      affiliateRef.length
-    );
+    return name.length && url.length;
   };
 
   return (
     <div className="mr-3">
       <div>
         <Button variant="success" onClick={handleShow}>
-          Ajouter un outil
+          Ajouter une sous-catégorie
         </Button>
       </div>
       <Modal show={show} onHide={() => handleClose(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Ajouter un nouveau outil</Modal.Title>
+          <Modal.Title>Ajouter une nouvelle sous-catégorie</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <AddToolForm
-            handleFormAddTool={handleFormAddTool}
-            formAddTool={formAddTool}
+          <SubCategoryForm
+            handleForm={handleForm}
+            formSubCategory={formSubCategory}
           />
         </Modal.Body>
         <Modal.Footer>

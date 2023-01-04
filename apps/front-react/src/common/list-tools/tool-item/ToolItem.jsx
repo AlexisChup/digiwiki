@@ -5,6 +5,7 @@ import Image from "react-bootstrap/Image";
 import "../../list-categories/ListCategories.css";
 import EditTool from "../admin/EditTool";
 import RemoveTool from "../admin/RemoveTool";
+import { safeSrcImg } from "../../../utils/image";
 
 export default function ToolItem(props) {
   let navigate = useNavigate();
@@ -29,12 +30,7 @@ export default function ToolItem(props) {
             style={{ height: "80px" }}
           >
             <Image
-              src={
-                props.tool.imgUrl
-                  ? props.tool.imgUrl
-                  : require(`../../../assets/png/common/default.png`)
-              }
-              // src={require(`../../../assets/png/categories/${props.category.url}.png`)}
+              src={safeSrcImg(props.tool.imgUrl, "tools")}
               style={{ height: "80%", width: "auto" }}
             />
           </div>
