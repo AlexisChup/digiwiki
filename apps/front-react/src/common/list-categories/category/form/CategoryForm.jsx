@@ -12,7 +12,7 @@ export default function CategoryForm(props) {
           className="mb-2"
           type="text"
           placeholder="GeniusCategory"
-          value={props.category.name}
+          value={props.formCategory.name}
           onChange={(e) => props.handleForm("name", e.target.value)}
         />
       </Form.Group>
@@ -23,7 +23,7 @@ export default function CategoryForm(props) {
           className="mb-2"
           type="text"
           placeholder="genius-category"
-          value={props.category.url}
+          value={props.formCategory.url}
           onChange={(e) => props.handleForm("url", e.target.value)}
         />
       </Form.Group>

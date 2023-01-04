@@ -1,37 +1,36 @@
 import React, { useState } from "react";
-import "./EditSubCategory.css";
+import "./AddSubCategory.css";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { setCategories } from "../../../features/categories/categoriesSlice";
 import { AXIOS } from "../../../app/axios-http";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import SubCategoryForm from "../../list-sub-categories/sub-category/form/SubCategoryForm";
+import SubCategoryForm from "../sub-category/form/SubCategoryForm";
 
-export default function EditSubCategory(props) {
+export default function AddSubCategory(props) {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
 
-  const initialStateFormSubCategory = {
-    name: props.subCategory.name,
-    url: props.subCategory.url,
+  const initialStateFormAddSubCategory = {
+    name: "",
+    url: "",
   };
-
-  const [formSubCategory, setFormSubCategory] = useState(
-    initialStateFormSubCategory
-  );
 
   const handleClose = (isConfirmed) => {
     if (isConfirmed) {
+      const payload = {
+        ...formSubCategory,
+        categoriesIds: [props.categoryId],
+      };
+
       const id = toast.loading("Please wait...");
-      AXIOS.put(
-        "/admin/sub-category/" + props.subCategory.id + "/edit",
-        formSubCategory
-      )
+      console.log("POST: ", payload);
+      AXIOS.post("/admin/sub-category/create", payload)
         .then((response) => {
           dispatch(setCategories(response.data));
           toast.update(id, {
-            render: "Edit successfully !",
+            render: "Post successfully !",
             type: "success",
             isLoading: false,
             autoClose: 3000,
@@ -40,7 +39,6 @@ export default function EditSubCategory(props) {
           setShow(false);
         })
         .catch((err) => {
-          console.log(err);
           toast.update(id, {
             render: err.response.data.message,
             type: "error",
@@ -48,6 +46,7 @@ export default function EditSubCategory(props) {
             autoClose: 3000,
             closeOnClick: true,
           });
+          console.log(err);
         })
         .finally(() => {});
     } else {
@@ -59,8 +58,12 @@ export default function EditSubCategory(props) {
     setShow(true);
   };
 
+  const [formSubCategory, setformAddSubCategory] = useState(
+    initialStateFormAddSubCategory
+  );
+
   const handleForm = (key, value) => {
-    setFormSubCategory({ ...formSubCategory, [key]: value });
+    setformAddSubCategory({ ...formSubCategory, [key]: value });
   };
 
   const isFormIsValid = () => {
@@ -72,18 +75,18 @@ export default function EditSubCategory(props) {
   return (
     <div className="mr-3">
       <div>
-        <Button variant="warning" onClick={handleShow}>
-          Editer la sous catégorie
+        <Button variant="success" onClick={handleShow}>
+          Ajouter une sous-catégorie
         </Button>
       </div>
       <Modal show={show} onHide={() => handleClose(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Editer {props.subCategory.name}</Modal.Title>
+          <Modal.Title>Ajouter une nouvelle sous-catégorie</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <SubCategoryForm
-            formSubCategory={formSubCategory}
             handleForm={handleForm}
+            formSubCategory={formSubCategory}
           />
         </Modal.Body>
         <Modal.Footer>

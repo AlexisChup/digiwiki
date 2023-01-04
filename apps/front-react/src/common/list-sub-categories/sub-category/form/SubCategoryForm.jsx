@@ -12,7 +12,7 @@ export default function SubCategoryForm(props) {
           className="mb-2"
           type="text"
           placeholder="GeniusSubCategory"
-          value={props.subCategory.name}
+          value={props.formSubCategory.name}
           onChange={(e) => props.handleForm("name", e.target.value)}
         />
       </Form.Group>
@@ -23,7 +23,7 @@ export default function SubCategoryForm(props) {
           className="mb-2"
           type="text"
           placeholder="genius-sub-category"
-          value={props.subCategory.url}
+          value={props.formSubCategory.url}
           onChange={(e) => props.handleForm("url", e.target.value)}
         />
       </Form.Group>
