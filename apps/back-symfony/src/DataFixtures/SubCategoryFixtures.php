@@ -180,7 +180,7 @@ class SubCategoryFixtures extends Fixture implements DependentFixtureInterface
 
         $subCategory6_1 = new SubCategory();
         $subCategory6_1->setName("Environnement de développement");
-        $subCategory6_1->setUrl("development-environment");
+        $subCategory6_1->setUrl("framework");
         $manager->persist($subCategory6_1);
 
         $subCategory6_2 = new SubCategory();
@@ -239,7 +239,7 @@ class SubCategoryFixtures extends Fixture implements DependentFixtureInterface
 
         $subCategory8_2 = new SubCategory();
         $subCategory8_2->setName("Classement crypto");
-        $subCategory8_2->setUrl("crypto-ranking");
+        $subCategory8_2->setUrl("ranking");
         $manager->persist($subCategory8_2);
 
         $subCategory8_3 = new SubCategory();
