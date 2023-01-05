@@ -99,10 +99,23 @@ class ToolFixtures extends Fixture
         $manager->persist($tool_1_1_1);
         $manager->persist($tool_2_1_1);
         $manager->persist($tool_3_3_1);
+        $manager->persist($tool_4_6_1);
+        $manager->persist($tool_5_1_1);
+        $manager->persist($tool_6_1_1);
+        $manager->persist($tool_7_1_1);
+        $manager->persist($tool_8_1_1);
+        $manager->persist($tool_9_2_1);
+        
 
         $this->addReference("tool_1_1_1", $tool_1_1_1);
         $this->addReference("tool_2_1_1", $tool_2_1_1);
         $this->addReference("tool_3_3_1", $tool_3_3_1);
+        $this->addReference("tool_4_6_1", $tool_4_6_1);
+        $this->addReference("tool_5_1_1", $tool_5_1_1);
+        $this->addReference("tool_6_1_1", $tool_6_1_1);
+        $this->addReference("tool_7_1_1", $tool_7_1_1);
+        $this->addReference("tool_8_1_1", $tool_8_1_1);
+        $this->addReference("tool_9_2_1", $tool_9_2_1);
 
         $manager->flush();
     }
