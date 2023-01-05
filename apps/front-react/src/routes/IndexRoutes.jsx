@@ -17,6 +17,7 @@ import ListTools from "../common/list-tools/ListTools";
 import Tool from "../common/tool/Tool";
 import Auth from "../common/generic/auth/Auth";
 import EmptySubCategories from "../common/dashboard/admin/empty-sub-categories/EmptySubCategories";
+import EmptyTools from "../common/dashboard/admin/empty-tools/EmptyTools";
 
 export default function IndexRoutes() {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
@@ -71,6 +72,16 @@ export default function IndexRoutes() {
             element={
               isAuthenticated && user.roles.includes("ROLE_ADMIN") ? (
                 <EmptySubCategories />
+              ) : (
+                <Navigate to="/dashboard" />
+              )
+            }
+          />
+          <Route
+            path="empty-tools"
+            element={
+              isAuthenticated && user.roles.includes("ROLE_ADMIN") ? (
+                <EmptyTools />
               ) : (
                 <Navigate to="/dashboard" />
               )
