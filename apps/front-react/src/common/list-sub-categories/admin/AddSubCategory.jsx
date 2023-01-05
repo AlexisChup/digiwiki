@@ -15,6 +15,7 @@ export default function AddSubCategory(props) {
   const initialStateFormAddSubCategory = {
     name: "",
     url: "",
+    categoriesIds: "",
   };
 
   const handleClose = (isConfirmed) => {

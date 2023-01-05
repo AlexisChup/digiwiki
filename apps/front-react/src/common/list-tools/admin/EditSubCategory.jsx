@@ -12,9 +12,30 @@ export default function EditSubCategory(props) {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
 
+  const getCategoriesIds = () => {
+    if (!props.subCategory.category) {
+      return "";
+    }
+    let categoriesIds = "";
+
+    const number = 1;
+
+    for (let index = 0; index < props.subCategory.category.length; index++) {
+      if (typeof props.subCategory.category[index] == typeof number) {
+        categoriesIds += props.subCategory.category[index] + ",";
+      } else {
+        categoriesIds += props.subCategory.category[index].id + ",";
+      }
+    }
+
+    categoriesIds = categoriesIds.slice(0, -1);
+    return categoriesIds;
+  };
+
   const initialStateFormSubCategory = {
     name: props.subCategory.name,
     url: props.subCategory.url,
+    categoriesIds: getCategoriesIds(),
   };
 
   const [formSubCategory, setFormSubCategory] = useState(
@@ -24,9 +45,14 @@ export default function EditSubCategory(props) {
   const handleClose = (isConfirmed) => {
     if (isConfirmed) {
       const id = toast.loading("Please wait...");
+
+      let payload = { ...formSubCategory };
+      payload.categoriesIds = formSubCategory.categoriesIds.split(",");
+      console.log("PAYLOAD :", payload);
+
       AXIOS.put(
         "/admin/sub-category/" + props.subCategory.id + "/edit",
-        formSubCategory
+        payload
       )
         .then((response) => {
           dispatch(setCategories(response.data));

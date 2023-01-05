@@ -22,7 +22,7 @@ class AdminSubCategoryController extends AbstractController
         $encoder = new JsonEncoder();
         $defaultContext = [
             AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-                return $object->getName();
+                return $object->getId();
             },
         ];
         $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
@@ -43,7 +43,11 @@ class AdminSubCategoryController extends AbstractController
             $categoriesId = $data["categoriesIds"];
             for($i = 0; $i < count($categoriesId); $i++)
             {
-                $subCategory->addCategory($categoryRepository->find($categoriesId[$i]));
+                $categoryToAdd = $categoryRepository->find($categoriesId[$i]);
+                if($categoryToAdd)
+                {
+                    $subCategory->addCategory($categoryToAdd);
+                }
             }
         }
 
@@ -74,12 +78,16 @@ class AdminSubCategoryController extends AbstractController
         $subCategory->setName($data["name"]);
         $subCategory->setUrl($data["url"]);
 
-        if(isset($data["categoriesId"]))
+        if(isset($data["categoriesIds"]))
         {
-            $categoriesId = $data["categoriesId"];
+            $categoriesId = $data["categoriesIds"];
             for($i = 0; $i < count($categoriesId); $i++)
             {
-                $subCategory->addCategory($categoryRepository->find($categoriesId[$i]));
+                $categoryToAdd = $categoryRepository->find($categoriesId[$i]);
+                if($categoryToAdd)
+                {
+                    $subCategory->addCategory($categoryToAdd);
+                }
             }
         }
 
