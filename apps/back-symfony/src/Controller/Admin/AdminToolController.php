@@ -101,10 +101,27 @@ class AdminToolController extends AbstractController
 
         if(isset($data["subCategoriesIds"]))
         {
+            // Remove old subCategories
+            $subCategoriesIdsToRemove = $data["subCategoriesIdsToRemove"];
+
+            for ($i = 0; $i<count($subCategoriesIdsToRemove); $i++) {
+                $subCategoryToRemove = $subCategoryRepository->find($subCategoriesIdsToRemove[$i]);
+
+                if ($subCategoryToRemove) {
+                    $tool->removeSubCategory($subCategoryToRemove);
+                }
+            }
+
+            // New subCategories
             $subCategoriesIds = $data["subCategoriesIds"];
+
             for($i = 0; $i < count($subCategoriesIds); $i++)
             {
-                $tool->addSubCategory($subCategoryRepository->find($subCategoriesIds[$i]));
+                $subCategoryToAdd = $subCategoryRepository->find($subCategoriesIds[$i]);
+                if($subCategoryToAdd)
+                {
+                    $tool->addSubCategory($subCategoryToAdd);
+                }
             }
         }
 

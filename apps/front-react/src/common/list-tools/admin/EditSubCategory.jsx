@@ -19,9 +19,9 @@ export default function EditSubCategory(props) {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
 
-  const getCategoriesIds = () => {
+  const getActiveCategoriesIds = () => {
     if (!props.subCategory.category) {
-      return "";
+      return [];
     }
     let categoriesIds = [];
 
@@ -52,8 +52,8 @@ export default function EditSubCategory(props) {
   const initialStateFormSubCategory = {
     name: props.subCategory.name,
     url: props.subCategory.url,
-    categoriesIds: getCategoriesIds(),
-    initialCategoriesIds: getCategoriesIds(),
+    categoriesIds: getActiveCategoriesIds(),
+    initialCategoriesIds: getActiveCategoriesIds(),
   };
 
   const [formSubCategory, setFormSubCategory] = useState(
