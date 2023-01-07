@@ -81,15 +81,17 @@ class AdminSubCategoryController extends AbstractController
         if(isset($data["categoriesIds"]))
         {
             // Remove old categories
-            $oldCategories = $subCategory->getCategory();
-            for ($i = 0; $i < count($oldCategories); $i++)
-            {
-                $subCategory->removeCategory($oldCategories[$i]);
+            $categoriesIdsToRemove = $data["categoriesIdsToRemove"];
+
+            for ($i = 0; $i<count($categoriesIdsToRemove); $i++) {
+                $categoryToRemove = $categoryRepository->find($categoriesIdsToRemove[$i]);
+
+                if ($categoryToRemove) {
+                    $subCategory->removeCategory($categoryToRemove);
+                }
             }
 
-
-
-//            $subCategoryRepository->save($subCategory, true);
+            //$subCategoryRepository->save($subCategory, true);
 
 //            $content = $this->serializeCircular->serialize($oldCategories, 'json');
 //            $response = new Response($content);
@@ -98,10 +100,10 @@ class AdminSubCategoryController extends AbstractController
 //            return $response;
 
             // New categories
-            $categoriesId = $data["categoriesIds"];
-            for($i = 0; $i < count($categoriesId); $i++)
+            $categoriesIds = $data["categoriesIds"];
+            for($i = 0; $i < count($categoriesIds); $i++)
             {
-                $categoryToAdd = $categoryRepository->find($categoriesId[$i]);
+                $categoryToAdd = $categoryRepository->find($categoriesIds[$i]);
                 if($categoryToAdd)
                 {
                     $subCategory->addCategory($categoryToAdd);
