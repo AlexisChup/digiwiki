@@ -17,25 +17,25 @@ class ToolFixtures extends Fixture
         $tool_1_1_1->setDescription("AlsoAsked grande description !!!");
         $tool_1_1_1->setAffiliateRef("https://alsoasked.com/");
         $tool_1_1_1->setCodePromo("A");
-        $tool_1_1_1->setImgUrl("https://alsoasked.com/static/media/logo-white.7f7c89ca383aa788e117d34567bb7a12.svg");
+        $tool_1_1_1->setImgUrl("https://pbs.twimg.com/profile_images/1348759676532486145/VtaZX6MF_400x400.png");
 
-        $tool_2_1_1 = new Tool();
-        $tool_2_1_1->setName("Icon Sax");
-        $tool_2_1_1->setUrl("icon-sax");
-        $tool_2_1_1->setShortDescription("Icon Sax description brève");
-        $tool_2_1_1->setDescription("Icon Sax grande description !!!");
-        $tool_2_1_1->setAffiliateRef("https://iconsax.io");
-        $tool_2_1_1->setCodePromo("ICOSA22");
-        $tool_2_1_1->setImgUrl("https://iconsax.io/logo-vuesax.svg");
+        $tool_2_3_1 = new Tool();
+        $tool_2_3_1->setName("Icon Sax");
+        $tool_2_3_1->setUrl("icon-sax");
+        $tool_2_3_1->setShortDescription("Icon Sax description brève");
+        $tool_2_3_1->setDescription("Icon Sax grande description !!!");
+        $tool_2_3_1->setAffiliateRef("https://iconsax.io");
+        $tool_2_3_1->setCodePromo("ICOSA22");
+        $tool_2_3_1->setImgUrl("https://iconsax.io/logo-vuesax.svg");
 
-        $tool_3_3_1 = new Tool();
-        $tool_3_3_1->setName("Ahref");
-        $tool_3_3_1->setUrl("ahref");
-        $tool_3_3_1->setShortDescription("Ahref description brève");
-        $tool_3_3_1->setDescription("Ahref grande description !!!");
-        $tool_3_3_1->setAffiliateRef("https://ahrefs.com/fr");
-        $tool_3_3_1->setCodePromo("B");
-        $tool_3_3_1->setImgUrl("https://iconsax.io/logo-vuesax.svg");
+        $tool_3_1_1 = new Tool();
+        $tool_3_1_1->setName("Ahref");
+        $tool_3_1_1->setUrl("ahref");
+        $tool_3_1_1->setShortDescription("Ahref SEO description brève");
+        $tool_3_1_1->setDescription("Ahref grande description !!!");
+        $tool_3_1_1->setAffiliateRef("https://ahrefs.com/fr");
+        $tool_3_1_1->setCodePromo("B");
+        $tool_3_1_1->setImgUrl("https://assets-3b70.kxcdn.com/images/mediakit/logo_dark@2x.png");
 
         $tool_4_6_1 = new Tool();
         $tool_4_6_1->setName("Exceformulabot");
@@ -44,7 +44,7 @@ class ToolFixtures extends Fixture
         $tool_4_6_1->setDescription("Exceformulabot grande description !!!");
         $tool_4_6_1->setAffiliateRef("https://excelformulabot.com/");
         $tool_4_6_1->setCodePromo("C");
-        $tool_4_6_1->setImgUrl("https://excel-formula-bot2.cdn.bubble.io/f1669483384494x223770736384971460/Full%20logo%20with%20transparent%20background.svg");
+        $tool_4_6_1->setImgUrl("https://pbs.twimg.com/profile_images/1572751321593176064/9oGeTW3I_400x400.jpg");
 
         $tool_5_1_1 = new Tool();
         $tool_5_1_1->setName("Backstop Solution");
@@ -76,7 +76,7 @@ class ToolFixtures extends Fixture
         $tool_7_1_1->setDescription("ChatGPT grande description !!!");
         $tool_7_1_1->setAffiliateRef("https://chat.openai.com/");
         $tool_7_1_1->setCodePromo("F");
-        $tool_7_1_1->setImgUrl("https://chat.openai.com/apple-touch-icon.png");
+        $tool_7_1_1->setImgUrl("https://openai.com/content/images/2022/05/openai-avatar.png");
 
         $tool_8_2_1 = new Tool();
         $tool_8_2_1->setName("CoinMarketCap");
@@ -87,35 +87,35 @@ class ToolFixtures extends Fixture
         $tool_8_2_1->setCodePromo("G");
         $tool_8_2_1->setImgUrl("https://coinmarketcap.com/apple-touch-icon.png");
 
-        $tool_9_2_1 = new Tool();
-        $tool_9_2_1->setName("Boursorama Banque");
-        $tool_9_2_1->setUrl("boursorama-banque");
-        $tool_9_2_1->setShortDescription("Boursorama Banque description brève");
-        $tool_9_2_1->setDescription("Boursorama Banque grande description !!!");
-        $tool_9_2_1->setAffiliateRef("​https://bour.so/9RWl2zJSVY");
-        $tool_9_2_1->setCodePromo("H");
-        $tool_9_2_1->setImgUrl("https://bourse.boursorama.com/bundles/boursoramaui/images/favicons/favicon-32x32.png");
+        $tool_9_3_1 = new Tool();
+        $tool_9_3_1->setName("Boursorama Banque");
+        $tool_9_3_1->setUrl("boursorama-banque");
+        $tool_9_3_1->setShortDescription("Boursorama Banque description brève");
+        $tool_9_3_1->setDescription("Boursorama Banque grande description !!!");
+        $tool_9_3_1->setAffiliateRef("​https://bour.so/9RWl2zJSVY");
+        $tool_9_3_1->setCodePromo("H");
+        $tool_9_3_1->setImgUrl("https://bourse.boursorama.com/bundles/boursoramaui/images/favicons/favicon-32x32.png");
 
         $manager->persist($tool_1_1_1);
-        $manager->persist($tool_2_1_1);
-        $manager->persist($tool_3_3_1);
+        $manager->persist($tool_2_3_1);
+        $manager->persist($tool_3_1_1);
         $manager->persist($tool_4_6_1);
         $manager->persist($tool_5_1_1);
         $manager->persist($tool_6_1_1);
         $manager->persist($tool_7_1_1);
-        $manager->persist($tool_8_1_1);
-        $manager->persist($tool_9_2_1);
+        $manager->persist($tool_8_2_1);
+        $manager->persist($tool_9_3_1);
         
 
         $this->addReference("tool_1_1_1", $tool_1_1_1);
-        $this->addReference("tool_2_1_1", $tool_2_1_1);
-        $this->addReference("tool_3_3_1", $tool_3_3_1);
+        $this->addReference("tool_2_3_1", $tool_2_3_1);
+        $this->addReference("tool_3_1_1", $tool_3_1_1);
         $this->addReference("tool_4_6_1", $tool_4_6_1);
         $this->addReference("tool_5_1_1", $tool_5_1_1);
         $this->addReference("tool_6_1_1", $tool_6_1_1);
         $this->addReference("tool_7_1_1", $tool_7_1_1);
-        $this->addReference("tool_8_1_1", $tool_8_1_1);
-        $this->addReference("tool_9_2_1", $tool_9_2_1);
+        $this->addReference("tool_8_2_1", $tool_8_2_1);
+        $this->addReference("tool_9_3_1", $tool_9_3_1);
 
         $manager->flush();
     }
