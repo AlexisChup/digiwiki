@@ -3,29 +3,6 @@ import "./SubCategoryForm.css";
 import { useSelector } from "react-redux";
 import Form from "react-bootstrap/Form";
 
-const categoriesAAAA = [
-  {
-    name: "asa",
-    value: 1,
-  },
-  {
-    name: "adeffesa",
-    value: 2,
-  },
-  {
-    name: "vccasa",
-    value: 3,
-  },
-  {
-    name: "ertyuio",
-    value: 4,
-  },
-];
-
-const onSelectedOptionsChange = (event) => {
-  console.log("onSelectedOptionsChange: ", event.target.selectedOptions);
-};
-
 export default function SubCategoryForm(props) {
   const { categories } = useSelector((state) => state.categories);
 
@@ -71,9 +48,6 @@ export default function SubCategoryForm(props) {
           multiple
           value={props.formSubCategory.categoriesIds}
           onChange={(e) => handleMultipleSelect(e)}
-          // onChange={(e) =>
-          //   props.handleForm("categoriesIds", e.target.selectedOptions)
-          // }
         >
           {categories.map((category) => (
             <option key={category.id} value={category.id}>
@@ -82,18 +56,6 @@ export default function SubCategoryForm(props) {
           ))}
         </Form.Control>
       </Form.Group>
-      {/* <Form.Group>
-        <Form.Label className="my-0 small">Categories Ids</Form.Label>
-        <Form.Control
-          size="sm"
-          className="mb-0"
-          type="text"
-          placeholder="17,36"
-          value={props.formSubCategory.categoriesIds}
-          onChange={(e) => props.handleForm("categoriesIds", e.target.value)}
-        />
-        <small>Write category's id separated by a comma, e.g. 17,36</small>
-      </Form.Group> */}
     </Form>
   );
 }

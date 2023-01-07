@@ -1,8 +1,80 @@
 import React, { useState } from "react";
 import "./AddToolForm.css";
+import { useSelector } from "react-redux";
 import Form from "react-bootstrap/Form";
 
 export default function AddToolForm(props) {
+  const { categories } = useSelector((state) => state.categories);
+
+  const isSubCategoryIdIsPresent = (id, arrayOfSubCategory) => {
+    let indexOfArray = false;
+
+    for (let index = 0; index < arrayOfSubCategory.length; index++) {
+      const subCategory = arrayOfSubCategory[index];
+      if (subCategory.id === id) {
+        indexOfArray = index;
+        break;
+      }
+    }
+
+    return indexOfArray;
+  };
+
+  const uniqueSubCategories = () => {
+    let listOfUniqueSubCategories = [];
+
+    if (categories) {
+      for (
+        let indexCategory = 0;
+        indexCategory < categories.length;
+        indexCategory++
+      ) {
+        const listOfSubCategoriesOfOneCategory =
+          categories[indexCategory].subCategories;
+        for (
+          let indexSubCategory = 0;
+          indexSubCategory < listOfSubCategoriesOfOneCategory.length;
+          indexSubCategory++
+        ) {
+          const subCategory =
+            listOfSubCategoriesOfOneCategory[indexSubCategory];
+          const indexIfPresent = isSubCategoryIdIsPresent(
+            subCategory.id,
+            listOfUniqueSubCategories
+          );
+          if (!indexIfPresent && indexIfPresent !== 0) {
+            listOfUniqueSubCategories.push({
+              id: subCategory.id,
+              name: subCategory.name,
+              categoryParent: [categories[indexCategory].name],
+            });
+          } else {
+            listOfUniqueSubCategories[indexIfPresent].categoryParent.push(
+              categories[indexCategory].name
+            );
+          }
+        }
+      }
+    }
+
+    return listOfUniqueSubCategories;
+  };
+
+  const buildOptionString = (subCategory) => {
+    let strReturn = subCategory.name;
+
+    strReturn = strReturn + " - [";
+    for (let index = 0; index < subCategory.categoryParent.length; index++) {
+      const categoryParent = subCategory.categoryParent[index];
+      strReturn = strReturn + categoryParent + ",";
+    }
+
+    strReturn = strReturn.slice(0, -1);
+    strReturn = strReturn + "]";
+
+    return strReturn;
+  };
+
   return (
     <Form>
       <Form.Group>
@@ -92,6 +164,21 @@ export default function AddToolForm(props) {
           value={props.formAddTool.imgUrl}
           onChange={(e) => props.handleFormAddTool("imgUrl", e.target.value)}
         />
+      </Form.Group>
+      <Form.Group>
+        <Form.Label className="my-0 small">Parent's SubCategories</Form.Label>
+        <Form.Control
+          as="select"
+          multiple
+          // value={props.formSubCategory.categoriesIds}
+          // onChange={(e) => handleMultipleSelect(e)}
+        >
+          {uniqueSubCategories().map((subCategory) => (
+            <option key={subCategory.id} value={subCategory.id}>
+              {buildOptionString(subCategory)}
+            </option>
+          ))}
+        </Form.Control>
       </Form.Group>
     </Form>
   );

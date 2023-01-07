@@ -13,13 +13,15 @@ export default function EditTool(props) {
   const [show, setShow] = useState(false);
 
   const initialStateFormEditTool = {
-    name: props.tool.name,
-    url: props.tool.url,
-    shortDescription: props.tool.shortDescription,
-    description: props.tool.description,
-    affiliateRef: props.tool.affiliateRef,
-    codePromo: props.tool.codePromo,
-    imgUrl: props.tool.imgUrl,
+    name: props.tool.name ? props.tool.name : "",
+    url: props.tool.url ? props.tool.url : "",
+    shortDescription: props.tool.shortDescription
+      ? props.tool.shortDescription
+      : "",
+    description: props.tool.description ? props.tool.description : "",
+    affiliateRef: props.tool.affiliateRef ? props.tool.affiliateRef : "",
+    codePromo: props.tool.codePromo ? props.tool.codePromo : "",
+    imgUrl: props.tool.imgUrl ? props.tool.imgUrl : "",
   };
 
   const handleClose = (isConfirmed) => {
