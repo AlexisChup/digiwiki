@@ -2,7 +2,12 @@ import React from "react";
 import "./Dashboard.css";
 import { useSelector } from "react-redux";
 import { Outlet, NavLink } from "react-router-dom";
-import { FaUserCircle, FaWrench, FaUsers } from "react-icons/fa";
+import {
+  FaUserCircle,
+  FaWrench,
+  FaUsers,
+  FaRegFolderOpen,
+} from "react-icons/fa";
 
 export default function Dashboard() {
   const { user } = useSelector((state) => state.auth);
@@ -44,6 +49,32 @@ export default function Dashboard() {
               >
                 <FaUsers />
                 Handle Users
+              </NavLink>
+            </div>
+          ) : null}
+          {user.roles.includes("ROLE_ADMIN") ? (
+            <div className="mr-2">
+              <NavLink
+                to="empty-sub-categories"
+                className={({ isActive }) =>
+                  isActive ? "dashboard-navlink-active" : "dashboard-navlink"
+                }
+              >
+                <FaRegFolderOpen />
+                Empty Sub Categories
+              </NavLink>
+            </div>
+          ) : null}
+          {user.roles.includes("ROLE_ADMIN") ? (
+            <div className="mr-2">
+              <NavLink
+                to="empty-tools"
+                className={({ isActive }) =>
+                  isActive ? "dashboard-navlink-active" : "dashboard-navlink"
+                }
+              >
+                <FaRegFolderOpen />
+                Empty Tools
               </NavLink>
             </div>
           ) : null}

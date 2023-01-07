@@ -21,7 +21,7 @@ class AdminCategoryController extends AbstractController
         $encoder = new JsonEncoder();
         $defaultContext = [
             AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-                return $object->getName();
+                return $object->getId();
             },
         ];
         $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
@@ -64,9 +64,11 @@ class AdminCategoryController extends AbstractController
         $category->setName($data["name"]);
         $category->setUrl($data["url"]);
 
-        $categoryRepository->getEntityManager()->flush();
+        $categoryRepository->save($category, true);
 
-        $content = $this->serializeCircular->serialize($category, 'json');
+        $categories = $categoryRepository->findAll();
+
+        $content = $this->serializeCircular->serialize($categories, 'json');
         $response = new Response($content);
         $response->headers->set('Content-Type', 'application/json');
 

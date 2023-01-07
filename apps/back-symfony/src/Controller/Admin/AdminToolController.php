@@ -23,7 +23,7 @@ class AdminToolController extends AbstractController
         $encoder = new JsonEncoder();
         $defaultContext = [
             AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-                return $object->getName();
+                return $object->getId();
             },
         ];
         $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
@@ -34,9 +34,9 @@ class AdminToolController extends AbstractController
     #[Route('/create', name: 'create_tool', methods: 'POST')]
     public function createTool(CategoryRepository $categoryRepository, SubCategoryRepository $subCategoryRepository, ToolRepository $toolRepository, Request $request): Response
     {
-        $data = json_decode($request->getContent(), true);
-
         $tool = new Tool();
+
+        $data = json_decode($request->getContent(), true);
 
         $tool->setName($data["name"]);
         $tool->setUrl($data["url"]);
@@ -48,15 +48,23 @@ class AdminToolController extends AbstractController
             $tool->setAffiliateRef($data["affiliateRef"]);
         }
 
-        if(isset($data["codePromo"])) {
+        if(isset($data["codePromo"]))
+        {
             $tool->setCodePromo($data["codePromo"]);
         }
+
         if(isset($data["subCategoriesIds"]))
         {
+            // New subCategories
             $subCategoriesIds = $data["subCategoriesIds"];
+
             for($i = 0; $i < count($subCategoriesIds); $i++)
             {
-                $tool->addSubCategory($subCategoryRepository->find($subCategoriesIds[$i]));
+                $subCategoryToAdd = $subCategoryRepository->find($subCategoriesIds[$i]);
+                if($subCategoryToAdd)
+                {
+                    $tool->addSubCategory($subCategoryToAdd);
+                }
             }
         }
 
@@ -101,10 +109,27 @@ class AdminToolController extends AbstractController
 
         if(isset($data["subCategoriesIds"]))
         {
+            // Remove old subCategories
+            $subCategoriesIdsToRemove = $data["subCategoriesIdsToRemove"];
+
+            for ($i = 0; $i<count($subCategoriesIdsToRemove); $i++) {
+                $subCategoryToRemove = $subCategoryRepository->find($subCategoriesIdsToRemove[$i]);
+
+                if ($subCategoryToRemove) {
+                    $tool->removeSubCategory($subCategoryToRemove);
+                }
+            }
+
+            // New subCategories
             $subCategoriesIds = $data["subCategoriesIds"];
+
             for($i = 0; $i < count($subCategoriesIds); $i++)
             {
-                $tool->addSubCategory($subCategoryRepository->find($subCategoriesIds[$i]));
+                $subCategoryToAdd = $subCategoryRepository->find($subCategoriesIds[$i]);
+                if($subCategoryToAdd)
+                {
+                    $tool->addSubCategory($subCategoryToAdd);
+                }
             }
         }
 

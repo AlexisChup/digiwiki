@@ -16,9 +16,11 @@ import ListSubCategories from "../common/list-sub-categories/ListSubCategories";
 import ListTools from "../common/list-tools/ListTools";
 import Tool from "../common/tool/Tool";
 import Auth from "../common/generic/auth/Auth";
+import EmptySubCategories from "../common/dashboard/admin/empty-sub-categories/EmptySubCategories";
+import EmptyTools from "../common/dashboard/admin/empty-tools/EmptyTools";
 
 export default function IndexRoutes() {
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   return (
     <div id="body-content">
@@ -55,7 +57,36 @@ export default function IndexRoutes() {
         >
           <Route path="profile" element={<Profile />} />
           <Route path="settings" element={<Settings />} />
-          <Route path="handle-users" element={<HandleUsers />} />
+          <Route
+            path="handle-users"
+            element={
+              isAuthenticated && user.roles.includes("ROLE_ADMIN") ? (
+                <HandleUsers />
+              ) : (
+                <Navigate to="/dashboard" />
+              )
+            }
+          />
+          <Route
+            path="empty-sub-categories"
+            element={
+              isAuthenticated && user.roles.includes("ROLE_ADMIN") ? (
+                <EmptySubCategories />
+              ) : (
+                <Navigate to="/dashboard" />
+              )
+            }
+          />
+          <Route
+            path="empty-tools"
+            element={
+              isAuthenticated && user.roles.includes("ROLE_ADMIN") ? (
+                <EmptyTools />
+              ) : (
+                <Navigate to="/dashboard" />
+              )
+            }
+          />
         </Route>
         <Route path="terms-of-service" element={<TermsOfService />} />
         <Route path="privacy-and-cookies" element={<PrivacyAndCookies />} />

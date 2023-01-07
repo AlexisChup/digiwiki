@@ -2,6 +2,7 @@ import React from "react";
 import "./CategoryItem.css";
 import { useNavigate } from "react-router-dom";
 import Image from "react-bootstrap/Image";
+import { safeSrcImg } from "../../../utils/image";
 
 export default function CategoryItem(props) {
   let navigate = useNavigate();
@@ -9,7 +10,7 @@ export default function CategoryItem(props) {
   return (
     <div className="col col-4 ">
       <div
-        className="d-flex rounded noselect my-1 justify-content-between align-content-center align-self-center category-container  py-3 px-3"
+        className="swing-in-bottom-fwd d-flex rounded noselect my-1 justify-content-between align-content-center align-self-center category-container  py-3 px-3"
         onClick={() => navigate("/explorer/" + props.category.url)}
       >
         <div className="d-flex align-items-center">
@@ -20,7 +21,7 @@ export default function CategoryItem(props) {
         <div>
           <div className="d-flex align-items-center" style={{ height: "80px" }}>
             <Image
-              src={require(`../../../assets/png/categories/${props.category.url}.png`)}
+              src={safeSrcImg(props.category.url, "categories")}
               style={{ height: "80%", width: "auto" }}
             />
           </div>

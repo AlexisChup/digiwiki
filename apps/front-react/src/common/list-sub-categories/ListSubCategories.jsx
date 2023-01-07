@@ -8,9 +8,12 @@ import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 import SubCategoryItem from "./sub-category-item/SubCategoryItem";
 import Spinner from "../generic/spinner/Spinner";
+import AdminHeaderListSubCategories from "./admin/AdminHeaderListSubCategories";
+import { safeSrcImg } from "../../utils/image";
 
 export default function ListSubCategories() {
   const { categories } = useSelector((state) => state.categories);
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   const location = useLocation();
   const urlSplitted = location.pathname.split("/");
@@ -26,6 +29,18 @@ export default function ListSubCategories() {
     findSubCatetegories();
   }, []);
 
+  // used when modifying category
+  useEffect(() => {
+    if (categories) {
+      for (let index = 0; index < categories.length; index++) {
+        if (categories[index].url === urlCategory) {
+          setCategory(categories[index]);
+          break;
+        }
+      }
+    }
+  }, [categories]);
+
   const findSubCatetegories = () => {
     let isFound = false;
     if (!categories) {
@@ -38,6 +53,7 @@ export default function ListSubCategories() {
               isFound = true;
               setIsSubCategoriesFound(true);
               setCategory(res.data[index]);
+              break;
             }
           }
           if (!isFound) {
@@ -54,6 +70,7 @@ export default function ListSubCategories() {
           setCategory(categories[index]);
           setIsSubCategoriesFound(true);
           isFound = true;
+          break;
         }
       }
       if (!isFound) {
@@ -174,6 +191,11 @@ export default function ListSubCategories() {
 
   return (
     <div className="container h-100 d-flex flex-column">
+      {category ? (
+        isAuthenticated && user.roles.includes("ROLE_ADMIN") ? (
+          <AdminHeaderListSubCategories category={category} />
+        ) : null
+      ) : null}
       {isSubCategoriesFound ? (
         <div className="row justify-content-center">
           <div className="d-flex flex-row align-content-center">
@@ -191,7 +213,7 @@ export default function ListSubCategories() {
               style={{ height: "80px" }}
             >
               <Image
-                src={require(`../../assets/png/categories/${urlCategory}.png`)}
+                src={safeSrcImg(category.url, "categories")}
                 style={{ height: "80%", width: "auto" }}
               />
             </div>

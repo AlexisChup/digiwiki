@@ -12,6 +12,20 @@ export default function AddTool(props) {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
 
+  const getActiveSubCategoriesIds = () => {
+    if (!props.tool.subCategories) {
+      return [];
+    }
+    let subCategoriesIds = [];
+
+    for (let index = 0; index < props.tool.subCategories.length; index++) {
+      subCategoriesIds.push(props.tool.subCategories[index]);
+    }
+
+    console.log("subCategoriesIds: ", subCategoriesIds);
+    return subCategoriesIds;
+  };
+
   const initialStateFormAddTool = {
     name: "",
     url: "",
@@ -20,13 +34,34 @@ export default function AddTool(props) {
     affiliateRef: "",
     codePromo: "",
     imgUrl: "",
+    subCategoriesIds: [props.subCategoryId],
+    initialSubCategoriesIds: [],
   };
+
+  const getSubCategoriesIdsToRemove = () => {
+    let subCategoriesIdsToRemove = [];
+
+    for (
+      let index = 0;
+      index < formAddTool.initialSubCategoriesIds.length;
+      index++
+    ) {
+      const idSubCategory = formAddTool.initialSubCategoriesIds[index];
+      if (!formAddTool.subCategoriesIds.includes(idSubCategory)) {
+        subCategoriesIdsToRemove.push(idSubCategory);
+      }
+    }
+
+    return subCategoriesIdsToRemove;
+  };
+
+  const [formAddTool, setformAddTool] = useState(initialStateFormAddTool);
 
   const handleClose = (isConfirmed) => {
     if (isConfirmed) {
-      const payload = {
+      let payload = {
         ...formAddTool,
-        subCategoriesIds: [props.subCategoryId],
+        subCategoriesIdsToRemove: getSubCategoriesIdsToRemove(),
       };
 
       const id = toast.loading("Please wait...");
@@ -62,8 +97,6 @@ export default function AddTool(props) {
     setShow(true);
   };
 
-  const [formAddTool, setformAddTool] = useState(initialStateFormAddTool);
-
   const handleFormAddTool = (key, value) => {
     setformAddTool({ ...formAddTool, [key]: value });
   };
@@ -82,20 +115,12 @@ export default function AddTool(props) {
   };
 
   return (
-    <div>
-      <div className="d-flex justify-content-between align-items-center">
-        <div>
-          <h2 className="font-weight-bold my-0">Admin</h2>
-        </div>
-        <div>
-          <div>
-            <Button variant="success" onClick={handleShow}>
-              Ajouter
-            </Button>
-          </div>
-        </div>
+    <div className="mr-3">
+      <div>
+        <Button variant="success" onClick={handleShow}>
+          Ajouter un outil
+        </Button>
       </div>
-      <hr className="solid" />
       <Modal show={show} onHide={() => handleClose(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Ajouter un nouveau outil</Modal.Title>

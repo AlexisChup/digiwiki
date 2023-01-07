@@ -22,7 +22,7 @@ class AdminSubCategoryController extends AbstractController
         $encoder = new JsonEncoder();
         $defaultContext = [
             AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-                return $object->getName();
+                return $object->getId();
             },
         ];
         $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
@@ -33,20 +33,32 @@ class AdminSubCategoryController extends AbstractController
     #[Route('/create', name: 'create_sub_category', methods: 'POST')]
     public function createSubCategory(CategoryRepository $categoryRepository, SubCategoryRepository $subCategoryRepository, Request $request): Response
     {
-        $data = json_decode($request->getContent(), true);
         $subCategory = new SubCategory();
+
+        $data = json_decode($request->getContent(), true);
 
         $subCategory->setName($data["name"]);
         $subCategory->setUrl($data["url"]);
-        $categoriesId = $data["categoriesId"];
-        for($i = 0; $i < count($categoriesId); $i++)
+
+        if(isset($data["categoriesIds"]))
         {
-            $subCategory->addCategory($categoryRepository->find($categoriesId[$i]));
+            // New categories
+            $categoriesIds = $data["categoriesIds"];
+            for($i = 0; $i < count($categoriesIds); $i++)
+            {
+                $categoryToAdd = $categoryRepository->find($categoriesIds[$i]);
+                if($categoryToAdd)
+                {
+                    $subCategory->addCategory($categoryToAdd);
+                }
+            }
         }
 
         $subCategoryRepository->save($subCategory, true);
 
-        $content = $this->serializeCircular->serialize($subCategory, 'json');
+        $categories = $categoryRepository->findAll();
+
+        $content = $this->serializeCircular->serialize($categories, 'json');
         $response = new Response($content);
         $response->headers->set('Content-Type', 'application/json');
 
@@ -68,15 +80,37 @@ class AdminSubCategoryController extends AbstractController
 
         $subCategory->setName($data["name"]);
         $subCategory->setUrl($data["url"]);
-        $categoriesId = $data["categoriesId"];
-        for($i = 0; $i < count($categoriesId); $i++)
+
+        if(isset($data["categoriesIds"]))
         {
-            $subCategory->addCategory($categoryRepository->find($categoriesId[$i]));
+            // Remove old categories
+            $categoriesIdsToRemove = $data["categoriesIdsToRemove"];
+
+            for ($i = 0; $i<count($categoriesIdsToRemove); $i++) {
+                $categoryToRemove = $categoryRepository->find($categoriesIdsToRemove[$i]);
+
+                if ($categoryToRemove) {
+                    $subCategory->removeCategory($categoryToRemove);
+                }
+            }
+
+            // New categories
+            $categoriesIds = $data["categoriesIds"];
+            for($i = 0; $i < count($categoriesIds); $i++)
+            {
+                $categoryToAdd = $categoryRepository->find($categoriesIds[$i]);
+                if($categoryToAdd)
+                {
+                    $subCategory->addCategory($categoryToAdd);
+                }
+            }
         }
 
-        $subCategoryRepository->getEntityManager()->flush();
+        $subCategoryRepository->save($subCategory, true);
 
-        $content = $this->serializeCircular->serialize($subCategory, 'json');
+        $categories = $categoryRepository->findAll();
+
+        $content = $this->serializeCircular->serialize($categories, 'json');
         $response = new Response($content);
         $response->headers->set('Content-Type', 'application/json');
 
@@ -84,7 +118,7 @@ class AdminSubCategoryController extends AbstractController
     }
 
     #[Route('/{id}/remove', name: 'sub_category_remove', methods: 'DELETE')]
-    public function removeById(SubCategoryRepository $subCategoryRepository, Request $request, int $id)
+    public function removeById(CategoryRepository $categoryRepository, SubCategoryRepository $subCategoryRepository, Request $request, int $id)
     {
         $subCategory = $subCategoryRepository->find($id);
 
@@ -96,7 +130,9 @@ class AdminSubCategoryController extends AbstractController
 
         $subCategoryRepository->remove($subCategory, true);
 
-        $content = $this->serializeCircular->serialize($subCategory, 'json');
+        $categories = $categoryRepository->findAll();
+
+        $content = $this->serializeCircular->serialize($categories, 'json');
         $response = new Response($content);
         $response->headers->set('Content-Type', 'application/json');
 
