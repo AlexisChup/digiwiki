@@ -34,9 +34,9 @@ class AdminToolController extends AbstractController
     #[Route('/create', name: 'create_tool', methods: 'POST')]
     public function createTool(CategoryRepository $categoryRepository, SubCategoryRepository $subCategoryRepository, ToolRepository $toolRepository, Request $request): Response
     {
-        $data = json_decode($request->getContent(), true);
-
         $tool = new Tool();
+
+        $data = json_decode($request->getContent(), true);
 
         $tool->setName($data["name"]);
         $tool->setUrl($data["url"]);
@@ -48,15 +48,23 @@ class AdminToolController extends AbstractController
             $tool->setAffiliateRef($data["affiliateRef"]);
         }
 
-        if(isset($data["codePromo"])) {
+        if(isset($data["codePromo"]))
+        {
             $tool->setCodePromo($data["codePromo"]);
         }
+
         if(isset($data["subCategoriesIds"]))
         {
+            // New subCategories
             $subCategoriesIds = $data["subCategoriesIds"];
+
             for($i = 0; $i < count($subCategoriesIds); $i++)
             {
-                $tool->addSubCategory($subCategoryRepository->find($subCategoriesIds[$i]));
+                $subCategoryToAdd = $subCategoryRepository->find($subCategoriesIds[$i]);
+                if($subCategoryToAdd)
+                {
+                    $tool->addSubCategory($subCategoryToAdd);
+                }
             }
         }
 

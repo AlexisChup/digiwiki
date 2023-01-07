@@ -12,6 +12,20 @@ export default function AddTool(props) {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
 
+  const getActiveSubCategoriesIds = () => {
+    if (!props.tool.subCategories) {
+      return [];
+    }
+    let subCategoriesIds = [];
+
+    for (let index = 0; index < props.tool.subCategories.length; index++) {
+      subCategoriesIds.push(props.tool.subCategories[index]);
+    }
+
+    console.log("subCategoriesIds: ", subCategoriesIds);
+    return subCategoriesIds;
+  };
+
   const initialStateFormAddTool = {
     name: "",
     url: "",
@@ -20,13 +34,34 @@ export default function AddTool(props) {
     affiliateRef: "",
     codePromo: "",
     imgUrl: "",
+    subCategoriesIds: [props.subCategoryId],
+    initialSubCategoriesIds: [],
   };
+
+  const getSubCategoriesIdsToRemove = () => {
+    let subCategoriesIdsToRemove = [];
+
+    for (
+      let index = 0;
+      index < formAddTool.initialSubCategoriesIds.length;
+      index++
+    ) {
+      const idSubCategory = formAddTool.initialSubCategoriesIds[index];
+      if (!formAddTool.subCategoriesIds.includes(idSubCategory)) {
+        subCategoriesIdsToRemove.push(idSubCategory);
+      }
+    }
+
+    return subCategoriesIdsToRemove;
+  };
+
+  const [formAddTool, setformAddTool] = useState(initialStateFormAddTool);
 
   const handleClose = (isConfirmed) => {
     if (isConfirmed) {
-      const payload = {
+      let payload = {
         ...formAddTool,
-        subCategoriesIds: [props.subCategoryId],
+        subCategoriesIdsToRemove: getSubCategoriesIdsToRemove(),
       };
 
       const id = toast.loading("Please wait...");
@@ -61,8 +96,6 @@ export default function AddTool(props) {
   const handleShow = (user) => {
     setShow(true);
   };
-
-  const [formAddTool, setformAddTool] = useState(initialStateFormAddTool);
 
   const handleFormAddTool = (key, value) => {
     setformAddTool({ ...formAddTool, [key]: value });
