@@ -118,7 +118,7 @@ class AdminSubCategoryController extends AbstractController
     }
 
     #[Route('/{id}/remove', name: 'sub_category_remove', methods: 'DELETE')]
-    public function removeById(SubCategoryRepository $subCategoryRepository, Request $request, int $id)
+    public function removeById(CategoryRepository $categoryRepository, SubCategoryRepository $subCategoryRepository, Request $request, int $id)
     {
         $subCategory = $subCategoryRepository->find($id);
 
@@ -130,7 +130,9 @@ class AdminSubCategoryController extends AbstractController
 
         $subCategoryRepository->remove($subCategory, true);
 
-        $content = $this->serializeCircular->serialize($subCategory, 'json');
+        $categories = $categoryRepository->findAll();
+
+        $content = $this->serializeCircular->serialize($categories, 'json');
         $response = new Response($content);
         $response->headers->set('Content-Type', 'application/json');
 
