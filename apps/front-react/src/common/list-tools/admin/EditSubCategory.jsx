@@ -16,19 +16,19 @@ export default function EditSubCategory(props) {
     if (!props.subCategory.category) {
       return "";
     }
-    let categoriesIds = "";
+    let categoriesIds = [];
 
     const number = 1;
 
     for (let index = 0; index < props.subCategory.category.length; index++) {
       if (typeof props.subCategory.category[index] == typeof number) {
-        categoriesIds += props.subCategory.category[index] + ",";
+        categoriesIds.push(props.subCategory.category[index]);
       } else {
-        categoriesIds += props.subCategory.category[index].id + ",";
+        categoriesIds.push(props.subCategory.category[index].id);
       }
     }
 
-    categoriesIds = categoriesIds.slice(0, -1);
+    console.log("getCategoriesIds: ", categoriesIds);
     return categoriesIds;
   };
 
@@ -46,13 +46,13 @@ export default function EditSubCategory(props) {
     if (isConfirmed) {
       const id = toast.loading("Please wait...");
 
-      let payload = { ...formSubCategory };
-      payload.categoriesIds = formSubCategory.categoriesIds.split(",");
-      console.log("PAYLOAD :", payload);
+      // let payload = { ...formSubCategory };
+      // payload.categoriesIds = formSubCategory.categoriesIds.split(",");
+      console.log("formSubCategory :", formSubCategory);
 
       AXIOS.put(
         "/admin/sub-category/" + props.subCategory.id + "/edit",
-        payload
+        formSubCategory
       )
         .then((response) => {
           dispatch(setCategories(response.data));

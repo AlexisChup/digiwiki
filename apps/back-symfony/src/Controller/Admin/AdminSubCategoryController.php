@@ -80,6 +80,24 @@ class AdminSubCategoryController extends AbstractController
 
         if(isset($data["categoriesIds"]))
         {
+            // Remove old categories
+            $oldCategories = $subCategory->getCategory();
+            for ($i = 0; $i < count($oldCategories); $i++)
+            {
+                $subCategory->removeCategory($oldCategories[$i]);
+            }
+
+
+
+//            $subCategoryRepository->save($subCategory, true);
+
+//            $content = $this->serializeCircular->serialize($oldCategories, 'json');
+//            $response = new Response($content);
+//            $response->headers->set('Content-Type', 'application/json');
+//
+//            return $response;
+
+            // New categories
             $categoriesId = $data["categoriesIds"];
             for($i = 0; $i < count($categoriesId); $i++)
             {
