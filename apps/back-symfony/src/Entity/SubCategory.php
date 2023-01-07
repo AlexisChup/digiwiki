@@ -66,11 +66,11 @@ class SubCategory
     }
 
     /**
-     * @return Collection<int, Tool>
+     * @return array<int, Tool>
      */
-    public function getTools(): Collection
+    public function getTools(): array
     {
-        return $this->tools;
+        return $this->tools->getValues();
     }
 
     public function addTool(Tool $tool): self
@@ -90,11 +90,11 @@ class SubCategory
     }
 
     /**
-     * @return Collection<int, Category>
+     * @return array<int, Category>
      */
-    public function getCategory(): Collection
+    public function getCategory(): array
     {
-        return $this->category;
+        return $this->category->getValues();
     }
 
     public function addCategory(Category $category): self

@@ -6,6 +6,17 @@ import Form from "react-bootstrap/Form";
 export default function AddToolForm(props) {
   const { categories } = useSelector((state) => state.categories);
 
+  const handleMultipleSelect = (event) => {
+    let selectOptionsInt = [];
+    const selectedOptionsHTML = event.target.selectedOptions;
+
+    for (let index = 0; index < selectedOptionsHTML.length; index++) {
+      selectOptionsInt.push(parseInt(selectedOptionsHTML[index].value));
+    }
+
+    props.handleFormAddTool("subCategoriesIds", selectOptionsInt);
+  };
+
   const isSubCategoryIdIsPresent = (id, arrayOfSubCategory) => {
     let indexOfArray = false;
 
@@ -166,12 +177,14 @@ export default function AddToolForm(props) {
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label className="my-0 small">Parent's SubCategories</Form.Label>
+        <Form.Label className="my-0 small">
+          Sous Catégories parent - {"[Catégorie(s) grand-parent]"}
+        </Form.Label>
         <Form.Control
           as="select"
           multiple
-          // value={props.formSubCategory.categoriesIds}
-          // onChange={(e) => handleMultipleSelect(e)}
+          value={props.formAddTool.subCategoriesIds}
+          onChange={(e) => handleMultipleSelect(e)}
         >
           {uniqueSubCategories().map((subCategory) => (
             <option key={subCategory.id} value={subCategory.id}>

@@ -91,14 +91,6 @@ class AdminSubCategoryController extends AbstractController
                 }
             }
 
-            //$subCategoryRepository->save($subCategory, true);
-
-//            $content = $this->serializeCircular->serialize($oldCategories, 'json');
-//            $response = new Response($content);
-//            $response->headers->set('Content-Type', 'application/json');
-//
-//            return $response;
-
             // New categories
             $categoriesIds = $data["categoriesIds"];
             for($i = 0; $i < count($categoriesIds); $i++)

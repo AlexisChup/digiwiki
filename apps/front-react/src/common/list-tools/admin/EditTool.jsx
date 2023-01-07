@@ -8,9 +8,46 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import AddToolForm from "../../tool/form/AddToolForm";
 
+var toType = function (obj) {
+  return {}.toString
+    .call(obj)
+    .match(/\s([a-zA-Z]+)/)[1]
+    .toLowerCase();
+};
+
 export default function EditTool(props) {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+
+  const getActiveSubCategoriesIds = () => {
+    if (!props.tool.subCategories) {
+      return [];
+    }
+    let subCategoriesIds = [];
+
+    if (toType(props.tool.subCategories) === toType([])) {
+      for (let index = 0; index < props.tool.subCategories.length; index++) {
+        if (toType(props.tool.subCategories[index]) === toType(1)) {
+          subCategoriesIds.push(props.tool.subCategories[index]);
+        } else if (toType(props.tool.subCategories[index]) === toType({})) {
+          subCategoriesIds.push(props.tool.subCategories[index].id);
+        }
+      }
+    } else if (toType(props.tool.subCategories) === toType({})) {
+      const valuesOfObject = Object.values(props.tool.subCategories);
+
+      for (let indObject = 0; indObject < valuesOfObject.length; indObject++) {
+        const valObj = valuesOfObject[indObject];
+        if (toType(valObj) === toType(1)) {
+          subCategoriesIds.push(valObj);
+        } else if (toType(valObj) === toType({})) {
+          subCategoriesIds.push(valObj.id);
+        }
+      }
+    }
+
+    return subCategoriesIds;
+  };
 
   const initialStateFormEditTool = {
     name: props.tool.name ? props.tool.name : "",
@@ -22,16 +59,38 @@ export default function EditTool(props) {
     affiliateRef: props.tool.affiliateRef ? props.tool.affiliateRef : "",
     codePromo: props.tool.codePromo ? props.tool.codePromo : "",
     imgUrl: props.tool.imgUrl ? props.tool.imgUrl : "",
+    subCategoriesIds: getActiveSubCategoriesIds(),
+    initialSubCategoriesIds: getActiveSubCategoriesIds(),
+  };
+
+  const [formEditTool, setformEditTool] = useState(initialStateFormEditTool);
+
+  const getSubCategoriesIdsToRemove = () => {
+    let subCategoriesIdsToRemove = [];
+
+    for (
+      let index = 0;
+      index < formEditTool.initialSubCategoriesIds.length;
+      index++
+    ) {
+      const idSubCategory = formEditTool.initialSubCategoriesIds[index];
+      if (!formEditTool.subCategoriesIds.includes(idSubCategory)) {
+        subCategoriesIdsToRemove.push(idSubCategory);
+      }
+    }
+
+    return subCategoriesIdsToRemove;
   };
 
   const handleClose = (isConfirmed) => {
     if (isConfirmed) {
       let payload = {
         ...formEditTool,
-        subCategoriesIds: [props.subCategoryId],
+        subCategoriesIdsToRemove: getSubCategoriesIdsToRemove(),
       };
 
       const id = toast.loading("Please wait...");
+
       AXIOS.put("/admin/tool/" + props.tool.id + "/edit", payload)
         .then((response) => {
           dispatch(setCategories(response.data));
@@ -63,8 +122,6 @@ export default function EditTool(props) {
   const handleShow = (user) => {
     setShow(true);
   };
-
-  const [formEditTool, setformEditTool] = useState(initialStateFormEditTool);
 
   const handleFormEditTool = (key, value) => {
     setformEditTool({ ...formEditTool, [key]: value });
