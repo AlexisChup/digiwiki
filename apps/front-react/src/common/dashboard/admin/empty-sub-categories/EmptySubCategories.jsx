@@ -10,6 +10,10 @@ export default function EmptySubCategories() {
   const [emptySubCategories, setEmptySubCategories] = useState([]);
 
   useEffect(() => {
+    fetchSubCategories();
+  }, []);
+
+  const fetchSubCategories = () => {
     setIsRequesting(true);
 
     AXIOS.get("public/sub-category/all")
@@ -18,7 +22,7 @@ export default function EmptySubCategories() {
       })
       .catch((e) => console.log("ERROR public/sub-category/all: ", e))
       .finally(() => setIsRequesting(false));
-  }, []);
+  };
 
   const findEmptySubCategories = (subCatagories) => {
     let listEmptySubCategories = [];
@@ -45,6 +49,7 @@ export default function EmptySubCategories() {
             <EmptySubCategoryItem
               key={subCategory.id}
               subCategory={subCategory}
+              fetchSubCategories={fetchSubCategories}
             />
           ))
         ) : (

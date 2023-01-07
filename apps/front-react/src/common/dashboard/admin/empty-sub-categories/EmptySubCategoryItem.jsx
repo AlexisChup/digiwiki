@@ -2,6 +2,7 @@ import React from "react";
 import "../../../list-categories/category-item/CategoryItem.css";
 import { safeSrcImg } from "../../../../utils/image";
 import Image from "react-bootstrap/Image";
+import EditSubCategory from "../../../list-tools/admin/EditSubCategory";
 
 export default function EmptySubCategoryItem(props) {
   return (
@@ -27,18 +28,13 @@ export default function EmptySubCategoryItem(props) {
             <div>{props.subCategory.id}</div>
           </div>
         </div>
-        <div className="d-flex align-items-center"></div>
-      </div>
-      {/* {props.isAuthenticated && props.user.roles.includes("ROLE_ADMIN") ? (
-        <div className="d-flex flex-row">
-          <EditTool
-            updateTools={props.updateTools}
-            tool={props.subCategory}
-            subCategoryId={props.subCategoryId}
+        <div className="d-flex align-items-center">
+          <EditSubCategory
+            subCategory={props.subCategory}
+            fetchSubCategories={props.fetchSubCategories}
           />
-          <RemoveTool updateTools={props.updateTools} tool={props.subCategory} />
         </div>
-      ) : null} */}
+      </div>
     </div>
   );
 }

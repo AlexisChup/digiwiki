@@ -2,6 +2,8 @@ import React from "react";
 import "../../../list-categories/category-item/CategoryItem.css";
 import { safeSrcImg } from "../../../../utils/image";
 import Image from "react-bootstrap/Image";
+import EditTool from "../../../list-tools/admin/EditTool";
+import RemoveTool from "../../../list-tools/admin/RemoveTool";
 
 export default function EmptyToolItem(props) {
   return (
@@ -27,18 +29,11 @@ export default function EmptyToolItem(props) {
             <div>{props.tool.id}</div>
           </div>
         </div>
-        <div className="d-flex align-items-center"></div>
-      </div>
-      {/* {props.isAuthenticated && props.user.roles.includes("ROLE_ADMIN") ? (
-        <div className="d-flex flex-row">
-          <EditTool
-            updateTools={props.updateTools}
-            tool={props.tool}
-            subCategoryId={props.subCategoryId}
-          />
-          <RemoveTool updateTools={props.updateTools} tool={props.tool} />
+        <div className="d-flex align-items-center">
+          <EditTool tool={props.tool} fetchTools={props.fetchTools} />
+          <RemoveTool tool={props.tool} fetchTools={props.fetchTools} />
         </div>
-      ) : null} */}
+      </div>
     </div>
   );
 }
