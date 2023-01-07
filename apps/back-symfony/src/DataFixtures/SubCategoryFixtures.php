@@ -304,11 +304,6 @@ class SubCategoryFixtures extends Fixture implements DependentFixtureInterface
         $subCategory9_6->setUrl("fundamental-analysis");
         $manager->persist($subCategory9_6);
 
-        $subCategory9_7 = new SubCategory();
-        $subCategory9_7->setName("Analyse technique");
-        $subCategory9_7->setUrl("technical-analysis");
-        $manager->persist($subCategory9_7);
-
         $subCategory9_8 = new SubCategory();
         $subCategory9_8->setName("Formation");
         $subCategory9_8->setUrl("learning");
@@ -391,7 +386,6 @@ class SubCategoryFixtures extends Fixture implements DependentFixtureInterface
         $this->addReference("subCategory9_4", $subCategory9_4);
         $this->addReference("subCategory9_5", $subCategory9_5);
         $this->addReference("subCategory9_6", $subCategory9_6);
-        $this->addReference("subCategory9_7", $subCategory9_7);
         $this->addReference("subCategory9_8", $subCategory9_8);
 
         $manager->flush();
