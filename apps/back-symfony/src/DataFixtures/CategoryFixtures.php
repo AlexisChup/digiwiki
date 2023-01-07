@@ -120,7 +120,7 @@ class CategoryFixtures extends Fixture implements DependentFixtureInterface
         $category9->addSubCategory($this->getReference("subCategory9_4"));
         $category9->addSubCategory($this->getReference("subCategory9_5"));
         $category9->addSubCategory($this->getReference("subCategory9_6"));
-        $category9->addSubCategory($this->getReference("subCategory9_7"));
+        $category9->addSubCategory($this->getReference("subCategory8_6"));
         $category9->addSubCategory($this->getReference("subCategory9_8"));
 
         $manager->flush();
