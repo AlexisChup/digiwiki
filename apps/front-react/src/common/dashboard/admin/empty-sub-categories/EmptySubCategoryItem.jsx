@@ -16,7 +16,7 @@ export default function EmptySubCategoryItem(props) {
             style={{ height: "80px" }}
           >
             <Image
-              src={safeSrcImg(props.subCategory.imgUrl, "tools")}
+              src={safeSrcImg(props.subCategory.url, "sub-categories")}
               style={{ height: "80%", width: "auto" }}
             />
           </div>
