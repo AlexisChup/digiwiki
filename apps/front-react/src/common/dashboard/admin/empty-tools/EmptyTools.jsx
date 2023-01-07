@@ -10,6 +10,10 @@ export default function EmptyTools() {
   const [emptyTools, setEmptyTools] = useState([]);
 
   useEffect(() => {
+    fetchTools();
+  }, []);
+
+  const fetchTools = () => {
     setIsRequesting(true);
 
     AXIOS.get("public/tool/all")
@@ -18,7 +22,7 @@ export default function EmptyTools() {
       })
       .catch((e) => console.log("ERROR public/tool/all: ", e))
       .finally(() => setIsRequesting(false));
-  }, []);
+  };
 
   const findEmptyTools = (tools) => {
     let listEmptyTools = [];
@@ -42,7 +46,7 @@ export default function EmptyTools() {
           <Spinner />
         ) : emptyTools.length > 0 ? (
           emptyTools.map((tool, index) => (
-            <EmptyToolItem key={tool.id} tool={tool} />
+            <EmptyToolItem key={tool.id} tool={tool} fetchTools={fetchTools} />
           ))
         ) : (
           <div className="d-flex flex-row">

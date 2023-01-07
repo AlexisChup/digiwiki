@@ -15,8 +15,7 @@ export default function ListCategories() {
     if (!categories) {
       setIsRequesting(true);
       AXIOS.get("/public/category/all")
-        .then((res) => { 
-          console.log(res.data);
+        .then((res) => {
           dispatch(setCategories(res.data));
         })
         .catch((e) => {

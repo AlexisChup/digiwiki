@@ -93,6 +93,10 @@ export default function EditTool(props) {
 
       AXIOS.put("/admin/tool/" + props.tool.id + "/edit", payload)
         .then((response) => {
+          if (props.fetchTools) {
+            props.fetchTools();
+          }
+
           dispatch(setCategories(response.data));
           toast.update(id, {
             render: "Edit successfully !",

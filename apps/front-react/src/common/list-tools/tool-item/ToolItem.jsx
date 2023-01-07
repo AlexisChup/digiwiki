@@ -45,12 +45,8 @@ export default function ToolItem(props) {
       </div>
       {props.isAuthenticated && props.user.roles.includes("ROLE_ADMIN") ? (
         <div className="d-flex flex-row">
-          <EditTool
-            updateTools={props.updateTools}
-            tool={props.tool}
-            subCategoryId={props.subCategoryId}
-          />
-          <RemoveTool updateTools={props.updateTools} tool={props.tool} />
+          <EditTool tool={props.tool} />
+          <RemoveTool tool={props.tool} />
         </div>
       ) : null}
     </div>

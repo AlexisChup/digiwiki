@@ -16,6 +16,10 @@ export default function RemoveTool(props) {
       const id = toast.loading("Please wait...");
       AXIOS.delete("/admin/tool/" + props.tool.id + "/remove")
         .then((response) => {
+          if (props.fetchTools) {
+            props.fetchTools();
+          }
+
           dispatch(setCategories(response.data));
           toast.update(id, {
             render: "Remove successfully !",

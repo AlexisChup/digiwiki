@@ -89,7 +89,11 @@ export default function EditSubCategory(props) {
         payload
       )
         .then((response) => {
+          if (props.fetchSubCategories) {
+            props.fetchSubCategories();
+          }
           dispatch(setCategories(response.data));
+
           toast.update(id, {
             render: "Edit successfully !",
             type: "success",
