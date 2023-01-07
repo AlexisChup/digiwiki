@@ -33,17 +33,20 @@ class AdminSubCategoryController extends AbstractController
     #[Route('/create', name: 'create_sub_category', methods: 'POST')]
     public function createSubCategory(CategoryRepository $categoryRepository, SubCategoryRepository $subCategoryRepository, Request $request): Response
     {
-        $data = json_decode($request->getContent(), true);
         $subCategory = new SubCategory();
+
+        $data = json_decode($request->getContent(), true);
 
         $subCategory->setName($data["name"]);
         $subCategory->setUrl($data["url"]);
+
         if(isset($data["categoriesIds"]))
         {
-            $categoriesId = $data["categoriesIds"];
-            for($i = 0; $i < count($categoriesId); $i++)
+            // New categories
+            $categoriesIds = $data["categoriesIds"];
+            for($i = 0; $i < count($categoriesIds); $i++)
             {
-                $categoryToAdd = $categoryRepository->find($categoriesId[$i]);
+                $categoryToAdd = $categoryRepository->find($categoriesIds[$i]);
                 if($categoryToAdd)
                 {
                     $subCategory->addCategory($categoryToAdd);
