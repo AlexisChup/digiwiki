@@ -3,6 +3,7 @@ import "../../../list-categories/category-item/CategoryItem.css";
 import { safeSrcImg } from "../../../../utils/image";
 import Image from "react-bootstrap/Image";
 import EditSubCategory from "../../../list-tools/admin/EditSubCategory";
+import RemoveSubCategory from "../../../list-sub-categories/admin/RemoveSubCategory";
 
 export default function EmptySubCategoryItem(props) {
   return (
@@ -30,6 +31,10 @@ export default function EmptySubCategoryItem(props) {
         </div>
         <div className="d-flex align-items-center">
           <EditSubCategory
+            subCategory={props.subCategory}
+            fetchSubCategories={props.fetchSubCategories}
+          />
+          <RemoveSubCategory
             subCategory={props.subCategory}
             fetchSubCategories={props.fetchSubCategories}
           />
