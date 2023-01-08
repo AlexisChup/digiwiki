@@ -1,6 +1,5 @@
 import React from "react";
 import "./SubCategoryItem.css";
-import "../../list-categories/ListCategories.css";
 import { useNavigate } from "react-router-dom";
 import Image from "react-bootstrap/Image";
 import { safeSrcImg } from "../../../utils/image";
@@ -9,7 +8,7 @@ export default function SubCategoryItem(props) {
   let navigate = useNavigate();
 
   return (
-    <div className="col col-4 ">
+    <div className="col">
       <div
         className="d-flex rounded noselect my-1 justify-content-between align-content-center align-self-center category-container  py-3 px-3"
         onClick={() =>

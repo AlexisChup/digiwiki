@@ -2,7 +2,6 @@ import React from "react";
 import "./ToolItem.css";
 import { useNavigate } from "react-router-dom";
 import Image from "react-bootstrap/Image";
-import "../../list-categories/ListCategories.css";
 import EditTool from "../admin/EditTool";
 import RemoveTool from "../admin/RemoveTool";
 import { safeSrcImg } from "../../../utils/image";

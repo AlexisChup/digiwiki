@@ -79,116 +79,6 @@ export default function ListSubCategories() {
     }
   };
 
-  const renderFirstRow = () => {
-    if (category.subCategories.length > 2) {
-      return (
-        <div className="row flex-grow-1">
-          {category.subCategories.slice(0, 3).map((subCategory, index) => {
-            return (
-              <SubCategoryItem
-                key={subCategory.id}
-                urlCategory={urlCategory}
-                subCategory={subCategory}
-              />
-            );
-          })}
-        </div>
-      );
-    } else {
-      return (
-        <div className="row flex-grow-1">
-          {category.subCategories
-            .slice(0, category.subCategories.length)
-            .map((subCategory, index) => {
-              return (
-                <SubCategoryItem
-                  key={subCategory.id}
-                  urlCategory={urlCategory}
-                  subCategory={subCategory}
-                />
-              );
-            })}
-        </div>
-      );
-    }
-  };
-
-  const renderSecondRow = () => {
-    if (category.subCategories.length <= 3) {
-      return <div className="row flex-grow-1"></div>;
-    }
-
-    if (category.subCategories.length > 5) {
-      return (
-        <div className="row flex-grow-1">
-          {category.subCategories.slice(3, 6).map((subCategory, index) => {
-            return (
-              <SubCategoryItem
-                key={subCategory.id}
-                urlCategory={urlCategory}
-                subCategory={subCategory}
-              />
-            );
-          })}
-        </div>
-      );
-    } else {
-      return (
-        <div className="row flex-grow-1">
-          {category.subCategories
-            .slice(3, category.subCategories.length)
-            .map((subCategory, index) => {
-              return (
-                <SubCategoryItem
-                  key={subCategory.id}
-                  urlCategory={urlCategory}
-                  subCategory={subCategory}
-                />
-              );
-            })}
-        </div>
-      );
-    }
-  };
-
-  const renderThirdRow = () => {
-    if (category.subCategories.length <= 6) {
-      return <div className="row flex-grow-1"></div>;
-    }
-
-    if (category.subCategories.length > 8) {
-      return (
-        <div className="row flex-grow-1">
-          {category.subCategories.slice(6, 9).map((subCategory, index) => {
-            return (
-              <SubCategoryItem
-                key={subCategory.id}
-                urlCategory={urlCategory}
-                subCategory={subCategory}
-              />
-            );
-          })}
-        </div>
-      );
-    } else {
-      return (
-        <div className="row flex-grow-1">
-          {category.subCategories
-            .slice(6, category.subCategories.length)
-            .map((subCategory, index) => {
-              return (
-                <SubCategoryItem
-                  key={subCategory.id}
-                  urlCategory={urlCategory}
-                  subCategory={subCategory}
-                />
-              );
-            })}
-        </div>
-      );
-    }
-  };
-
   return (
     <div className="container h-100 d-flex flex-column">
       {category ? (
@@ -198,7 +88,7 @@ export default function ListSubCategories() {
       ) : null}
       {isSubCategoriesFound ? (
         <div className="row justify-content-center">
-          <div className="d-flex flex-row align-content-center">
+          <div className="d-flex align-content-center">
             <div className="d-flex align-items-center mr-3">
               <Button
                 variant="outline-primary"
@@ -237,13 +127,24 @@ export default function ListSubCategories() {
                 </div>
                 <div></div>
               </div>
-            </div>{" "}
+            </div>
           </div>
-        ) : null
+        ) : (
+          <div className="container h-100 px-0">
+            <div class="row row-cols-md-3 row-cols-1 g-2">
+              {category.subCategories.map((subCategory, index) => {
+                return (
+                  <SubCategoryItem
+                    key={subCategory.id}
+                    urlCategory={urlCategory}
+                    subCategory={subCategory}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        )
       ) : null}
-      {isSubCategoriesFound ? renderFirstRow() : null}
-      {isSubCategoriesFound ? renderSecondRow() : null}
-      {isSubCategoriesFound ? renderThirdRow() : null}
     </div>
   );
 }
