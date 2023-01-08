@@ -9,7 +9,7 @@ import { safeSrcImg } from "../../../utils/image";
 export default function ToolItem(props) {
   let navigate = useNavigate();
   return (
-    <div className="col p-0">
+    <div className="col ">
       <div
         className="d-flex rounded my-1 justify-content-between align-content-center align-self-center category-container py-3 px-3"
         onClick={() =>
@@ -25,7 +25,7 @@ export default function ToolItem(props) {
       >
         <div className="d-flex flex-row">
           <div
-            className="d-flex align-items-center mr-3"
+            className="d-flex align-items-center me-3"
             style={{ height: "80px" }}
           >
             <Image

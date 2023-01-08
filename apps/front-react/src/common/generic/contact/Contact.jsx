@@ -19,13 +19,9 @@ export default function Contact() {
 
   return (
     <div className="container ">
-      <div className="row justify-content-center">
-        <div>
-          <h1>Contact</h1>
-        </div>
-      </div>
       <div className="row">
-        <div className="col-6">
+        <div className="col-6 mx-auto">
+          <h1>Contact</h1>
           <Form>
             <Form.Group className="">
               <Form.Label className="small">Choisissez un topic</Form.Label>
@@ -55,6 +51,7 @@ export default function Contact() {
             <Button
               variant="primary"
               type="submit"
+              size="sm"
               className="mt-2 btn-submit-href"
             >
               <a

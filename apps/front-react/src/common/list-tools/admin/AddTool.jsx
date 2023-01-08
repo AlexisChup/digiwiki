@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./AddTool.css";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
+import { FaPlus } from "react-icons/fa";
 import { setCategories } from "../../../features/categories/categoriesSlice";
 import { AXIOS } from "../../../app/axios-http";
 import Modal from "react-bootstrap/Modal";
@@ -119,10 +120,10 @@ export default function AddTool(props) {
   };
 
   return (
-    <div className="mr-3">
+    <div className="me-3">
       <div>
-        <Button variant="success" onClick={handleShow}>
-          Ajouter un outil
+        <Button variant="success" size="sm" onClick={handleShow}>
+          <FaPlus /> Outil
         </Button>
       </div>
       <Modal show={show} onHide={() => handleClose(false)}>
@@ -136,13 +137,18 @@ export default function AddTool(props) {
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => handleClose(false)}>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => handleClose(false)}
+          >
             Fermer
           </Button>
           <Button
             disabled={!isFormIsValid()}
             variant="success"
             onClick={() => handleClose(true)}
+            size="sm"
           >
             Confirmer
           </Button>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./AddSubCategory.css";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
+import { FaPlus } from "react-icons/fa";
 import { setCategories } from "../../../features/categories/categoriesSlice";
 import { AXIOS } from "../../../app/axios-http";
 import Modal from "react-bootstrap/Modal";
@@ -132,10 +133,10 @@ export default function AddSubCategory(props) {
   };
 
   return (
-    <div className="mr-3">
+    <div className="me-3">
       <div>
-        <Button variant="success" onClick={handleShow}>
-          Ajouter une sous-catégorie
+        <Button size="sm" variant="success" onClick={handleShow}>
+          <FaPlus /> Sous-catégorie
         </Button>
       </div>
       <Modal show={show} onHide={() => handleClose(false)}>
