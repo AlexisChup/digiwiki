@@ -3,29 +3,112 @@ import "./HandleUsers.css";
 import { FaPen } from "react-icons/fa";
 import Button from "react-bootstrap/Button";
 import { AXIOS } from "../../../../app/axios-http";
+import { toast } from "react-toastify";
 import Spinner from "../../spinner/Spinner";
 import HandleUsersModal from "./handle-users-modal/HandleUsersModal";
 
 export default function HandleUsers() {
-  const initialStateUsers = [];
+  let [show, setShow] = useState(false);
 
+  const initialStateUsers = [];
   let [users, setUsers] = useState(initialStateUsers);
+
   let [isRequesting, setIsRequesting] = useState(false);
 
-  const [show, setShow] = useState(false);
-
-  const handleClose = (isRefreshing) => {
-    if (isRefreshing) {
-      fetchAllUsers();
-    }
-    setShow(false);
+  const emptyUser = {
+    userIdentifier: "",
+    email: "",
+    password: "",
+    roles: ["ROLE_USER"],
   };
+
+  let [formUser, setFormUser] = useState({
+    type: "ADD",
+    user: emptyUser,
+  });
+
+  const handleFormUserRoleAdmin = (key, value) => {
+    let copyRoles = [...formUser.user.roles];
+    if (value) {
+      copyRoles.push(key);
+    } else {
+      // Removing the specified element by value from the array
+      for (let i = 0; i < copyRoles.length; i++) {
+        if (copyRoles[i] === key) {
+          copyRoles.splice(i, 1);
+        }
+      }
+    }
+
+    setFormUser({
+      ...formUser,
+      user: { ...formUser.user, roles: copyRoles },
+    });
+  };
+
+  const handleFormUser = (key, value) => {
+    setFormUser({
+      ...formUser,
+      user: { ...formUser.user, [key]: value },
+    });
+  };
+
+  const handleClose = (isConfirmed) => {
+    if (isConfirmed) {
+      let payload = { ...formUser.user };
+      if (formUser.type === "EDIT") {
+        payload = {
+          ...payload,
+          isPasswordChanged: formUser.user.passwordEdited.length > 0,
+        };
+
+        if (payload.isPasswordChanged) {
+          payload.password = formUser.user.passwordEdited;
+        }
+      }
+
+      const id = toast.loading("Please wait...");
+
+      const endpoint = formUser.type === "ADD" ? "create" : "edit";
+      const urlApi = `/admin/user/${endpoint}`;
+
+      AXIOS.post(urlApi, payload)
+        .then((response) => {
+          fetchAllUsers();
+          toast.update(id, {
+            render: formUser.type + " successfully !",
+            type: "success",
+            isLoading: false,
+            autoClose: 3000,
+            closeOnClick: true,
+          });
+          setShow(false);
+        })
+        .catch((err) => {
+          toast.update(id, {
+            render: err.response.data.message,
+            type: "error",
+            isLoading: false,
+            autoClose: 3000,
+            closeOnClick: true,
+          });
+          console.log(err);
+        })
+        .finally(() => {});
+    } else {
+      setShow(false);
+    }
+  };
+
   const handleShow = (user) => {
-    setUserEditing(user);
+    if (user) {
+      setFormUser({ type: "EDIT", user: { ...user, passwordEdited: "" } });
+    } else {
+      setFormUser({ type: "ADD", user: emptyUser });
+    }
+
     setShow(true);
   };
-
-  let [userEditing, setUserEditing] = useState(null);
 
   const fetchAllUsers = () => {
     setIsRequesting(true);
@@ -43,7 +126,16 @@ export default function HandleUsers() {
 
   return (
     <div className="">
-      <h2>Handle Users</h2>
+      <div className="d-flex flex-row justify-content-between">
+        <div>
+          <h2>Handle Users</h2>
+        </div>
+        <div>
+          <Button variant="success" onClick={() => handleShow(false)}>
+            Add user
+          </Button>
+        </div>
+      </div>
       {isRequesting ? (
         <Spinner />
       ) : (
@@ -89,7 +181,9 @@ export default function HandleUsers() {
       <HandleUsersModal
         show={show}
         handleClose={handleClose}
-        userEditing={userEditing}
+        handleFormUser={handleFormUser}
+        formUser={formUser}
+        handleFormUserRoleAdmin={handleFormUserRoleAdmin}
       />
     </div>
   );
