@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./Profile.css";
 import { AXIOS } from "../../../app/axios-http";
 import Spinner from "../spinner/Spinner";
 

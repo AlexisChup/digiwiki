@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./HandleUsers.css";
 import { FaPen } from "react-icons/fa";
 import Button from "react-bootstrap/Button";
 import { AXIOS } from "../../../../app/axios-http";

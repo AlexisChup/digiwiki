@@ -1,5 +1,4 @@
 import React from "react";
-import "./CategoryForm.css";
 import Form from "react-bootstrap/Form";
 
 export default function CategoryForm(props) {

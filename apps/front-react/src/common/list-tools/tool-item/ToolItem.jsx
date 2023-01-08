@@ -1,5 +1,4 @@
 import React from "react";
-import "./ToolItem.css";
 import { useNavigate } from "react-router-dom";
 import Image from "react-bootstrap/Image";
 import EditTool from "../admin/EditTool";

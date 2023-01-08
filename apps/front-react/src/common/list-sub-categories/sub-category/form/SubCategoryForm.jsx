@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import "./SubCategoryForm.css";
+import React from "react";
 import { useSelector } from "react-redux";
 import Form from "react-bootstrap/Form";
 
@@ -38,7 +37,9 @@ export default function SubCategoryForm(props) {
           type="text"
           placeholder="genius-sub-category"
           value={props.formSubCategory.url}
-          onChange={(e) => props.handleForm("url", e.target.value.toLowerCase())}
+          onChange={(e) =>
+            props.handleForm("url", e.target.value.toLowerCase())
+          }
         />
       </Form.Group>
       <Form.Group>

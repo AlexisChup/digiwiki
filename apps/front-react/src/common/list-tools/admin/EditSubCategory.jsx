@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./EditSubCategory.css";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { FaPen } from "react-icons/fa";

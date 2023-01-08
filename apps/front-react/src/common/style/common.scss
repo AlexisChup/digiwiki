@@ -11,3 +11,15 @@
   background: #ffffff;
   box-shadow: 6px 6px 12px #919191, -6px -6px 12px #ffffff;
 }
+
+.logo-list {
+  width: auto;
+  height: 80%;
+}
+
+@media (max-width: 767px) {
+  .logo-list {
+    width: auto;
+    height: 60%;
+  }
+}

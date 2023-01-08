@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useLayoutEffect } from "react";
-import "./ListTools.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { AXIOS } from "../../app/axios-http";
@@ -7,7 +6,6 @@ import { setCategories } from "../../features/categories/categoriesSlice";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import ToolItem from "./tool-item/ToolItem";
-import AddTool from "./admin/AddTool";
 import Spinner from "../generic/spinner/Spinner";
 import { safeSrcImg } from "../../utils/image";
 import AdminHeaderListTools from "./admin/AdminHeaderListTools";
@@ -161,7 +159,7 @@ export default function ListTools() {
             >
               <Image
                 src={safeSrcImg(subCategory.url, "sub-categories")}
-                style={{ height: isMobileView ? "40%" : "80%", width: "auto" }}
+                className="logo-list"
               />
             </div>
             <div className="d-flex align-items-center">
@@ -170,7 +168,9 @@ export default function ListTools() {
           </div>
         </div>
       ) : (
-        <Spinner />
+        <div className="d-flex justify-content-center">
+          <Spinner />
+        </div>
       )}
 
       <hr className="solid" />

@@ -1,5 +1,4 @@
 import React from "react";
-import "../../../list-categories/category-item/CategoryItem.css";
 import { safeSrcImg } from "../../../../utils/image";
 import Image from "react-bootstrap/Image";
 import EditSubCategory from "../../../list-tools/admin/EditSubCategory";

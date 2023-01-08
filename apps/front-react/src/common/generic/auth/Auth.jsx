@@ -1,5 +1,4 @@
 import React from "react";
-import "./Auth.css";
 import Login from "../login/Login";
 
 export default function Auth() {

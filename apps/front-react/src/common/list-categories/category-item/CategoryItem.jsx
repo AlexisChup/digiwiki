@@ -1,5 +1,4 @@
 import React from "react";
-import "./CategoryItem.css";
 import { useNavigate } from "react-router-dom";
 import Image from "react-bootstrap/Image";
 import { safeSrcImg } from "../../../utils/image";

@@ -10,6 +10,7 @@ import AuthVerify from "../common/generic/auth/AuthVerify";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import "../common/style/common.scss";
 
 export default function App() {
   const { isMobileView } = useSelector((state) => state);
