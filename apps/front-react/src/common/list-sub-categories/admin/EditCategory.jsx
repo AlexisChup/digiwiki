@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./EditCategory.css";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
+import { FaPen } from "react-icons/fa";
 import { setCategories } from "../../../features/categories/categoriesSlice";
 import { AXIOS } from "../../../app/axios-http";
 import Modal from "react-bootstrap/Modal";
@@ -65,10 +65,10 @@ export default function EditCategory(props) {
   };
 
   return (
-    <div className="mr-3">
+    <div className="me-3">
       <div>
-        <Button variant="warning" onClick={handleShow}>
-          Editer la catégorie
+        <Button variant="warning" size="sm" onClick={handleShow}>
+          <FaPen /> Catégorie
         </Button>
       </div>
       <Modal show={show} onHide={() => handleClose(false)}>

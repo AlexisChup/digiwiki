@@ -14,7 +14,7 @@ export default function EmptyToolItem(props) {
       >
         <div className="d-flex flex-row">
           <div
-            className="d-flex align-items-center mr-3"
+            className="d-flex align-items-center me-3"
             style={{ height: "80px" }}
           >
             <Image

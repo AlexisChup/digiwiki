@@ -133,6 +133,7 @@ export default function Tool() {
               variant="outline-primary"
               className="mb-2"
               onClick={() => navigate(-1)}
+              size="sm"
             >
               Retour
             </Button>
@@ -140,7 +141,7 @@ export default function Tool() {
           <div className="col-8 shadow p-3 rounded">
             <div className="d-flex flex-row">
               <div
-                className="d-flex align-items-center mr-3"
+                className="d-flex align-items-center me-3"
                 style={{ height: "80px" }}
               >
                 <Image
@@ -164,6 +165,7 @@ export default function Tool() {
                   variant="outline-primary"
                   className="mb-2"
                   onClick={() => navigate(-1)}
+                  size="sm"
                 >
                   Retour
                 </Button>

@@ -31,30 +31,34 @@ export default function Profile() {
       {isRequesting ? (
         <Spinner />
       ) : (
-        <table className="table table-striped table-sm">
-          <thead>
-            <tr>
-              <th scope="col">Id</th>
-              <th scope="col">Email</th>
-              <th scope="col">UserIdentifier</th>
-              <th scope="col">Roles</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th className="align-middle" scope="row">
-                {profile.id}
-              </th>
-              <td className="align-middle">{profile.email}</td>
-              <td className="align-middle">{profile.userIdentifier}</td>
-              <td className="align-middle">
-                {profile.roles.map((role, indexRole) => {
-                  return <div key={indexRole}>{role}</div>;
-                })}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="table-responsive">
+          <table className="table table-striped table-sm">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Email</th>
+                <th scope="col">UserIdentifier</th>
+                <th scope="col">Roles</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th className="align-middle text-truncate" scope="row">
+                  {profile.id}
+                </th>
+                <td className="align-middle text-truncate">{profile.email}</td>
+                <td className="align-middle text-truncate">
+                  {profile.userIdentifier}
+                </td>
+                <td className="align-middle text-truncate">
+                  {profile.roles.map((role, indexRole) => {
+                    return <div key={indexRole}>{role}</div>;
+                  })}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import "./ListSubCategories.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +14,7 @@ import { safeSrcImg } from "../../utils/image";
 export default function ListSubCategories() {
   const { categories } = useSelector((state) => state.categories);
   const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const [isMobileView, setIsMobileView] = useState(window.innerWidth < 767);
 
   const location = useLocation();
   const urlSplitted = location.pathname.split("/");
@@ -24,6 +25,23 @@ export default function ListSubCategories() {
 
   let navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useLayoutEffect(() => {
+    const handleMobileView = () => {
+      if (window.innerWidth < 767) {
+        console.log("CALLL");
+        setIsMobileView(true);
+      } else {
+        setIsMobileView(false);
+      }
+    };
+
+    window.addEventListener("resize", handleMobileView);
+
+    return () => {
+      window.removeEventListener("resize", handleMobileView);
+    };
+  }, []);
 
   useEffect(() => {
     findSubCatetegories();
@@ -89,22 +107,23 @@ export default function ListSubCategories() {
       {isSubCategoriesFound ? (
         <div className="row justify-content-center">
           <div className="d-flex align-content-center">
-            <div className="d-flex align-items-center mr-3">
+            <div className="d-flex align-items-center me-3">
               <Button
                 variant="outline-primary"
                 className=""
                 onClick={() => navigate("/explorer")}
+                size="sm"
               >
                 Retour
               </Button>
             </div>
             <div
-              className="d-flex align-items-center mr-3"
+              className="d-flex align-items-center me-3"
               style={{ height: "80px" }}
             >
               <Image
                 src={safeSrcImg(category.url, "categories")}
-                style={{ height: "80%", width: "auto" }}
+                style={{ height: isMobileView ? "40%" : "80%", width: "auto" }}
               />
             </div>
             <div className="d-flex align-items-center">
@@ -131,7 +150,7 @@ export default function ListSubCategories() {
           </div>
         ) : (
           <div className="container h-100 px-0">
-            <div class="row row-cols-md-3 row-cols-1 g-2">
+            <div className="row row-cols-md-3 row-cols-1 g-2">
               {category.subCategories.map((subCategory, index) => {
                 return (
                   <SubCategoryItem

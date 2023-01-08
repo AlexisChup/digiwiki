@@ -34,8 +34,8 @@ export default function ListCategories() {
         </div>
       </div>
       <hr className="solid" />
-      <div className="container h-100 px-0">
-        <div class="row row-cols-md-3 row-cols-1 g-2">
+      <div>
+        <div className="row row-cols-md-3 row-cols-1 g-2">
           {!categories ? (
             <Spinner />
           ) : (
