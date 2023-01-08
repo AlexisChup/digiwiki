@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { AXIOS } from "../../../../app/axios-http";
 import { Spinner } from "react-bootstrap";
 import { FaCheck } from "react-icons/fa";
+import AddSubCategory from "../../../list-sub-categories/admin/AddSubCategory";
 
 export default function EmptySubCategories() {
   let [isRequesting, setIsRequesting] = useState(false);
@@ -38,6 +39,9 @@ export default function EmptySubCategories() {
 
   return (
     <div>
+      <div className="row">
+        <AddSubCategory fetchSubCategories={fetchSubCategories} />
+      </div>
       <div>
         <h2>Sous-catégories sans catégorie parent</h2>
       </div>
