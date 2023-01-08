@@ -24,7 +24,9 @@ export default function CategoryForm(props) {
           type="text"
           placeholder="genius-category"
           value={props.formCategory.url}
-          onChange={(e) => props.handleForm("url", e.target.value)}
+          onChange={(e) =>
+            props.handleForm("url", e.target.value.toLowerCase())
+          }
         />
       </Form.Group>
     </Form>

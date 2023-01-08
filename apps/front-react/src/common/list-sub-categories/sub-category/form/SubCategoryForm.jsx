@@ -38,7 +38,7 @@ export default function SubCategoryForm(props) {
           type="text"
           placeholder="genius-sub-category"
           value={props.formSubCategory.url}
-          onChange={(e) => props.handleForm("url", e.target.value)}
+          onChange={(e) => props.handleForm("url", e.target.value.toLowerCase())}
         />
       </Form.Group>
       <Form.Group>

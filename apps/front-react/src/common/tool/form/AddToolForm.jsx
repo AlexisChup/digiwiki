@@ -107,7 +107,9 @@ export default function AddToolForm(props) {
           type="text"
           placeholder="genius-tool"
           value={props.formAddTool.url}
-          onChange={(e) => props.handleFormAddTool("url", e.target.value)}
+          onChange={(e) =>
+            props.handleFormAddTool("url", e.target.value.toLowerCase())
+          }
         />
       </Form.Group>
       <Form.Group>
