@@ -1,5 +1,4 @@
 import React from "react";
-import "./AdminHeaderListTools.css";
 import AddTool from "./AddTool";
 import EditSubCategory from "./EditSubCategory";
 import RemoveSubCategory from "../../list-sub-categories/admin/RemoveSubCategory";

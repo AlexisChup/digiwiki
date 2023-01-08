@@ -47,7 +47,9 @@ export default function EmptyTools() {
       </div>
       <div className="row justify-content-center flex-column">
         {isRequesting ? (
-          <Spinner />
+          <div className="d-flex justify-content-center">
+            <Spinner />
+          </div>
         ) : emptyTools.length > 0 ? (
           emptyTools.map((tool, index) => (
             <EmptyToolItem key={tool.id} tool={tool} fetchTools={fetchTools} />

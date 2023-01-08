@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
@@ -61,56 +60,61 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <Row className="justify-content-center">
-        <div>
+    <div className="container ">
+      <div className="row">
+        <div className="col-6 mx-auto col-6-resized-md">
           <h1>Connexion</h1>
-        </div>
-        <Form>
-          <Form.Group>
-            <Form.Label htmlFor="login-email">Adresse mail</Form.Label>
-            <Form.Control
-              type="email"
-              className="form-control"
-              id="login-email"
-              aria-describedby="login-email-help"
-              placeholder="Enter email"
-              onChange={(e) => handleFormLogin("email", e.target.value)}
-              value={formLogin.email}
-            />
-            <small id="login-email-help" className="form-text text-muted mt-0">
-              user@gmail.com
-            </small>
-          </Form.Group>
-          <Form.Group className="my-2">
-            <Form.Label htmlFor="login-password">Mot de passe</Form.Label>
-            <Form.Control
-              type="password"
-              autoComplete="on"
-              className="form-control"
-              id="login-password"
-              aria-describedby="login-password-help"
-              placeholder="Password"
-              onChange={(e) => handleFormLogin("password", e.target.value)}
-              value={formLogin.password}
-            />
-            <small
-              id="login-password-help"
-              className="form-text text-muted mt-0"
+          <Form>
+            <Form.Group>
+              <Form.Label htmlFor="login-email">Adresse mail</Form.Label>
+              <Form.Control
+                size="sm"
+                type="email"
+                className="form-control"
+                id="login-email"
+                aria-describedby="login-email-help"
+                placeholder="Enter email"
+                onChange={(e) => handleFormLogin("email", e.target.value)}
+                value={formLogin.email}
+              />
+              <small
+                id="login-email-help"
+                className="form-text text-muted mt-0"
+              >
+                user@gmail.com
+              </small>
+            </Form.Group>
+            <Form.Group className="my-2">
+              <Form.Label htmlFor="login-password">Mot de passe</Form.Label>
+              <Form.Control
+                size="sm"
+                type="password"
+                autoComplete="on"
+                className="form-control"
+                id="login-password"
+                aria-describedby="login-password-help"
+                placeholder="Password"
+                onChange={(e) => handleFormLogin("password", e.target.value)}
+                value={formLogin.password}
+              />
+              <small
+                id="login-password-help"
+                className="form-text text-muted mt-0"
+              >
+                user
+              </small>
+            </Form.Group>
+            <Button
+              type="submit"
+              onClick={(e) => handleSubmit(e)}
+              disabled={isRequesting}
+              size="sm"
             >
-              user
-            </small>
-          </Form.Group>
-          <Button
-            type="submit"
-            onClick={(e) => handleSubmit(e)}
-            disabled={isRequesting}
-            size="sm"
-          >
-            Submit
-          </Button>
-        </Form>
-      </Row>
+              Submit
+            </Button>
+          </Form>
+        </div>
+      </div>
     </div>
   );
 }

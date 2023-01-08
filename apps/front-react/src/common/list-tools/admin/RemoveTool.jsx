@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./RemoveTool.css";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { FaTrash } from "react-icons/fa";

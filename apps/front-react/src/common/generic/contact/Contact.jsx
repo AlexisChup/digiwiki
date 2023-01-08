@@ -20,7 +20,7 @@ export default function Contact() {
   return (
     <div className="container ">
       <div className="row">
-        <div className="col-6 mx-auto">
+        <div className="col-6 mx-auto col-6-resized-md">
           <h1>Contact</h1>
           <Form>
             <Form.Group className="">

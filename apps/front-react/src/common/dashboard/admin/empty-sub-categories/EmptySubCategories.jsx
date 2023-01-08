@@ -47,7 +47,9 @@ export default function EmptySubCategories() {
       </div>
       <div className="row justify-content-center flex-column">
         {isRequesting ? (
-          <Spinner />
+          <div className="d-flex justify-content-center">
+            <Spinner />
+          </div>
         ) : emptySubCategories.length > 0 ? (
           emptySubCategories.map((subCategory, index) => (
             <EmptySubCategoryItem

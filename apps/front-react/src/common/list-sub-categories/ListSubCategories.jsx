@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useLayoutEffect } from "react";
-import "./ListSubCategories.css";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AXIOS } from "../../app/axios-http";
@@ -14,7 +13,6 @@ import { safeSrcImg } from "../../utils/image";
 export default function ListSubCategories() {
   const { categories } = useSelector((state) => state.categories);
   const { isAuthenticated, user } = useSelector((state) => state.auth);
-  const [isMobileView, setIsMobileView] = useState(window.innerWidth < 767);
 
   const location = useLocation();
   const urlSplitted = location.pathname.split("/");
@@ -25,23 +23,6 @@ export default function ListSubCategories() {
 
   let navigate = useNavigate();
   const dispatch = useDispatch();
-
-  useLayoutEffect(() => {
-    const handleMobileView = () => {
-      if (window.innerWidth < 767) {
-        console.log("CALLL");
-        setIsMobileView(true);
-      } else {
-        setIsMobileView(false);
-      }
-    };
-
-    window.addEventListener("resize", handleMobileView);
-
-    return () => {
-      window.removeEventListener("resize", handleMobileView);
-    };
-  }, []);
 
   useEffect(() => {
     findSubCatetegories();
@@ -123,7 +104,7 @@ export default function ListSubCategories() {
             >
               <Image
                 src={safeSrcImg(category.url, "categories")}
-                style={{ height: isMobileView ? "40%" : "80%", width: "auto" }}
+                className="logo-list-header"
               />
             </div>
             <div className="d-flex align-items-center">
@@ -132,7 +113,9 @@ export default function ListSubCategories() {
           </div>
         </div>
       ) : (
-        <Spinner />
+        <div className="d-flex justify-content-center">
+          <Spinner />
+        </div>
       )}
 
       <hr className="solid" />

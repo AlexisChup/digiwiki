@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./HandleUsers.css";
-import { FaPen } from "react-icons/fa";
+import { FaPen, FaPlus, FaUser } from "react-icons/fa";
 import Button from "react-bootstrap/Button";
 import { AXIOS } from "../../../../app/axios-http";
 import { toast } from "react-toastify";
@@ -131,52 +130,57 @@ export default function HandleUsers() {
           <h2>Handle Users</h2>
         </div>
         <div>
-          <Button variant="success" onClick={() => handleShow(false)}>
-            Add user
+          <Button size="sm" variant="success" onClick={() => handleShow(false)}>
+            <FaPlus />
+            <FaUser />
           </Button>
         </div>
       </div>
       {isRequesting ? (
-        <Spinner />
+        <div className="d-flex justify-content-center">
+          <Spinner />
+        </div>
       ) : (
-        <table className="table table-striped table-sm">
-          <thead>
-            <tr>
-              <th scope="col">Id</th>
-              <th scope="col">Email</th>
-              <th scope="col">UserIdentifier</th>
-              <th scope="col">Roles</th>
-              <th scope="col">Edit</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user, index) => (
-              <tr key={(index + 1) * 10}>
-                <th className="align-middle" scope="row">
-                  {user.id}
-                </th>
-                <td className="align-middle">{user.email}</td>
-                <td className="align-middle">{user.userIdentifier}</td>
-                <td className="align-middle">
-                  {user.roles.map((role, indexRole) => {
-                    return (
-                      <div key={(index + 1) * 10 + indexRole + 1}>{role}</div>
-                    );
-                  })}
-                </td>
-                <td className="align-middle">
-                  <Button
-                    size="sm"
-                    variant="warning"
-                    onClick={() => handleShow(user)}
-                  >
-                    <FaPen />
-                  </Button>
-                </td>
+        <div className="table-responsive">
+          <table className="table table-striped table-sm">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Email</th>
+                <th scope="col">UserIdentifier</th>
+                <th scope="col">Roles</th>
+                <th scope="col">Edit</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {users.map((user, index) => (
+                <tr key={(index + 1) * 10}>
+                  <th className="align-middle" scope="row">
+                    {user.id}
+                  </th>
+                  <td className="align-middle">{user.email}</td>
+                  <td className="align-middle">{user.userIdentifier}</td>
+                  <td className="align-middle">
+                    {user.roles.map((role, indexRole) => {
+                      return (
+                        <div key={(index + 1) * 10 + indexRole + 1}>{role}</div>
+                      );
+                    })}
+                  </td>
+                  <td className="align-middle">
+                    <Button
+                      size="sm"
+                      variant="warning"
+                      onClick={() => handleShow(user)}
+                    >
+                      <FaPen />
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
       <HandleUsersModal
         show={show}

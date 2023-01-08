@@ -1,5 +1,4 @@
 import React from "react";
-import "./AdminHeaderListSubCategories.css";
 import EditCategory from "./EditCategory";
 import AddSubCategory from "./AddSubCategory";
 

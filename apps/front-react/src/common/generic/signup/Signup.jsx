@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./Signup.css";
 import { AXIOS } from "../../../app/axios-http";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -7,9 +6,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../../../features/auth/authSlice";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 
 export default function Signup() {
   const initialFormLogin = {

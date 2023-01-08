@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./AddSubCategory.css";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { FaPlus } from "react-icons/fa";
