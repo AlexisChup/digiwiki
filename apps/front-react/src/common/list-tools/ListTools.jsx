@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import "./ListTools.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -15,6 +15,7 @@ import AdminHeaderListTools from "./admin/AdminHeaderListTools";
 export default function ListTools() {
   const { categories } = useSelector((state) => state.categories);
   const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const [isMobileView, setIsMobileView] = useState(window.innerWidth < 767);
 
   const location = useLocation();
   const urlSplitted = location.pathname.split("/");
@@ -26,6 +27,23 @@ export default function ListTools() {
 
   let navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useLayoutEffect(() => {
+    const handleMobileView = () => {
+      if (window.innerWidth < 767) {
+        console.log("CALLL");
+        setIsMobileView(true);
+      } else {
+        setIsMobileView(false);
+      }
+    };
+
+    window.addEventListener("resize", handleMobileView);
+
+    return () => {
+      window.removeEventListener("resize", handleMobileView);
+    };
+  }, []);
 
   useEffect(() => {
     findTools();
@@ -143,7 +161,7 @@ export default function ListTools() {
             >
               <Image
                 src={safeSrcImg(subCategory.url, "sub-categories")}
-                style={{ height: "80%", width: "auto" }}
+                style={{ height: isMobileView ? "40%" : "80%", width: "auto" }}
               />
             </div>
             <div className="d-flex align-items-center">
