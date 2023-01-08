@@ -8,7 +8,7 @@ export default function EmptySubCategoryItem(props) {
   return (
     <div className="col p-0">
       <div
-        className="d-flex rounded my-1 justify-content-between align-content-center align-self-center category-container py-3 px-3"
+        className="d-flex rounded my-1 justify-content-between align-content-center align-self-center item-list-shadow py-3 px-3"
         onClick={() => {}}
       >
         <div className="d-flex flex-row">
@@ -18,7 +18,7 @@ export default function EmptySubCategoryItem(props) {
           >
             <Image
               src={safeSrcImg(props.subCategory.url, "sub-categories")}
-              style={{ height: "80%", width: "auto" }}
+              className="logo-list-item"
             />
           </div>
           <div className="d-flex flex-column justify-content-center">

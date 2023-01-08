@@ -28,7 +28,9 @@ export default function Profile() {
     <div className="">
       <h2>Profile</h2>
       {isRequesting ? (
-        <Spinner />
+        <div className="d-flex justify-content-center">
+          <Spinner />
+        </div>
       ) : (
         <div className="table-responsive">
           <table className="table table-striped table-sm">

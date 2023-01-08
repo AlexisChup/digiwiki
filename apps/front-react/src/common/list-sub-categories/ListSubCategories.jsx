@@ -104,7 +104,7 @@ export default function ListSubCategories() {
             >
               <Image
                 src={safeSrcImg(category.url, "categories")}
-                className="logo-list"
+                className="logo-list-header"
               />
             </div>
             <div className="d-flex align-items-center">

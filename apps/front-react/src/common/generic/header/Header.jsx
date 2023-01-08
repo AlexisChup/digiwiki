@@ -91,64 +91,6 @@ export default function Header() {
             )}
           </Nav>
         </Navbar.Collapse>
-        {/* <div className="d-flex flex-row">
-          <div className="ms-2">
-            <NavLink
-              to="explorer"
-              className={({ isActive }) =>
-                isActive ? commonClassNameNavLink + " navbar-navlink-active" : commonClassNameNavLink + " navbar-navlink"
-              }
-            >
-              Explorer
-            </NavLink>
-          </div>
-          <div className="ms-2">
-            <NavLink
-              to="about"
-              className={({ isActive }) =>
-                isActive ? commonClassNameNavLink + " navbar-navlink-active" : commonClassNameNavLink + " navbar-navlink"
-              }
-            >
-              About
-            </NavLink>
-          </div>
-          <div className="ms-2">
-            <NavLink
-              to="contact"
-              className={({ isActive }) =>
-                isActive ? commonClassNameNavLink + " navbar-navlink-active" : commonClassNameNavLink + " navbar-navlink"
-              }
-            >
-              Contact
-            </NavLink>
-          </div>
-
-          {isAuthenticated ? (
-            <div className="ms-2">
-              <NavLink
-                to="dashboard"
-                className={({ isActive }) =>
-                  isActive ? commonClassNameNavLink + " navbar-navlink-active" : commonClassNameNavLink + " navbar-navlink"
-                }
-              >
-                <FaUserCircle className="mb-1" />
-              </NavLink>
-            </div>
-          ) : (
-            <>
-              <div className="ms-2">
-                <NavLink
-                  to="auth"
-                  className={({ isActive }) =>
-                    isActive ? commonClassNameNavLink + " navbar-navlink-active" : commonClassNameNavLink + " navbar-navlink"
-                  }
-                >
-                  <FaUserCircle className="mb-1" />
-                </NavLink>
-              </div>
-            </>
-          )}
-        </div> */}
       </Navbar>
     </header>
   );

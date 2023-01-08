@@ -126,8 +126,8 @@ export default function Tool() {
   return (
     <div className="container h-100 d-flex flex-column">
       {isToolFound ? (
-        <div className="row justify-content-between">
-          <div className="col-8 shadow p-3 rounded mx-auto">
+        <div className="row justify-content-between mx-3">
+          <div className="col shadow p-3 rounded mx-auto">
             <div className="d-flex flex-row justify-content-between">
               <div>
                 <Button
@@ -152,7 +152,7 @@ export default function Tool() {
               >
                 <Image
                   src={safeSrcImg(tool.imgUrl, "tools")}
-                  style={{ height: "80%", width: "auto" }}
+                  className="logo-tool-page"
                 />
               </div>
               <div className="d-flex flex-column justify-content-center">
