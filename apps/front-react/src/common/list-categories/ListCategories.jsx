@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./ListCategories.css";
 import { AXIOS } from "../../app/axios-http";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategories } from "../../features/categories/categoriesSlice";
@@ -27,86 +26,6 @@ export default function ListCategories() {
     }
   }, []);
 
-  const renderFirstRow = () => {
-    if (categories) {
-      if (categories.length > 2) {
-        return (
-          <div className="row flex-grow-1">
-            {categories.slice(0, 3).map((category, index) => {
-              return <CategoryItem key={category.id} category={category} />;
-            })}
-          </div>
-        );
-      } else {
-        return (
-          <div className="row flex-grow-1">
-            {categories.slice(0, categories.length).map((category, index) => {
-              return <CategoryItem key={category.id} category={category} />;
-            })}
-          </div>
-        );
-      }
-    } else {
-      return null;
-    }
-  };
-
-  const renderSecondRow = () => {
-    if (categories) {
-      if (categories.length <= 3) {
-        return null;
-      }
-
-      if (categories.length > 5) {
-        return (
-          <div className="row flex-grow-1">
-            {categories.slice(3, 6).map((category, index) => {
-              return <CategoryItem key={category.id} category={category} />;
-            })}
-          </div>
-        );
-      } else {
-        return (
-          <div className="row flex-grow-1">
-            {categories.slice(3, categories.length).map((category, index) => {
-              return <CategoryItem key={category.id} category={category} />;
-            })}
-          </div>
-        );
-      }
-    } else {
-      return null;
-    }
-  };
-
-  const renderThirdRow = () => {
-    if (categories) {
-      if (categories.length <= 6) {
-        return null;
-      }
-
-      if (categories.length > 8) {
-        return (
-          <div className="row flex-grow-1">
-            {categories.slice(6, 9).map((category, index) => {
-              return <CategoryItem key={category.id} category={category} />;
-            })}
-          </div>
-        );
-      } else {
-        return (
-          <div className="row flex-grow-1">
-            {categories.slice(6, categories.length).map((category, index) => {
-              return <CategoryItem key={category.id} category={category} />;
-            })}
-          </div>
-        );
-      }
-    } else {
-      return null;
-    }
-  };
-
   return (
     <div className="container h-100 d-flex flex-column">
       <div className="row justify-content-center" style={{ height: "80px" }}>
@@ -115,9 +34,17 @@ export default function ListCategories() {
         </div>
       </div>
       <hr className="solid" />
-      {!categories ? <Spinner /> : renderFirstRow()}
-      {!categories ? null : renderSecondRow()}
-      {!categories ? null : renderThirdRow()}
+      <div className="container h-100 px-0">
+        <div class="row row-cols-md-3 row-cols-1 g-2">
+          {!categories ? (
+            <Spinner />
+          ) : (
+            categories.map((category, index) => {
+              return <CategoryItem key={category.id} category={category} />;
+            })
+          )}
+        </div>
+      </div>
     </div>
   );
 }
