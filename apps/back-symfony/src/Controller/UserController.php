@@ -23,30 +23,31 @@ class UserController extends AbstractController
     {
     }
 
-    #[Route('/register', name: 'user_register', methods: 'POST')]
-    public function register(UserRepository $userRepo, Request $request, UserPasswordHasherInterface $passwordHasher, JWTTokenManagerInterface $JWTManager): Response
-    {
-        $data = json_decode($request->getContent(), true);
-        $user = new User();
-
-        $plaintextPassword =$data["password"];
-        // hash the password (based on the security.yaml config for the $user class)
-        $hashedPassword = $passwordHasher->hashPassword(
-            $user,
-            $plaintextPassword
-        );
-
-        $user->setPassword($hashedPassword);
-        $user->setEmail($data["email"]);
-        $user->setRoles(["ROLE_USER"]);
-        $user->setCreatedAt(new DateTimeImmutable());
-
-        $userRepo->save($user, true);
-        $res = $this->serializer->normalize($user, 'json');
-        unset($res["password"]);
-        $res["token"] = $JWTManager->create($user);
-        return $this->json($res);
-    }
+    // Not used for now
+//    #[Route('/register', name: 'user_register', methods: 'POST')]
+//    public function register(UserRepository $userRepo, Request $request, UserPasswordHasherInterface $passwordHasher, JWTTokenManagerInterface $JWTManager): Response
+//    {
+//        $data = json_decode($request->getContent(), true);
+//        $user = new User();
+//
+//        $plaintextPassword =$data["password"];
+//        // hash the password (based on the security.yaml config for the $user class)
+//        $hashedPassword = $passwordHasher->hashPassword(
+//            $user,
+//            $plaintextPassword
+//        );
+//
+//        $user->setPassword($hashedPassword);
+//        $user->setEmail($data["email"]);
+//        $user->setRoles(["ROLE_USER"]);
+//        $user->setCreatedAt(new DateTimeImmutable());
+//
+//        $userRepo->save($user, true);
+//        $res = $this->serializer->normalize($user, 'json');
+//        unset($res["password"]);
+//        $res["token"] = $JWTManager->create($user);
+//        return $this->json($res);
+//    }
 
     #[Route('/profile', name: 'profile', methods: 'GET')]
     public function getUserInfo(Request $request) {

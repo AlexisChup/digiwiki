@@ -64,11 +64,11 @@ export default function Login() {
     <div>
       <Row className="justify-content-center">
         <div>
-          <h2>Login</h2>
+          <h1>Connexion</h1>
         </div>
         <Form>
           <Form.Group>
-            <Form.Label htmlFor="login-email">Email address</Form.Label>
+            <Form.Label htmlFor="login-email">Adresse mail</Form.Label>
             <Form.Control
               type="email"
               className="form-control"
@@ -78,12 +78,12 @@ export default function Login() {
               onChange={(e) => handleFormLogin("email", e.target.value)}
               value={formLogin.email}
             />
-            <small id="login-email-help" className="form-text text-muted">
+            <small id="login-email-help" className="form-text text-muted mt-0">
               user@gmail.com
             </small>
           </Form.Group>
-          <Form.Group>
-            <Form.Label htmlFor="login-password">Password</Form.Label>
+          <Form.Group className="my-2">
+            <Form.Label htmlFor="login-password">Mot de passe</Form.Label>
             <Form.Control
               type="password"
               autoComplete="on"
@@ -94,7 +94,10 @@ export default function Login() {
               onChange={(e) => handleFormLogin("password", e.target.value)}
               value={formLogin.password}
             />
-            <small id="login-password-help" className="form-text text-muted">
+            <small
+              id="login-password-help"
+              className="form-text text-muted mt-0"
+            >
               user
             </small>
           </Form.Group>
