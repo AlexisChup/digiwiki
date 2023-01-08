@@ -34,6 +34,12 @@ class AdminUserController extends AbstractController
 
         $user = $userRepo->find($data["id"]);
 
+        if (!$user) {
+            throw $this->createNotFoundException(
+                'No user found for id '.$data["id"]
+            );
+        }
+
         $user->setRoles($data["roles"]);
         $user->setEmail($data["email"]);
 
