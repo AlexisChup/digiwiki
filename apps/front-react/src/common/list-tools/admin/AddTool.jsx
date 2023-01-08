@@ -34,7 +34,7 @@ export default function AddTool(props) {
     affiliateRef: "",
     codePromo: "",
     imgUrl: "",
-    subCategoriesIds: [props.subCategoryId],
+    subCategoriesIds: props.subCategoryId ? [props.subCategoryId] : [],
     initialSubCategoriesIds: [],
   };
 
@@ -67,6 +67,10 @@ export default function AddTool(props) {
       const id = toast.loading("Please wait...");
       AXIOS.post("/admin/tool/create", payload)
         .then((response) => {
+          if (props.fetchTools) {
+            props.fetchTools();
+          }
+
           dispatch(setCategories(response.data));
           toast.update(id, {
             render: "Post successfully !",

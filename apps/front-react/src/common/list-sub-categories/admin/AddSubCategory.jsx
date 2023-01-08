@@ -53,7 +53,7 @@ export default function AddSubCategory(props) {
     name: "",
     url: "",
     categoriesIds: "",
-    categoriesIds: [props.categoryId],
+    categoriesIds: props.categoryId ? [props.categoryId] : [],
     initialCategoriesIds: [],
   };
 
@@ -87,6 +87,10 @@ export default function AddSubCategory(props) {
 
       AXIOS.post("/admin/sub-category/create", payload)
         .then((response) => {
+          if (props.fetchSubCategories) {
+            props.fetchSubCategories();
+          }
+
           dispatch(setCategories(response.data));
           toast.update(id, {
             render: "Post successfully !",

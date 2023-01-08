@@ -4,6 +4,7 @@ import { AXIOS } from "../../../../app/axios-http";
 import { Spinner } from "react-bootstrap";
 import { FaCheck } from "react-icons/fa";
 import EmptyToolItem from "./EmptyToolItem";
+import AddTool from "../../../list-tools/admin/AddTool";
 
 export default function EmptyTools() {
   let [isRequesting, setIsRequesting] = useState(false);
@@ -38,6 +39,9 @@ export default function EmptyTools() {
 
   return (
     <div>
+      <div className="row">
+        <AddTool fetchTools={fetchTools} />
+      </div>
       <div>
         <h2>Outils sans sous-catégorie parent</h2>
       </div>
