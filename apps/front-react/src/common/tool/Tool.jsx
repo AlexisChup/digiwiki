@@ -169,14 +169,14 @@ export default function Tool() {
                 </Button>
               </div>
               <div className="col text-end">
-                <a href={tool.affiliateRef}>
+                <a href={tool.affiliateRef} target="_blank">
                   <Button>Site Web</Button>
                 </a>
               </div>
             </div>
           </div>
           <div className="col-2 text-end">
-            <a href={tool.affiliateRef}>
+            <a href={tool.affiliateRef} target="_blank">
               <Button>Site Web</Button>
             </a>
           </div>
