@@ -63,9 +63,7 @@ export default function EditTool(props) {
     initialSubCategoriesIds: getActiveSubCategoriesIds(),
   };
 
-  const [formEditTool, setformEditTool] = useState(initialStateFormEditTool);
-
-  const getSubCategoriesIdsToRemove = () => {
+  const getSubCategoriesIdsToRemove = (formEditTool) => {
     let subCategoriesIdsToRemove = [];
 
     for (
@@ -82,11 +80,11 @@ export default function EditTool(props) {
     return subCategoriesIdsToRemove;
   };
 
-  const handleClose = (isConfirmed) => {
+  const handleClose = (isConfirmed, formEditTool) => {
     if (isConfirmed) {
       let payload = {
         ...formEditTool,
-        subCategoriesIdsToRemove: getSubCategoriesIdsToRemove(),
+        subCategoriesIdsToRemove: getSubCategoriesIdsToRemove(formEditTool),
       };
 
       const id = toast.loading("Please wait...");
@@ -127,23 +125,6 @@ export default function EditTool(props) {
     setShow(true);
   };
 
-  const handleFormEditTool = (key, value) => {
-    setformEditTool({ ...formEditTool, [key]: value });
-  };
-
-  const isFormIsValid = () => {
-    const { name, url, shortDescription, description, affiliateRef } =
-      formEditTool;
-
-    return (
-      name.length &&
-      url.length &&
-      shortDescription.length &&
-      description.length &&
-      affiliateRef.length
-    );
-  };
-
   return (
     <div className="me-3">
       <div>
@@ -151,29 +132,13 @@ export default function EditTool(props) {
           <FaPen />
         </Button>
       </div>
-      <Modal show={show} onHide={() => handleClose(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Editer {props.tool.name}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <AddToolForm
-            handleFormAddTool={handleFormEditTool}
-            formAddTool={formEditTool}
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => handleClose(false)}>
-            Fermer
-          </Button>
-          <Button
-            disabled={!isFormIsValid()}
-            variant="success"
-            onClick={() => handleClose(true)}
-          >
-            Confirmer
-          </Button>
-        </Modal.Footer>
-      </Modal>
+
+      <AddToolForm
+        show={show}
+        handleClose={handleClose}
+        initialStateForm={initialStateFormEditTool}
+        type="EDIT"
+      />
     </div>
   );
 }

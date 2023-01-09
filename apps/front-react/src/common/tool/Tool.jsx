@@ -123,6 +123,8 @@ export default function Tool() {
     }
   };
 
+  console.log("tool.description: ", tool.description, typeof tool.description);
+
   return (
     <div className="container h-100 d-flex flex-column">
       {isToolFound ? (
@@ -163,7 +165,15 @@ export default function Tool() {
               </div>
             </div>
             <div>
-              <p>{tool.description}</p>
+              {/* {tool.description} */}
+              {/* dangerouslySetInnerHTML={{ __html: tool.description }} */}
+              {
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: tool.description,
+                  }}
+                />
+              }
             </div>
             <div className="row justify-content-between">
               <div className="col">
