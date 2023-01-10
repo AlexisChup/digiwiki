@@ -38,7 +38,7 @@ export default function AddTool(props) {
     initialSubCategoriesIds: [],
   };
 
-  const getSubCategoriesIdsToRemove = () => {
+  const getSubCategoriesIdsToRemove = (formAddTool) => {
     let subCategoriesIdsToRemove = [];
 
     for (
@@ -55,13 +55,11 @@ export default function AddTool(props) {
     return subCategoriesIdsToRemove;
   };
 
-  const [formAddTool, setformAddTool] = useState(initialStateFormAddTool);
-
-  const handleClose = (isConfirmed) => {
+  const handleClose = (isConfirmed, formAddTool) => {
     if (isConfirmed) {
       let payload = {
         ...formAddTool,
-        subCategoriesIdsToRemove: getSubCategoriesIdsToRemove(),
+        subCategoriesIdsToRemove: getSubCategoriesIdsToRemove(formAddTool),
       };
 
       const id = toast.loading("Please wait...");
@@ -101,23 +99,6 @@ export default function AddTool(props) {
     setShow(true);
   };
 
-  const handleFormAddTool = (key, value) => {
-    setformAddTool({ ...formAddTool, [key]: value });
-  };
-
-  const isFormIsValid = () => {
-    const { name, url, shortDescription, description, affiliateRef } =
-      formAddTool;
-
-    return (
-      name.length &&
-      url.length &&
-      shortDescription.length &&
-      description.length &&
-      affiliateRef.length
-    );
-  };
-
   return (
     <div className="me-3">
       <div>
@@ -125,34 +106,12 @@ export default function AddTool(props) {
           <FaPlus /> Outil
         </Button>
       </div>
-      <Modal show={show} onHide={() => handleClose(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Ajouter un nouveau outil</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <AddToolForm
-            handleFormAddTool={handleFormAddTool}
-            formAddTool={formAddTool}
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={() => handleClose(false)}
-          >
-            Fermer
-          </Button>
-          <Button
-            disabled={!isFormIsValid()}
-            variant="success"
-            onClick={() => handleClose(true)}
-            size="sm"
-          >
-            Confirmer
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <AddToolForm
+        initialStateForm={initialStateFormAddTool}
+        show={show}
+        handleClose={handleClose}
+        type="ADD"
+      />
     </div>
   );
 }

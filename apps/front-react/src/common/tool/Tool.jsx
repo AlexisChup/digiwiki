@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import DOMPurify from "isomorphic-dompurify";
 import { AXIOS } from "../../app/axios-http";
 import { setCategories } from "../../features/categories/categoriesSlice";
 import Button from "react-bootstrap/Button";
@@ -162,9 +163,13 @@ export default function Tool() {
                 <div>{tool.shortDescription}</div>
               </div>
             </div>
-            <div>
-              <p>{tool.description}</p>
-            </div>
+            {
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(tool.description),
+                }}
+              />
+            }
             <div className="row justify-content-between">
               <div className="col">
                 <Button
