@@ -1,8 +1,6 @@
 import React, { useEffect, useLayoutEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import { BrowserRouter } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { setIsMobileView } from "../features/window/windowSlice";
 import Header from "../common/generic/header/Header";
 import Footer from "../common/generic/footer/Footer";
 import IndexRoutes from "../routes/IndexRoutes";
@@ -13,17 +11,6 @@ import "./App.css";
 import "../common/style/common.scss";
 
 export default function App() {
-  const { isMobileView } = useSelector((state) => state);
-
-  const handleMobileView = () => {
-    if (window.innerWidth < 767) {
-      console.log("CALLL");
-      setIsMobileView(true);
-    } else {
-      setIsMobileView(false);
-    }
-  };
-
   return (
     <BrowserRouter>
       <AuthVerify />

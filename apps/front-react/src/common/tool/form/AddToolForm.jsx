@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import DOMPurify from "isomorphic-dompurify";
 import Form from "react-bootstrap/Form";
 import Spinner from "../../generic/spinner/Spinner";
 import { setCategories } from "../../../features/categories/categoriesSlice";
@@ -11,7 +12,6 @@ import Button from "react-bootstrap/Button";
 export default function AddToolForm(props) {
   const dispatch = useDispatch();
   const { categories } = useSelector((state) => state.categories);
-  const [value, setValue] = useState("");
   const [uniqueSubcategories, setUniqueSubcategories] = useState([]);
   const [isRequesting, setIsRequesting] = useState(false);
 
@@ -147,34 +147,22 @@ export default function AddToolForm(props) {
     subCategoriesIds,
   } = formTool;
 
-  // const modules = {
-  //   toolbar: [
-  //     [{ header: [1, 2, 3, 4, 5, 6, false] }],
-  //     ["bold", "italic", "underline", "strike", "blockquote"],
-  //     [
-  //       { list: "ordered" },
-  //       { list: "bullet" },
-  //       { indent: "-1" },
-  //       { indent: "+1" },
-  //     ],
-  //     ["link", "image"],
-  //     ["clean"],
-  //   ],
-  // };
+  var toolbarOptions = {
+    toolbar: [
+      ["bold", "italic", "underline", "strike"], // toggled buttons
+      ["blockquote", "code-block"],
 
-  // const formats = [
-  //   "header",
-  //   "bold",
-  //   "italic",
-  //   "underline",
-  //   "strike",
-  //   "blockquote",
-  //   "list",
-  //   "bullet",
-  //   "indent",
-  //   "link",
-  //   "image",
-  // ];
+      [{ list: "ordered" }, { list: "bullet" }],
+      [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+
+      [{ size: ["small", false, "large", "huge"] }], // custom dropdown
+      [{ header: [2, 3, 4, 5, 6, false] }],
+
+      [{ align: [] }],
+
+      ["clean"], // remove formatting button
+    ],
+  };
 
   return (
     <Modal show={props.show} onHide={() => props.handleClose(false, null)}>
@@ -199,7 +187,7 @@ export default function AddToolForm(props) {
                 className="mb-2"
                 type="text"
                 placeholder="GeniusTool"
-                value={formTool.name}
+                value={name}
                 onChange={(e) => handleFormAddTool("name", e.target.value)}
               />
             </Form.Group>
@@ -210,7 +198,7 @@ export default function AddToolForm(props) {
                 className="mb-2"
                 type="text"
                 placeholder="genius-tool"
-                value={formTool.url}
+                value={url}
                 onChange={(e) =>
                   handleFormAddTool("url", e.target.value.toLowerCase())
                 }
@@ -225,7 +213,7 @@ export default function AddToolForm(props) {
                 className="mb-2"
                 type="text"
                 placeholder="Cet outil est vraiment génial !"
-                value={formTool.shortDescription}
+                value={shortDescription}
                 onChange={(e) =>
                   handleFormAddTool("shortDescription", e.target.value)
                 }
@@ -233,25 +221,10 @@ export default function AddToolForm(props) {
             </Form.Group>
             <Form.Group>
               <Form.Label className="my-0 small">Description</Form.Label>
-              {/* <Form.Control
-          size="sm"
-          className="mb-2"
-          as="textarea"
-          type="text"
-          placeholder="Cet outil est vraiment génial !"
-          value={formTool.description}
-          onChange={(e) =>
-            handleFormAddTool("description", e.target.value)
-          }
-        /> */}
               <ReactQuill
-                value={formTool.description}
-                // value={formTool.description}
+                value={description}
                 onChange={handleQuillText}
-                // modules={modules}
-                // formats={formats}
-                // onChange={setValue}
-                // onChange={(e) =>            handleFormAddTool("description", e.target.value)}
+                modules={toolbarOptions}
               />
             </Form.Group>
             <Form.Group>
@@ -263,7 +236,7 @@ export default function AddToolForm(props) {
                 className="mb-2"
                 type="text"
                 placeholder="https://genius-tool.com"
-                value={formTool.affiliateRef}
+                value={affiliateRef}
                 onChange={(e) =>
                   handleFormAddTool("affiliateRef", e.target.value)
                 }
@@ -276,7 +249,7 @@ export default function AddToolForm(props) {
                 className="mb-2"
                 type="text"
                 placeholder="GT022"
-                value={formTool.codePromo}
+                value={codePromo}
                 onChange={(e) => handleFormAddTool("codePromo", e.target.value)}
               />
             </Form.Group>
@@ -289,7 +262,7 @@ export default function AddToolForm(props) {
                 className="mb-2"
                 type="text"
                 placeholder="https://genius-tool/logo.png"
-                value={formTool.imgUrl}
+                value={imgUrl}
                 onChange={(e) => handleFormAddTool("imgUrl", e.target.value)}
               />
             </Form.Group>
@@ -300,7 +273,7 @@ export default function AddToolForm(props) {
               <Form.Control
                 as="select"
                 multiple
-                value={formTool.subCategoriesIds}
+                value={subCategoriesIds}
                 onChange={(e) => handleMultipleSelect(e)}
               >
                 {uniqueSubcategories.map((subCategory) => (
