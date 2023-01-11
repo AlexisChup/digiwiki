@@ -11,6 +11,7 @@ import AddToolForm from "../../tool/form/AddToolForm";
 export default function AddTool(props) {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+  const [isRequesting, setIsRequesting] = useState(false);
 
   const getActiveSubCategoriesIds = () => {
     if (!props.tool.subCategories) {
@@ -57,6 +58,7 @@ export default function AddTool(props) {
 
   const handleClose = (isConfirmed, formAddTool) => {
     if (isConfirmed) {
+      setIsRequesting(true);
       let payload = {
         ...formAddTool,
         subCategoriesIdsToRemove: getSubCategoriesIdsToRemove(formAddTool),
@@ -89,7 +91,9 @@ export default function AddTool(props) {
           });
           console.log(err);
         })
-        .finally(() => {});
+        .finally(() => {
+          setIsRequesting(false);
+        });
     } else {
       setShow(false);
     }
@@ -111,6 +115,7 @@ export default function AddTool(props) {
         show={show}
         handleClose={handleClose}
         type="ADD"
+        isRequesting={isRequesting}
       />
     </div>
   );

@@ -11,6 +11,7 @@ import CategoryForm from "../../list-categories/category/form/CategoryForm";
 export default function EditCategory(props) {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+  const [isRequesting, setIsRequesting] = useState(false);
 
   const initialStateFormCategory = {
     name: props.category.name,
@@ -21,6 +22,7 @@ export default function EditCategory(props) {
 
   const handleClose = (isConfirmed) => {
     if (isConfirmed) {
+      setIsRequesting(true);
       const id = toast.loading("Please wait...");
       AXIOS.put("/admin/category/" + props.category.id + "/edit", formCategory)
         .then((response) => {
@@ -44,7 +46,9 @@ export default function EditCategory(props) {
             closeOnClick: true,
           });
         })
-        .finally(() => {});
+        .finally(() => {
+          setIsRequesting(false);
+        });
     } else {
       setShow(false);
     }
@@ -83,7 +87,7 @@ export default function EditCategory(props) {
             Fermer
           </Button>
           <Button
-            disabled={!isFormIsValid()}
+            disabled={isRequesting || !isFormIsValid()}
             variant="success"
             onClick={() => handleClose(true)}
           >

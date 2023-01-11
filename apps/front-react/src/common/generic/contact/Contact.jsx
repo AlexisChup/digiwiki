@@ -17,6 +17,14 @@ export default function Contact() {
   const placeHolderInput =
     "Bonjour ! \nJe connais un outil génial pour mieux gérer ses finances, voici le lien :\nhttps://mon-outil-genial.com.\n\nBonne journée ! :)";
 
+  const isFormValid = () => {
+    let isFormValid = true;
+
+    isFormValid &= message.length > 0;
+
+    return isFormValid;
+  };
+
   return (
     <div className="container ">
       <div className="row">
@@ -53,6 +61,7 @@ export default function Contact() {
               type="submit"
               size="sm"
               className="mt-2 btn-submit-href"
+              disabled={!isFormValid()}
             >
               <a
                 href={
