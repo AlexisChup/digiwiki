@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
@@ -8,6 +10,11 @@ import { login } from "../../../features/auth/authSlice";
 import { AXIOS } from "../../../app/axios-http";
 
 export default function Login() {
+  const AXIOS_GOOGLE = axios.create({
+    headers: { "Access-Control-Allow-Origin": "*" },
+  });
+
+  const captchaRef = useRef(null);
   const initialFormLogin = {
     email: "",
     password: "",
@@ -20,36 +27,65 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const id = toast.loading("Please wait...");
     setRequesting(true);
-    AXIOS.post("/login_check", formLogin)
-      .then((response) => {
-        toast.update(id, {
-          render: "Login successfully !",
-          type: "success",
-          isLoading: false,
-          autoClose: 3000,
-          closeOnClick: true,
-        });
-        //get token from response
-        const token = response.data.token;
+    const id = toast.loading("Please wait...", { closeOnClick: true });
+    let token = captchaRef.current.getValue();
+    AXIOS.post("/captcha/check", {
+      token,
+    })
+      .then((res) => {
+        if (res.data.success) {
+          AXIOS.post("/login_check", formLogin)
+            .then((response) => {
+              toast.update(id, {
+                render: "Login successfully !",
+                type: "success",
+                isLoading: false,
+                autoClose: 3000,
+                closeOnClick: true,
+              });
+              //get token from response
+              const token = response.data.token;
 
-        dispatch(login(token));
+              dispatch(login(token));
 
-        //redirect user to dashboard page
-        navigate("/dashboard");
+              //redirect user to dashboard page
+              navigate("/dashboard");
+            })
+            .catch((err) => {
+              toast.update(id, {
+                render: err.response.data.message,
+                type: "error",
+                isLoading: false,
+                autoClose: 3000,
+                closeOnClick: true,
+              });
+              console.log(err);
+            })
+            .finally(() => setRequesting(false));
+        } else {
+          setRequesting(false);
+          toast.update(id, {
+            render: "Error captcha",
+            type: "error",
+            isLoading: false,
+            autoClose: 3000,
+            closeOnClick: true,
+          });
+          console.log("error captcha: ", res);
+        }
       })
-      .catch((err) => {
+      .catch((e) => {
+        console.log("error captcha: ", e);
         toast.update(id, {
-          render: err.response.data.message,
+          render: e,
           type: "error",
           isLoading: false,
           autoClose: 3000,
           closeOnClick: true,
         });
-        console.log(err);
-      })
-      .finally(() => setRequesting(false));
+        setRequesting(false);
+      });
   };
 
   const handleFormLogin = (key, value) => {
@@ -109,6 +145,12 @@ export default function Login() {
               >
                 user
               </small>
+            </Form.Group>
+            <Form.Group>
+              <ReCAPTCHA
+                sitekey={process.env.REACT_APP_SITE_KEY}
+                ref={captchaRef}
+              />
             </Form.Group>
             <Button
               type="submit"
