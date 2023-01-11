@@ -18,6 +18,7 @@ var toType = function (obj) {
 export default function EditSubCategory(props) {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+  const [isRequesting, setIsRequesting] = useState(false);
 
   const getActiveCategoriesIds = () => {
     if (!props.subCategory.category) {
@@ -79,6 +80,7 @@ export default function EditSubCategory(props) {
 
   const handleClose = (isConfirmed) => {
     if (isConfirmed) {
+      setIsRequesting(true);
       const id = toast.loading("Please wait...");
 
       let payload = { ...formSubCategory };
@@ -113,7 +115,9 @@ export default function EditSubCategory(props) {
             closeOnClick: true,
           });
         })
-        .finally(() => {});
+        .finally(() => {
+          setIsRequesting(false);
+        });
     } else {
       setShow(false);
     }
@@ -159,7 +163,7 @@ export default function EditSubCategory(props) {
             Fermer
           </Button>
           <Button
-            disabled={!isFormIsValid()}
+            disabled={isRequesting || !isFormIsValid()}
             variant="success"
             onClick={() => handleClose(true)}
             size="sm"

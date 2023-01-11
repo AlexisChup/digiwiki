@@ -4,9 +4,6 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import { login } from "../../../features/auth/authSlice";
 import { AXIOS } from "../../../app/axios-http";
 
@@ -59,6 +56,15 @@ export default function Login() {
     setFormLogin({ ...formLogin, [key]: value });
   };
 
+  const isFormValid = () => {
+    let isFormValid = true;
+
+    isFormValid &= formLogin.email.length > 0;
+    isFormValid &= formLogin.password.length > 0;
+
+    return isFormValid;
+  };
+
   return (
     <div className="container ">
       <div className="row">
@@ -107,7 +113,7 @@ export default function Login() {
             <Button
               type="submit"
               onClick={(e) => handleSubmit(e)}
-              disabled={isRequesting}
+              disabled={isRequesting || !isFormValid()}
               size="sm"
             >
               Submit

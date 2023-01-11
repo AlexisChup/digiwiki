@@ -51,6 +51,7 @@ export default function AddToolForm(props) {
       name.length &&
       url.length &&
       shortDescription.length &&
+      shortDescription.length < 80 &&
       description.length &&
       affiliateRef.length
     );
@@ -295,7 +296,7 @@ export default function AddToolForm(props) {
           Fermer
         </Button>
         <Button
-          disabled={!isFormIsValid()}
+          disabled={props.isRequesting || !isFormIsValid()}
           variant="success"
           onClick={() => props.handleClose(true, formTool)}
           size="sm"

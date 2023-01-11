@@ -57,6 +57,15 @@ export default function Signup() {
     setFormLogin({ ...formLogin, [key]: value });
   };
 
+  const isFormValid = () => {
+    let isFormValid = true;
+
+    isFormValid &= formLogin.email.length > 0;
+    isFormValid &= formLogin.password.length > 0;
+
+    return isFormValid;
+  };
+
   return (
     <div>
       <Row className="justify-content-center">
@@ -98,7 +107,7 @@ export default function Signup() {
           <Button
             type="submit"
             onClick={(e) => handleSubmit(e)}
-            disabled={isRequesting}
+            disabled={isRequesting || !isFormValid()}
             size="sm"
           >
             Submit

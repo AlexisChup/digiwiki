@@ -18,6 +18,7 @@ var toType = function (obj) {
 export default function EditTool(props) {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+  const [isRequesting, setIsRequesting] = useState(false);
 
   const getActiveSubCategoriesIds = () => {
     if (!props.tool.subCategories) {
@@ -82,6 +83,7 @@ export default function EditTool(props) {
 
   const handleClose = (isConfirmed, formEditTool) => {
     if (isConfirmed) {
+      setIsRequesting(true);
       let payload = {
         ...formEditTool,
         subCategoriesIdsToRemove: getSubCategoriesIdsToRemove(formEditTool),
@@ -115,7 +117,9 @@ export default function EditTool(props) {
             closeOnClick: true,
           });
         })
-        .finally(() => {});
+        .finally(() => {
+          setIsRequesting(false);
+        });
     } else {
       setShow(false);
     }
@@ -138,6 +142,7 @@ export default function EditTool(props) {
         handleClose={handleClose}
         initialStateForm={initialStateFormEditTool}
         type="EDIT"
+        isRequesting={isRequesting}
       />
     </div>
   );
