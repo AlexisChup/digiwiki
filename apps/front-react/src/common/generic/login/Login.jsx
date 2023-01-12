@@ -22,6 +22,7 @@ export default function Login() {
 
   let [isRequesting, setRequesting] = useState(false);
   let [formLogin, setFormLogin] = useState(initialFormLogin);
+  const [isCaptchaFilled, setIsCaptchaFilled] = useState(false);
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -97,6 +98,10 @@ export default function Login() {
 
     isFormValid &= formLogin.email.length > 0;
     isFormValid &= formLogin.password.length > 0;
+    console.log(
+      "captchaRef.current.getValue(): ",
+      captchaRef.current.getValue()
+    );
 
     return isFormValid;
   };
