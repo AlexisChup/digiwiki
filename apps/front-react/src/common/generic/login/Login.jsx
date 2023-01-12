@@ -93,15 +93,20 @@ export default function Login() {
     setFormLogin({ ...formLogin, [key]: value });
   };
 
+  const handleChangeOnCaptcha = (token) => {
+    if (token !== "") {
+      setIsCaptchaFilled(true);
+    } else {
+      setIsCaptchaFilled(false);
+    }
+  };
+
   const isFormValid = () => {
     let isFormValid = true;
 
     isFormValid &= formLogin.email.length > 0;
     isFormValid &= formLogin.password.length > 0;
-    console.log(
-      "captchaRef.current.getValue(): ",
-      captchaRef.current.getValue()
-    );
+    isFormValid &= isCaptchaFilled;
 
     return isFormValid;
   };
@@ -155,6 +160,7 @@ export default function Login() {
               <ReCAPTCHA
                 sitekey={process.env.REACT_APP_SITE_KEY}
                 ref={captchaRef}
+                onChange={handleChangeOnCaptcha}
               />
             </Form.Group>
             <Button
@@ -163,7 +169,7 @@ export default function Login() {
               disabled={isRequesting || !isFormValid()}
               size="sm"
             >
-              Submit
+              Connexion
             </Button>
           </Form>
         </div>
