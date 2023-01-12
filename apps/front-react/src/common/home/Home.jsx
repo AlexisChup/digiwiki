@@ -15,7 +15,7 @@ export default function Home() {
 
   useEffect(() => {
     const handleMobileView = () => {
-      if (window.innerWidth < 720) {
+      if (window.innerWidth < 820) {
         setMobileView(true);
       } else {
         setMobileView(false);
@@ -37,6 +37,8 @@ export default function Home() {
           "landingbackground1",
           "landingpage"
         )})`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: 'cover'
       }}
     >
       {/* <Image
@@ -61,43 +63,98 @@ export default function Home() {
       >
         <div className="row mx-0 flex-grow-1 h-100">
           <div className="col px-0" style={{ minWidth: "300px" }}>
-            <div className="row h-100 mx-0 flex-grow-1">TEXT </div>
+            <div className="row d-flex flex-column mx-0 flex-grow-1" style={{ height: "40%" }}></div>
+            <div className="row rows-col-5 mx-0 flex-grow-1">
+              <div className="col mx-0 flex-grow-1"> </div>
+              <div className="col d-flex flex-column mx-0 flex-grow-1">
+                <h1 className="display-1 headings-font-weight">DigiWiki</h1> 
+                <p className="headings-font-weight">Le site qui vous aide à trouver l'outil adapté à tous vos besoins.</p>
+                <Button class="btn btn-outline-primary btn-lg" onClick={() => navigate("/explorer")}>Explorer</Button>
+              </div>
+              <div className="col mx-0 flex-grow-1"> </div>
+              <div className="col mx-0 flex-grow-1"> </div>
+              <div className="col mx-0 flex-grow-1"> </div>
+            </div>
+            <div className="row rows-col-3 d-flex flex-column mx-0" style={{ height: "5%"}}>
+              <div className="col mx-0 flex-grow-1"> </div>
+              <div className="col mx-0 flex-grow-1"> </div>
+              <div className="col mx-0 flex-grow-1 align-items-end"> 
+              </div>
+            </div>
+            <div className="row rows-col-3 align-items-end mx-0">
+              <div className="col mx-0 flex-grow-1"style={{ height: "60%"}}> </div>
+              <div className="col mx-0 flex-grow-1"> </div>
+              <div className="col mx-0 flex-grow-1 align-items-end"> 
+                <Image
+                  src={safeSrcImg("manalone", "landingpage")}
+                  style={{ height: "110%", width: "auto" }}
+                />
+              </div>
+            </div>
           </div>
           {mobileView ? null : (
             <div className="col-7 px-0">
-              <div className="row h-100 flex-grow-1 mx-0 bg-success row-cols-lg-6 row-cols-md-3 row-cols-1">
-                <div className="col d-flex bg-warning justify-content-center align-content-center align-items-center">
+              <div className="row h-100 flex-grow-1 mx-0 row-cols-lg-6 row-cols-md-3 row-cols-1">
+                <div className="col d-flex justify-content-center align-content-center align-items-center">
                   <MouseParallaxChild
                     factorX={0.5}
                     factorY={0.3}
                     className=""
-                    // style={{
-                    //   display: "flex",
-                    //   alignItems: "center",
-                    //   justifyContent: "center",
-                    //   width: "auto",
-                    //   height: "105%",
-                    // }}
                   >
                     <div>
                       <Image
-                        src={safeSrcImg("branding", "sub-categories")}
-                        style={{ height: "80px", width: "auto" }}
+                        src={safeSrcImg("data-science", "sub-categories")}
+                        style={{ height: "90px", width: "auto" }}
                       />
                     </div>
+                    <div className="row flex-grow-1"></div>
                   </MouseParallaxChild>
                 </div>
-                <div className="col d-flex bg-warning justify-content-center align-content-center align-items-center">
-                  <div className="row flex-grow-1">
+                <div className="row d-flex align-content-center">
+                  <div className="row mx-0 flex-grow-1" style={{ height: "2%" }}></div>
+                  <div className="row flex-grow-1"style={{ height: "55%" }}>
                     <MouseParallaxChild
-                      factorX={0.3}
-                      factorY={0.5}
+                      factorX={0.4}
+                      factorY={0.3}
                       className=""
                     >
                       <div>
                         <Image
-                          src={safeSrcImg("branding", "sub-categories")}
-                          style={{ height: "80px", width: "auto" }}
+                          src={safeSrcImg("ai-general", "sub-categories")}
+                          style={{ height: "90px", width: "auto" }}
+                        />
+                      </div>
+                    </MouseParallaxChild>
+                  </div>
+                  <div className="row flex-grow-1 ">
+                    <MouseParallaxChild
+                      factorX={0.3}
+                      factorY={0.6}
+                      className=""
+                    >
+                      <div>
+                        <Image
+                          src={safeSrcImg("ai-programming", "sub-categories")}
+                          style={{ height: "90px", width: "auto" }}
+                        />
+                      </div>
+                    </MouseParallaxChild>
+                  </div>
+                 
+                  <div className="row flex-grow-1"></div>
+                </div>
+                <div className="row d-flex  ">
+                  <div className="row mx-0 flex-grow-1" style={{ height: "20%" }}></div>
+                  <div className="row flex-grow-1 ">
+                    <MouseParallaxChild
+                      factorX={0.4}
+                      factorY={0.3}
+                      className=""
+                    >
+                      <div>
+                        <Image
+                          src={safeSrcImg("finances", "categories")}
+                          style={{ height: "90px", width: "auto" }}
                         />
                       </div>
                     </MouseParallaxChild>
@@ -105,10 +162,105 @@ export default function Home() {
                   <div className="row flex-grow-1"></div>
                   <div className="row flex-grow-1"></div>
                 </div>
-                <div className="col bg-warning">Une</div>
-                <div className="col bg-warning">Une</div>
-                <div className="col bg-warning">Une</div>
-                <div className="col bg-warning">Une</div>
+                <div className="row d-flex">
+                <div className="row mx-0 flex-grow-1" style={{ height: "5%" }}></div>
+                  <div className="row flex-grow-1 " style={{ height: "40%" }}>
+                    <MouseParallaxChild
+                      factorX={0.4}
+                      factorY={0.5}
+                      className=""
+                    >
+                      <div>
+                        <Image
+                          src={safeSrcImg("social-network-marketing", "sub-categories")}
+                          style={{ height: "100px", width: "auto" }}
+                        />
+                      </div>
+                    </MouseParallaxChild>
+                  </div>
+                  <div className="row flex-grow-1 ">
+                    <MouseParallaxChild
+                      factorX={0.2}
+                      factorY={0.4}
+                      className=""
+                    >
+                      <div>
+                        <Image
+                          src={safeSrcImg("technical-analysis", "sub-categories")}
+                          style={{ height: "95px", width: "auto" }}
+                        />
+                      </div>
+                    </MouseParallaxChild>
+                  </div>
+                  <div className="row flex-grow-1"></div>
+                  <div className="row flex-grow-1"></div>
+                </div>
+                <div className="row d-flex align-content-center">
+                  <div className="row mx-0 flex-grow-1" style={{ height: "25%" }}></div>
+                  <div className="row flex-grow-1 " style={{ height: "45%" }}>
+                    <MouseParallaxChild
+                      factorX={0.3}
+                      factorY={0.5}
+                      className=""
+                    >
+                      <div>
+                        <Image
+                          src={safeSrcImg("learning", "sub-categories")}
+                          style={{ height: "90px", width: "auto" }}
+                        />
+                      </div>
+                    </MouseParallaxChild>
+                  </div>
+                  <div className="row flex-grow-1 ">
+                    <MouseParallaxChild
+                      factorX={0.6}
+                      factorY={0.4}
+                      className=""
+                    >
+                      <div>
+                        <Image
+                          src={safeSrcImg("growth-tips", "sub-categories")}
+                          style={{ height: "100px", width: "auto" }}
+                        />
+                      </div>
+                    </MouseParallaxChild>
+                  </div>
+                  <div className="row flex-grow-1"></div>
+                  <div className="row flex-grow-1"></div>
+                </div>
+                <div className="row d-flex align-content-center">
+                  <div className="row mx-0 flex-grow-1" style={{ height: "1%" }}></div>
+                  <div className="row flex-grow-1 "style={{ height: "45%" }}>
+                    <MouseParallaxChild
+                      factorX={0.5}
+                      factorY={0.3}
+                      className=""
+                    >
+                      <div>
+                        <Image
+                          src={safeSrcImg("fundamental-analysis", "sub-categories")}
+                          style={{ height: "95px", width: "auto" }}
+                        />
+                      </div>
+                    </MouseParallaxChild>
+                  </div>
+                  <div className="row flex-grow-1 ">
+                    <MouseParallaxChild
+                      factorX={0.4}
+                      factorY={0.2}
+                      className=""
+                    >
+                      <div>
+                        <Image
+                          src={safeSrcImg("marketing", "categories")}
+                          style={{ height: "100px", width: "auto" }}
+                        />
+                      </div>
+                    </MouseParallaxChild>
+                  </div>
+                  <div className="row flex-grow-1"></div>
+                  <div className="row flex-grow-1"></div>
+                </div>
               </div>
             </div>
           )}
