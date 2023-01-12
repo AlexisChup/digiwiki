@@ -9,7 +9,7 @@ export default function Header() {
   return (
     <header>
       <nav className="d-flex justify-content-between align-content-center flex-row p-3 shadow mb-3">
-        <div className="ml-3">
+        <div className="ml-3" style={{margin: "0 0 0 2%"}}>
           <NavLink
             to=""
             className={({ isActive }) =>
@@ -19,8 +19,8 @@ export default function Header() {
             DigiWiki
           </NavLink>
         </div>
-        <div className="d-flex flex-row">
-          <div className="ml-2">
+        <div className="d-flex flex-row" style={{margin: "0 4% 0 0"}}>
+          <div className="ml-2" style={{margin: "0 0 0 0"}}>
             <NavLink
               to="explorer"
               className={({ isActive }) =>
@@ -30,7 +30,7 @@ export default function Header() {
               Explorer
             </NavLink>
           </div>
-          <div className="ml-2">
+          <div className="ml-2" style={{margin: "0 0 0 4%"}}>
             <NavLink
               to="about"
               className={({ isActive }) =>
@@ -40,7 +40,7 @@ export default function Header() {
               About
             </NavLink>
           </div>
-          <div className="ml-2">
+          <div className="ml-2" style={{margin: "0 0 0 4%"}}>
             <NavLink
               to="contact"
               className={({ isActive }) =>
@@ -52,7 +52,7 @@ export default function Header() {
           </div>
 
           {isAuthenticated ? (
-            <div className="ml-2">
+            <div className="ml-2" style={{margin: "0 0 0 3%"}}>
               <NavLink
                 to="dashboard"
                 className={({ isActive }) =>
@@ -64,7 +64,7 @@ export default function Header() {
             </div>
           ) : (
             <>
-              <div className="ml-2">
+              <div className="ml-2" style={{margin: "0 0 0 3%"}}>
                 <NavLink
                   to="auth"
                   className={({ isActive }) =>
