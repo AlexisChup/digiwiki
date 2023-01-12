@@ -28,21 +28,23 @@ export default function ListCategories() {
 
   return (
     <div className="container h-100 d-flex flex-column">
-      <div className="row justify-content-center" style={{ height: "80px" }}>
+      <div
+        className="d-flex flex-row justify-content-between align-content-center align-items-center"
+        style={{ height: "80px" }}
+      >
         <div className="d-flex align-items-center">
           <h1 className="font-weight-bold">Choisir une catégorie</h1>
         </div>
+        {isRequesting ? <Spinner /> : null}
       </div>
       <hr className="solid" />
-      <div className="container h-100 px-0">
-        <div class="row row-cols-md-3 row-cols-1 g-2">
-          {!categories ? (
-            <Spinner />
-          ) : (
-            categories.map((category, index) => {
-              return <CategoryItem key={category.id} category={category} />;
-            })
-          )}
+      <div>
+        <div className="row row-cols-md-3 row-cols-1 g-2">
+          {!categories || isRequesting
+            ? null
+            : categories.map((category, index) => {
+                return <CategoryItem key={category.id} category={category} />;
+              })}
         </div>
       </div>
     </div>

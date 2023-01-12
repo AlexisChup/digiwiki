@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./Logout.css";
 import { useDispatch } from "react-redux";
 import LogoutModal from "./logout-modal/LogoutModal";
 import { logout } from "../../../features/auth/authSlice";

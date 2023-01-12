@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import "./ListTools.css";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { AXIOS } from "../../app/axios-http";
@@ -7,7 +6,6 @@ import { setCategories } from "../../features/categories/categoriesSlice";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import ToolItem from "./tool-item/ToolItem";
-import AddTool from "./admin/AddTool";
 import Spinner from "../generic/spinner/Spinner";
 import { safeSrcImg } from "../../utils/image";
 import AdminHeaderListTools from "./admin/AdminHeaderListTools";
@@ -127,22 +125,23 @@ export default function ListTools() {
       {isToolsFound ? (
         <div className="row justify-content-center">
           <div className="d-flex flex-row align-content-center">
-            <div className="d-flex align-items-center mr-3">
+            <div className="d-flex align-items-center me-3">
               <Button
                 variant="outline-primary"
                 className=""
                 onClick={() => navigate(-1)}
+                size="sm"
               >
                 Retour
               </Button>
             </div>
             <div
-              className="d-flex align-items-center mr-3"
+              className="d-flex align-items-center me-3"
               style={{ height: "80px" }}
             >
               <Image
                 src={safeSrcImg(subCategory.url, "sub-categories")}
-                style={{ height: "80%", width: "auto" }}
+                className="logo-list-header"
               />
             </div>
             <div className="d-flex align-items-center">
@@ -151,36 +150,40 @@ export default function ListTools() {
           </div>
         </div>
       ) : (
-        <Spinner />
+        <div className="d-flex justify-content-center">
+          <Spinner />
+        </div>
       )}
 
       <hr className="solid" />
-      {isToolsFound ? (
-        subCategory.tools.length > 0 ? (
-          <div className="row justify-content-center flex-column">
-            {subCategory.tools.map((tool, index) => (
-              <ToolItem
-                urlCategory={urlCategory}
-                urlSubCategory={urlSubCategory}
-                tool={tool}
-                key={tool.id}
-                isAuthenticated={isAuthenticated}
-                user={user}
-                subCategoryId={subCategory.id}
-              />
-            ))}
-          </div>
-        ) : (
-          <div className="col p-0">
-            <div className="d-flex rounded my-1 justify-content-between align-content-center align-self-center shadow py-3 px-3">
-              <div className="d-flex align-items-center">
-                <p className="my-0">Pas encore d'outil</p>
-              </div>
-              <div></div>
+      <div className="container h-100 px-0">
+        {isToolsFound ? (
+          subCategory.tools.length > 0 ? (
+            <div className="row row-cols-1 g-2">
+              {subCategory.tools.map((tool, index) => (
+                <ToolItem
+                  urlCategory={urlCategory}
+                  urlSubCategory={urlSubCategory}
+                  tool={tool}
+                  key={tool.id}
+                  isAuthenticated={isAuthenticated}
+                  user={user}
+                  subCategoryId={subCategory.id}
+                />
+              ))}
             </div>
-          </div>
-        )
-      ) : null}
+          ) : (
+            <div className="col p-0">
+              <div className="d-flex rounded my-1 justify-content-between align-content-center align-self-center shadow py-3 px-3">
+                <div className="d-flex align-items-center">
+                  <p className="my-0">Pas encore d'outil</p>
+                </div>
+                <div></div>
+              </div>
+            </div>
+          )
+        ) : null}
+      </div>
     </div>
   );
 }

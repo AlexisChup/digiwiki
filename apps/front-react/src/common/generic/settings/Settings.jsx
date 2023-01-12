@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-
 import Logout from "../logout/Logout";
-import "./Settings.css";
 import ResetPassword from "./reset-password/ResetPassword";
 
 export default function Settings() {

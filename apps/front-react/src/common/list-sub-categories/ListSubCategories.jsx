@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./ListSubCategories.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AXIOS } from "../../app/axios-http";
@@ -89,22 +88,23 @@ export default function ListSubCategories() {
       {isSubCategoriesFound ? (
         <div className="row justify-content-center">
           <div className="d-flex align-content-center">
-            <div className="d-flex align-items-center mr-3">
+            <div className="d-flex align-items-center me-3">
               <Button
                 variant="outline-primary"
                 className=""
                 onClick={() => navigate("/explorer")}
+                size="sm"
               >
                 Retour
               </Button>
             </div>
             <div
-              className="d-flex align-items-center mr-3"
+              className="d-flex align-items-center me-3"
               style={{ height: "80px" }}
             >
               <Image
                 src={safeSrcImg(category.url, "categories")}
-                style={{ height: "80%", width: "auto" }}
+                className="logo-list-header"
               />
             </div>
             <div className="d-flex align-items-center">
@@ -113,7 +113,9 @@ export default function ListSubCategories() {
           </div>
         </div>
       ) : (
-        <Spinner />
+        <div className="d-flex justify-content-center">
+          <Spinner />
+        </div>
       )}
 
       <hr className="solid" />
@@ -131,7 +133,7 @@ export default function ListSubCategories() {
           </div>
         ) : (
           <div className="container h-100 px-0">
-            <div class="row row-cols-md-3 row-cols-1 g-2">
+            <div className="row row-cols-md-3 row-cols-1 g-2">
               {category.subCategories.map((subCategory, index) => {
                 return (
                   <SubCategoryItem

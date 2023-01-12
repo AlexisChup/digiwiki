@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./EditTool.css";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
+import { FaPen } from "react-icons/fa";
 import { setCategories } from "../../../features/categories/categoriesSlice";
 import { AXIOS } from "../../../app/axios-http";
 import Modal from "react-bootstrap/Modal";
@@ -18,6 +18,7 @@ var toType = function (obj) {
 export default function EditTool(props) {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+  const [isRequesting, setIsRequesting] = useState(false);
 
   const getActiveSubCategoriesIds = () => {
     if (!props.tool.subCategories) {
@@ -63,9 +64,7 @@ export default function EditTool(props) {
     initialSubCategoriesIds: getActiveSubCategoriesIds(),
   };
 
-  const [formEditTool, setformEditTool] = useState(initialStateFormEditTool);
-
-  const getSubCategoriesIdsToRemove = () => {
+  const getSubCategoriesIdsToRemove = (formEditTool) => {
     let subCategoriesIdsToRemove = [];
 
     for (
@@ -82,11 +81,12 @@ export default function EditTool(props) {
     return subCategoriesIdsToRemove;
   };
 
-  const handleClose = (isConfirmed) => {
+  const handleClose = (isConfirmed, formEditTool) => {
     if (isConfirmed) {
+      setIsRequesting(true);
       let payload = {
         ...formEditTool,
-        subCategoriesIdsToRemove: getSubCategoriesIdsToRemove(),
+        subCategoriesIdsToRemove: getSubCategoriesIdsToRemove(formEditTool),
       };
 
       const id = toast.loading("Please wait...");
@@ -117,7 +117,9 @@ export default function EditTool(props) {
             closeOnClick: true,
           });
         })
-        .finally(() => {});
+        .finally(() => {
+          setIsRequesting(false);
+        });
     } else {
       setShow(false);
     }
@@ -127,53 +129,21 @@ export default function EditTool(props) {
     setShow(true);
   };
 
-  const handleFormEditTool = (key, value) => {
-    setformEditTool({ ...formEditTool, [key]: value });
-  };
-
-  const isFormIsValid = () => {
-    const { name, url, shortDescription, description, affiliateRef } =
-      formEditTool;
-
-    return (
-      name.length &&
-      url.length &&
-      shortDescription.length &&
-      description.length &&
-      affiliateRef.length
-    );
-  };
-
   return (
-    <div className="mr-3">
+    <div className="me-3">
       <div>
-        <Button variant="warning" onClick={handleShow}>
-          Modifier
+        <Button size="sm" variant="warning" onClick={handleShow}>
+          <FaPen />
         </Button>
       </div>
-      <Modal show={show} onHide={() => handleClose(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Editer {props.tool.name}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <AddToolForm
-            handleFormAddTool={handleFormEditTool}
-            formAddTool={formEditTool}
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => handleClose(false)}>
-            Fermer
-          </Button>
-          <Button
-            disabled={!isFormIsValid()}
-            variant="success"
-            onClick={() => handleClose(true)}
-          >
-            Confirmer
-          </Button>
-        </Modal.Footer>
-      </Modal>
+
+      <AddToolForm
+        show={show}
+        handleClose={handleClose}
+        initialStateForm={initialStateFormEditTool}
+        type="EDIT"
+        isRequesting={isRequesting}
+      />
     </div>
   );
 }

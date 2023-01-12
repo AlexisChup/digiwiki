@@ -47,6 +47,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+        - { path: ^/api/captcha/check, roles: PUBLIC_ACCESS}
         # - { path: ^/api/user/register, roles: PUBLIC_ACCESS } use later
         - { path: ^/api/public, roles: PUBLIC_ACCESS }
         - { path: ^/api/user, roles: ROLE_USER }

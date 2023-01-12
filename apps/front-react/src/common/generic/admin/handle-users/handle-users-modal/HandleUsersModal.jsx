@@ -1,5 +1,4 @@
 import React from "react";
-import "./HandleUsersModal.css";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -9,6 +8,17 @@ export default function HandleUsersModal(props) {
     props.formUser.user;
   const { type } = props.formUser;
   const { show } = props;
+
+  const isFormValid = () => {
+    let isFormValid = true;
+
+    if (type === "ADD") {
+      isFormValid &= email.length > 0;
+      isFormValid &= password.length > 0;
+    }
+
+    return isFormValid;
+  };
 
   return (
     <Modal show={show} onHide={() => props.handleClose(false)} keyboard={false}>
@@ -74,7 +84,7 @@ export default function HandleUsersModal(props) {
           Close
         </Button>
         <Button
-          disabled={!(password.length > 0 && email.length > 0)}
+          disabled={!isFormValid()}
           variant="primary"
           onClick={() => props.handleClose(true)}
         >

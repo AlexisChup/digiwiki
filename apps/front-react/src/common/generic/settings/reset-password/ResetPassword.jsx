@@ -48,6 +48,14 @@ export default function ResetPassword(props) {
       .finally(() => props.setIsRequesting(false));
   };
 
+  const isFormValid = () => {
+    let isFormValid = true;
+
+    isFormValid &= password.length > 0;
+
+    return isFormValid;
+  };
+
   return (
     <div>
       <h3>Reset Password</h3>
@@ -65,15 +73,15 @@ export default function ResetPassword(props) {
         <Form.Label id="reset-password-help" className="form-text text-muted">
           8 characters
         </Form.Label>
-        <Button
-          disabled={props.isRequesting}
-          variant="warning"
-          size="sm"
-          onClick={handleShow}
-        >
-          Reset
-        </Button>
       </Form>
+      <Button
+        disabled={props.isRequesting || !isFormValid()}
+        variant="warning"
+        size="sm"
+        onClick={handleShow}
+      >
+        Reset
+      </Button>
       <ResetPasswordModal
         show={show}
         handleClose={handleClose}

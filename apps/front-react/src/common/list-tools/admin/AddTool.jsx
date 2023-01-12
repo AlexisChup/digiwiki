@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./AddTool.css";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
+import { FaPlus } from "react-icons/fa";
 import { setCategories } from "../../../features/categories/categoriesSlice";
 import { AXIOS } from "../../../app/axios-http";
 import Modal from "react-bootstrap/Modal";
@@ -11,6 +11,7 @@ import AddToolForm from "../../tool/form/AddToolForm";
 export default function AddTool(props) {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+  const [isRequesting, setIsRequesting] = useState(false);
 
   const getActiveSubCategoriesIds = () => {
     if (!props.tool.subCategories) {
@@ -38,7 +39,7 @@ export default function AddTool(props) {
     initialSubCategoriesIds: [],
   };
 
-  const getSubCategoriesIdsToRemove = () => {
+  const getSubCategoriesIdsToRemove = (formAddTool) => {
     let subCategoriesIdsToRemove = [];
 
     for (
@@ -55,13 +56,12 @@ export default function AddTool(props) {
     return subCategoriesIdsToRemove;
   };
 
-  const [formAddTool, setformAddTool] = useState(initialStateFormAddTool);
-
-  const handleClose = (isConfirmed) => {
+  const handleClose = (isConfirmed, formAddTool) => {
     if (isConfirmed) {
+      setIsRequesting(true);
       let payload = {
         ...formAddTool,
-        subCategoriesIdsToRemove: getSubCategoriesIdsToRemove(),
+        subCategoriesIdsToRemove: getSubCategoriesIdsToRemove(formAddTool),
       };
 
       const id = toast.loading("Please wait...");
@@ -91,7 +91,9 @@ export default function AddTool(props) {
           });
           console.log(err);
         })
-        .finally(() => {});
+        .finally(() => {
+          setIsRequesting(false);
+        });
     } else {
       setShow(false);
     }
@@ -101,53 +103,20 @@ export default function AddTool(props) {
     setShow(true);
   };
 
-  const handleFormAddTool = (key, value) => {
-    setformAddTool({ ...formAddTool, [key]: value });
-  };
-
-  const isFormIsValid = () => {
-    const { name, url, shortDescription, description, affiliateRef } =
-      formAddTool;
-
-    return (
-      name.length &&
-      url.length &&
-      shortDescription.length &&
-      description.length &&
-      affiliateRef.length
-    );
-  };
-
   return (
-    <div className="mr-3">
+    <div className="me-3">
       <div>
-        <Button variant="success" onClick={handleShow}>
-          Ajouter un outil
+        <Button variant="success" size="sm" onClick={handleShow}>
+          <FaPlus /> Outil
         </Button>
       </div>
-      <Modal show={show} onHide={() => handleClose(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Ajouter un nouveau outil</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <AddToolForm
-            handleFormAddTool={handleFormAddTool}
-            formAddTool={formAddTool}
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => handleClose(false)}>
-            Fermer
-          </Button>
-          <Button
-            disabled={!isFormIsValid()}
-            variant="success"
-            onClick={() => handleClose(true)}
-          >
-            Confirmer
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <AddToolForm
+        initialStateForm={initialStateFormAddTool}
+        show={show}
+        handleClose={handleClose}
+        type="ADD"
+        isRequesting={isRequesting}
+      />
     </div>
   );
 }

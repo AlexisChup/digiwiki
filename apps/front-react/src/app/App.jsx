@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import { BrowserRouter } from "react-router-dom";
 import Header from "../common/generic/header/Header";
@@ -8,6 +8,7 @@ import AuthVerify from "../common/generic/auth/AuthVerify";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import "../common/style/common.scss";
 
 export default function App() {
   return (

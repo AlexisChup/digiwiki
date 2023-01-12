@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./EditSubCategory.css";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
+import { FaPen } from "react-icons/fa";
 import { setCategories } from "../../../features/categories/categoriesSlice";
 import { AXIOS } from "../../../app/axios-http";
 import Modal from "react-bootstrap/Modal";
@@ -18,6 +18,7 @@ var toType = function (obj) {
 export default function EditSubCategory(props) {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+  const [isRequesting, setIsRequesting] = useState(false);
 
   const getActiveCategoriesIds = () => {
     if (!props.subCategory.category) {
@@ -79,6 +80,7 @@ export default function EditSubCategory(props) {
 
   const handleClose = (isConfirmed) => {
     if (isConfirmed) {
+      setIsRequesting(true);
       const id = toast.loading("Please wait...");
 
       let payload = { ...formSubCategory };
@@ -113,7 +115,9 @@ export default function EditSubCategory(props) {
             closeOnClick: true,
           });
         })
-        .finally(() => {});
+        .finally(() => {
+          setIsRequesting(false);
+        });
     } else {
       setShow(false);
     }
@@ -134,10 +138,10 @@ export default function EditSubCategory(props) {
   };
 
   return (
-    <div className="mr-3">
+    <div className="me-3">
       <div>
-        <Button variant="warning" onClick={handleShow}>
-          Editer la sous catégorie
+        <Button variant="warning" onClick={handleShow} size="sm">
+          <FaPen /> SubCat
         </Button>
       </div>
       <Modal show={show} onHide={() => handleClose(false)}>
@@ -151,13 +155,18 @@ export default function EditSubCategory(props) {
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => handleClose(false)}>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => handleClose(false)}
+          >
             Fermer
           </Button>
           <Button
-            disabled={!isFormIsValid()}
+            disabled={isRequesting || !isFormIsValid()}
             variant="success"
             onClick={() => handleClose(true)}
+            size="sm"
           >
             Confirmer
           </Button>

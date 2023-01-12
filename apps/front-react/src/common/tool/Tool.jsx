@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import "./Tool.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import DOMPurify from "isomorphic-dompurify";
 import { AXIOS } from "../../app/axios-http";
 import { setCategories } from "../../features/categories/categoriesSlice";
 import Button from "react-bootstrap/Button";
@@ -127,25 +127,33 @@ export default function Tool() {
   return (
     <div className="container h-100 d-flex flex-column">
       {isToolFound ? (
-        <div className="row justify-content-between">
-          <div className="col-2">
-            <Button
-              variant="outline-primary"
-              className="mb-2"
-              onClick={() => navigate(-1)}
-            >
-              Retour
-            </Button>
-          </div>
-          <div className="col-8 shadow p-3 rounded">
+        <div className="row justify-content-between mx-3">
+          <div className="col shadow p-3 rounded mx-auto">
+            <div className="d-flex flex-row justify-content-between">
+              <div>
+                <Button
+                  variant="outline-primary"
+                  className="mb-2"
+                  onClick={() => navigate(-1)}
+                  size="sm"
+                >
+                  Retour
+                </Button>
+              </div>
+              <div>
+                <a href={tool.affiliateRef} target="_blank">
+                  <Button size="sm">Site Web</Button>
+                </a>
+              </div>
+            </div>
             <div className="d-flex flex-row">
               <div
-                className="d-flex align-items-center mr-3"
+                className="d-flex align-items-center me-3"
                 style={{ height: "80px" }}
               >
                 <Image
                   src={safeSrcImg(tool.imgUrl, "tools")}
-                  style={{ height: "80%", width: "auto" }}
+                  className="logo-tool-page"
                 />
               </div>
               <div className="d-flex flex-column justify-content-center">
@@ -155,34 +163,36 @@ export default function Tool() {
                 <div>{tool.shortDescription}</div>
               </div>
             </div>
-            <div>
-              <p>{tool.description}</p>
-            </div>
+            {
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(tool.description),
+                }}
+              />
+            }
             <div className="row justify-content-between">
               <div className="col">
                 <Button
                   variant="outline-primary"
                   className="mb-2"
                   onClick={() => navigate(-1)}
+                  size="sm"
                 >
                   Retour
                 </Button>
               </div>
               <div className="col text-end">
                 <a href={tool.affiliateRef} target="_blank">
-                  <Button>Site Web</Button>
+                  <Button size="sm">Site Web</Button>
                 </a>
               </div>
             </div>
           </div>
-          <div className="col-2 text-end">
-            <a href={tool.affiliateRef} target="_blank">
-              <Button>Site Web</Button>
-            </a>
-          </div>
         </div>
       ) : (
-        <Spinner />
+        <div className="d-flex justify-content-center">
+          <Spinner />
+        </div>
       )}
 
       <div className="row justify-content-center"></div>

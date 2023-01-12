@@ -17,15 +17,19 @@ export default function Contact() {
   const placeHolderInput =
     "Bonjour ! \nJe connais un outil génial pour mieux gérer ses finances, voici le lien :\nhttps://mon-outil-genial.com.\n\nBonne journée ! :)";
 
+  const isFormValid = () => {
+    let isFormValid = true;
+
+    isFormValid &= message.length > 0;
+
+    return isFormValid;
+  };
+
   return (
     <div className="container ">
-      <div className="row justify-content-center">
-        <div>
-          <h1>Contact</h1>
-        </div>
-      </div>
       <div className="row">
-        <div className="col-6">
+        <div className="col-6 mx-auto col-6-resized-md">
+          <h1>Contact</h1>
           <Form>
             <Form.Group className="">
               <Form.Label className="small">Choisissez un topic</Form.Label>
@@ -55,7 +59,9 @@ export default function Contact() {
             <Button
               variant="primary"
               type="submit"
+              size="sm"
               className="mt-2 btn-submit-href"
+              disabled={!isFormValid()}
             >
               <a
                 href={
