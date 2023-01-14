@@ -22,7 +22,6 @@ class UserController extends AbstractController
     public function __construct(private SerializerInterface $serializer)
     {
     }
-
     // Not used for now
 //    #[Route('/register', name: 'user_register', methods: 'POST')]
 //    public function register(UserRepository $userRepo, Request $request, UserPasswordHasherInterface $passwordHasher, JWTTokenManagerInterface $JWTManager): Response
