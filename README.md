@@ -88,3 +88,7 @@ See [SymfonyDoc](https://symfony.com/doc/current/doctrine.html) for more
 
 1. Run `docker exec -it front-react sh`
 2. Run `npm install my-lib`
+
+## Production
+
+heroku git:remote -a <app-name>
