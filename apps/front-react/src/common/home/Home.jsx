@@ -67,9 +67,18 @@ export default function Home() {
             <div className="row rows-col-5 mx-0 flex-grow-1">
               <div className="col mx-0 flex-grow-1"> </div>
               <div className="col d-flex flex-column mx-0 flex-grow-1">
-                <h1 className="display-1 headings-font-weight">DigiWiki</h1> 
-                <p className="headings-font-weight">Le site qui vous aide à trouver l'outil adapté à tous vos besoins.</p>
-                <Button class="btn btn-outline-primary btn-lg" onClick={() => navigate("/explorer")}>Explorer</Button>
+                <h1 className="display-1 headings-font-weight">
+                  DigiWiki
+                </h1> 
+                <p className="headings-font-weight">
+                  Le site qui vous aide à trouver l'outil adapté à tous vos besoins.
+                </p>
+                <Button 
+                  class="btn btn-outline-primary btn-lg" 
+                  variant="outline-primary" 
+                  onClick={() => navigate("/explorer")}>
+                    Explorer
+                </Button>
               </div>
               <div className="col mx-0 flex-grow-1"> </div>
               <div className="col mx-0 flex-grow-1"> </div>

@@ -4,6 +4,13 @@ body,
   margin: 0px;
   height: 100%;
   width: 100%;
+
+  cursor: none;
+
+  --color-cursor: 16, 97, 154;
+  --cursor-outline-shade: 0.3;
+  --cursor-size: 10px;
+  --cursor-outline-size: 12px;
 }
 #app-content {
   display: flex;
@@ -43,3 +50,6 @@ div {
   user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
+
+
+

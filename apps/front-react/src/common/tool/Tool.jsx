@@ -135,14 +135,14 @@ export default function Tool() {
                   variant="outline-primary"
                   className="mb-2"
                   onClick={() => navigate(-1)}
-                  size="sm"
+                  size="md"
                 >
                   Retour
                 </Button>
               </div>
               <div>
                 <a href={tool.affiliateRef} target="_blank">
-                  <Button size="sm">Site Web</Button>
+                  <Button size="md">Site Web</Button>
                 </a>
               </div>
             </div>
@@ -170,7 +170,7 @@ export default function Tool() {
                 }}
               />
             }
-            <div className="row justify-content-between">
+            {/*<div className="row justify-content-between">
               <div className="col">
                 <Button
                   variant="outline-primary"
@@ -186,7 +186,7 @@ export default function Tool() {
                   <Button size="sm">Site Web</Button>
                 </a>
               </div>
-            </div>
+          </div>*/}
           </div>
         </div>
       ) : (

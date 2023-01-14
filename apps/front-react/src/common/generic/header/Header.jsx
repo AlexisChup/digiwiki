@@ -7,14 +7,14 @@ import { FaUserCircle } from "react-icons/fa";
 export default function Header() {
   const { isAuthenticated } = useSelector((state) => state.auth);
 
-  const commonClassNameNavLink = "me-2";
+  const commonClassNameNavLink = "me-4";
 
   return (
     <header>
       <Navbar
         collapseOnSelect
         expand="md"
-        className="d-flex justify-content-between align-content-center flex-row p-3 shadow mb-3"
+        className="d-flex fixed justify-content-between align-content-center flex-row p-3 shadow mb-3"
       >
         <Navbar.Brand className="ms-3">
           <NavLink

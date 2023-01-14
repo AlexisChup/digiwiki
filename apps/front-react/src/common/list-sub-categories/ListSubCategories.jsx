@@ -93,7 +93,7 @@ export default function ListSubCategories() {
                 variant="outline-primary"
                 className=""
                 onClick={() => navigate("/explorer")}
-                size="sm"
+                size="md"
               >
                 Retour
               </Button>

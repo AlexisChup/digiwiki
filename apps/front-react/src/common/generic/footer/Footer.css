@@ -1,10 +1,10 @@
 .navbar-navlink-active {
-  color: #094067;
+  color: #0a446d;
   font-weight: bold;
 }
 
 .navbar-navlink {
-  color: #d1d1e9;
+  color: #10619a;
 }
 
 .navbar-navlink,
@@ -16,8 +16,8 @@
 }
 
 .navbar-navlink:hover {
-  color: #094067;
+  color: #1ea4c2;
 }
 .navbar-navlink-active:hover {
-  color: #094067;
+  color: #1ea4c2;
 }
