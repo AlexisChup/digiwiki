@@ -130,7 +130,7 @@ export default function ListTools() {
                 variant="outline-primary"
                 className=""
                 onClick={() => navigate(-1)}
-                size="sm"
+                size="md"
               >
                 Retour
               </Button>
