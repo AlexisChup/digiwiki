@@ -52,7 +52,7 @@ export default function Home() {
           (
             <div className="row mx-0 flex-grow-1 h-100">
               <div className="col px-0" style={{ minWidth: "300px" }}>
-                <div className="row" style={{ height: "30%" }}></div>
+                <div className="row" style={{ height: "20%" }}></div>
                 <div className="row mx-5 justify-content-center align-content-center align-items-center">
                   <div className="col d-flex flex-column mx-0">
                     <h1 className="mb-1 headings-font-weight">
