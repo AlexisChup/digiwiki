@@ -28,13 +28,13 @@ export default function Contact() {
   return (
     <div className="container ">
       <div className="row">
-        <div className="col-6 mx-auto col-6-resized-md">
+        <div className="col-9 mx-auto col-9-resized-md mt-3 mb-2">
           <h1>Contact</h1>
           <Form>
-            <Form.Group className="">
-              <Form.Label className="small">Choisissez un topic</Form.Label>
+            <Form.Group className="mt-3 mb-2 raleway">
+              <Form.Label className="medium mb-2 raleway">Choisissez un topic</Form.Label>
               <Form.Select
-                size="sm"
+                size="md"
                 value={topic}
                 onChange={(event) => setTopic(event.target.value)}
               >
@@ -44,10 +44,10 @@ export default function Contact() {
               </Form.Select>
             </Form.Group>
 
-            <Form.Group controlId="formMessage">
-              <Form.Label className="small">Message</Form.Label>
+            <Form.Group controlId="formMessage" className="raleway mb-2">
+              <Form.Label className="medium mb-2 raleway">Message</Form.Label>
               <Form.Control
-                size="sm"
+                size="md"
                 as="textarea"
                 rows="5"
                 placeholder={placeHolderInput}
@@ -59,7 +59,7 @@ export default function Contact() {
             <Button
               variant="primary"
               type="submit"
-              size="sm"
+              size="md"
               className="mt-2 btn-submit-href"
               disabled={!isFormValid()}
             >

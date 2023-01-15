@@ -27,6 +27,31 @@
   height: 70%;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: 'Raleway',
+    sans-serif;
+  margin: 0px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500&display=swap');
+p,
+a,
+ul,
+li {
+  font-family: 'Raleway';
+}
+
+.raleway {
+  font-family: 'Raleway';
+}
+.montserra{
+  font-family: 'Montserra';
+}
+
 @media (max-width: 765px) {
   .logo-list-header {
     width: auto;

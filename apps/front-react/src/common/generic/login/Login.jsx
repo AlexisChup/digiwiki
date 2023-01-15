@@ -105,12 +105,12 @@ export default function Login() {
     <div className="container ">
       <div className="row">
         <div className="col-6 mx-auto col-6-resized-md">
-          <h1>Connexion</h1>
+          <h1 className="mb-2">Connexion</h1>
           <Form>
             <Form.Group>
-              <Form.Label htmlFor="login-email">Adresse mail</Form.Label>
+              <Form.Label className="medium mb-2 raleway" htmlFor="login-email">Adresse mail</Form.Label>
               <Form.Control
-                size="sm"
+                size="md"
                 type="email"
                 className="form-control"
                 id="login-email"
@@ -119,32 +119,32 @@ export default function Login() {
                 onChange={(e) => handleFormLogin("email", e.target.value)}
                 value={formLogin.email}
               />
-              <small
+              {/*<small
                 id="login-email-help"
-                className="form-text text-muted mt-0"
+                className="form-text text-muted mt-0 medium mb-2 raleway"
               >
                 user@gmail.com
-              </small>
+              </small>*/}
             </Form.Group>
             <Form.Group className="my-2">
-              <Form.Label htmlFor="login-password">Mot de passe</Form.Label>
+              <Form.Label className="medium mb-2 raleway" htmlFor="login-password">Mot de passe</Form.Label>
               <Form.Control
-                size="sm"
+                size="md"
                 type="password"
                 autoComplete="on"
-                className="form-control"
+                className="form-control mb-2"
                 id="login-password"
                 aria-describedby="login-password-help"
                 placeholder="Password"
                 onChange={(e) => handleFormLogin("password", e.target.value)}
                 value={formLogin.password}
               />
-              <small
+              {/*<small
                 id="login-password-help"
-                className="form-text text-muted mt-0"
+                className="form-text text-muted mt-0 medium mb-2 raleway"
               >
                 user
-              </small>
+              </small>*/}
             </Form.Group>
             <Form.Group>
               <ReCAPTCHA
@@ -154,9 +154,10 @@ export default function Login() {
             </Form.Group>
             <Button
               type="submit"
+              className="mt-2 raleway"
               onClick={(e) => handleSubmit(e)}
               disabled={isRequesting || !isFormValid()}
-              size="sm"
+              size="mb"
             >
               Submit
             </Button>
