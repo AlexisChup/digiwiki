@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import { BrowserRouter } from "react-router-dom";
 import Header from "../common/generic/header/Header";
@@ -17,8 +17,8 @@ export default function App() {
       <AuthVerify />
       <div id="app-content">
         <Header id="header-content" />
-        <IndexRoutes />
-        <AnimatedCursor/>
+        <IndexRoutes />       
+             
         <Footer id="footer-content" />
         <ToastContainer autoClose={3000} position="bottom-right" />
       </div>

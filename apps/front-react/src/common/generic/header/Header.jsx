@@ -33,7 +33,7 @@ export default function Header() {
           <Nav className="me-auto">
             {/* <Nav.Link href="#serach">Search</Nav.Link> */}
           </Nav>
-          <Nav className="">
+          <Nav className="justify-content-center align-content-center align-items-center">
             <NavLink
               to="explorer"
               className={({ isActive }) =>

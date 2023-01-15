@@ -1,11 +1,11 @@
 
-import React, { useEffect, useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function useEventListener(eventName, handler, element = document) {
     const savedHandler = React.useRef()
-  
+
     React.useEffect(() => {
       savedHandler.current = handler
     }, [handler])
@@ -38,6 +38,7 @@ function useEventListener(eventName, handler, element = document) {
     outerScale = 3,
     innerScale = 0.7
   }) {
+
     const cursorOuterRef = React.useRef()
     const cursorInnerRef = React.useRef()
     const requestRef = React.useRef()
@@ -70,7 +71,7 @@ function useEventListener(eventName, handler, element = document) {
       },
       [requestRef] // eslint-disable-line
     )
-  
+    
     React.useEffect(() => requestRef.current = requestAnimationFrame(animateOuterCursor), [animateOuterCursor])
   
     const onMouseDown  = React.useCallback(() => setIsActive(true), [])
@@ -136,8 +137,9 @@ function useEventListener(eventName, handler, element = document) {
           setIsActiveClickable(false)
         })
       })
-  
+      
       return () => {
+        
         clickables.forEach((el) => {
           el.removeEventListener('mouseover', () => {
             setIsActive(true)
@@ -156,9 +158,11 @@ function useEventListener(eventName, handler, element = document) {
             setIsActive(false)
             setIsActiveClickable(false)
           })
+          
         })
       }
     }, [isActive])
+    
   
     const styles = {
       cursor: {
@@ -194,4 +198,5 @@ function useEventListener(eventName, handler, element = document) {
         <div ref={cursorInnerRef} style={styles.cursorInner} />
       </React.Fragment>
     )
+     
   }
