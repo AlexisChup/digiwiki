@@ -4,8 +4,9 @@ export default function PrivacyAndCookies() {
   return (
     <div className="container ">
       <div className="row justify-content-center">
-        <div>
-          <h1>Privacy Policy</h1>
+      <div className="col-9 mx-auto col-9-resized-md">
+        <div className="mt-3 mb-2">
+          <h1 className="mb-2">Privacy Policy</h1>
           <p>Last updated: December 26, 2022</p>
           <p>
             This Privacy Policy describes Our policies and procedures on the
@@ -519,6 +520,7 @@ export default function PrivacyAndCookies() {
           <ul>
             <li>By email: my-contact@gmail.com</li>
           </ul>
+        </div>
         </div>
       </div>
     </div>
