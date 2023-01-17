@@ -13,9 +13,9 @@ export default function CategoryItem(props) {
         onClick={() => navigate("/explorer/" + props.category.url)}
       >
         <div className="d-flex align-items-center">
-          <h3 className="my-0 small font-weight-bold text-uppercase">
+          <h6 className="my-0 font-weight-bold text-uppercase">
             {props.category.name}
-          </h3>
+          </h6>
         </div>
         <div>
           <div className="d-flex align-items-center" style={{ height: "80px" }}>

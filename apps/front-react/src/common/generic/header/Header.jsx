@@ -14,7 +14,7 @@ export default function Header() {
       <Navbar
         collapseOnSelect
         expand="md"
-        className="d-flex fixed justify-content-between align-content-center flex-row p-3 shadow mb-3"
+        className="d-flex fixed justify-content-between align-content-center flex-row p-3 shadow"
       >
         <Navbar.Brand className="ms-3">
           <NavLink
@@ -33,7 +33,7 @@ export default function Header() {
           <Nav className="me-auto">
             {/* <Nav.Link href="#serach">Search</Nav.Link> */}
           </Nav>
-          <Nav className="">
+          <Nav className="justify-content-center align-content-center align-items-center">
             <NavLink
               to="explorer"
               className={({ isActive }) =>
