@@ -82,7 +82,7 @@ export default function Home() {
               <div className="row mx-5 justify-content-center align-content-center align-items-center mt-3">
                 <div className="col d-flex flex-column mx-0">
                   <h1 className="mb-1 fw-bold">DigiWiki</h1>
-                  <p className="fw-bold">
+                  <p className="">
                     Le site qui vous aide à trouver l'outil adapté à tous vos
                     besoins.
                   </p>
@@ -115,7 +115,7 @@ export default function Home() {
               <div className="row rows-col-3 mx-0 flex-grow-1">
                 <div className="col d-flex flex-column mx-4 flex-grow-1">
                   <h1 className="mb-2 fw-bold">DigiWiki</h1>
-                  <p className="fw-bold">
+                  <p className="">
                     Le site qui vous aide à trouver l'outil adapté à tous vos
                     besoins.
                   </p>
