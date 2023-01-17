@@ -6,7 +6,6 @@
 }
 
 .item-list-shadow:hover {
-
   border-radius: 50px;
   background: #ffffff;
   box-shadow: 6px 6px 12px #919191, -6px -6px 12px #ffffff;
@@ -32,27 +31,56 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: 'Raleway',
-    sans-serif;
+  font-family: "Raleway", sans-serif;
   margin: 0px;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap");
 p,
 a,
 ul,
 li {
-  font-family: 'Raleway';
+  font-family: "Raleway";
 }
 
 .raleway {
-  font-family: 'Raleway';
+  font-family: "Raleway";
 }
-.montserra{
-  font-family: 'Montserra';
+.montserra {
+  font-family: "Montserra";
 }
 
-@media (max-width: 765px) {
+.img-landing-page {
+  height: 100px;
+  width: auto;
+}
+
+// xxl
+@media (max-width: 1400px) {
+  .img-landing-page {
+    height: 90px;
+    width: auto;
+  }
+}
+
+// xl
+@media (max-width: 1200px) {
+  .img-landing-page {
+    height: 80px;
+    width: auto;
+  }
+}
+
+// lg
+@media (max-width: 992px) {
+  .img-landing-page {
+    height: 70px;
+    width: auto;
+  }
+}
+
+// md
+@media (max-width: 768px) {
   .logo-list-header {
     width: auto;
     height: 50%;
@@ -70,16 +98,31 @@ li {
   .col-6-resized-md {
     width: 70%;
   }
+
+  .img-landing-page {
+    height: 60px;
+    width: auto;
+  }
 }
 
+// sm
 @media (max-width: 576px) {
   .col-6-resized-md {
     width: 80%;
+  }
+
+  .img-landing-page {
+    height: 50px;
+    width: auto;
   }
 }
 
 @media (max-width: 400px) {
   .col-6-resized-md {
     width: 95%;
+  }
+  .img-landing-page {
+    height: 40px;
+    width: auto;
   }
 }

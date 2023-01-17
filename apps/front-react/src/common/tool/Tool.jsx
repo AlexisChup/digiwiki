@@ -125,7 +125,7 @@ export default function Tool() {
   };
 
   return (
-    <div className="container h-100 d-flex flex-column">
+    <div className="container h-100 d-flex flex-column pt-3">
       {isToolFound ? (
         <div className="row justify-content-between mx-3">
           <div className="col shadow p-3 rounded mx-auto">
@@ -158,7 +158,7 @@ export default function Tool() {
               </div>
               <div className="d-flex flex-column justify-content-center">
                 <div>
-                  <h3 className="my-0">{tool.name}</h3>
+                  <h3 className="my-0 fw-bold">{tool.name}</h3>
                 </div>
                 <div>{tool.shortDescription}</div>
               </div>

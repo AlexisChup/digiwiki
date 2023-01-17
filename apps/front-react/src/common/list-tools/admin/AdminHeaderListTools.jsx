@@ -8,7 +8,7 @@ export default function AdminHeaderListTools(props) {
     <div>
       <div className="d-flex justify-content-between align-items-center">
         <div>
-          <h2 className="font-weight-bold my-0">Admin</h2>
+          <h2 className="fw-bold my-0">Admin</h2>
         </div>
         <div className="d-flex flex-row ">
           <div>
