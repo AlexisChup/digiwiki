@@ -2,7 +2,7 @@ import React from "react";
 
 export default function TermOfService() {
   return (
-    <div className="container ">
+    <div className="container pt-3">
       <div className="row justify-content-center">
         <div className="col-9 mx-auto col-9-resized-md">
           <div className="mt-3 mb-2">

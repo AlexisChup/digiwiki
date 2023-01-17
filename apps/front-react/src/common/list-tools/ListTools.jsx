@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { AXIOS } from "../../app/axios-http";
 import { setCategories } from "../../features/categories/categoriesSlice";
+import { FaArrowRight } from "react-icons/fa";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import ToolItem from "./tool-item/ToolItem";
@@ -116,7 +117,7 @@ export default function ListTools() {
   };
 
   return (
-    <div className="container h-100 d-flex flex-column">
+    <div className="container h-100 d-flex flex-column pt-3">
       {isToolsFound ? (
         isAuthenticated && user.roles.includes("ROLE_ADMIN") ? (
           <AdminHeaderListTools subCategory={subCategory} />
@@ -145,7 +146,7 @@ export default function ListTools() {
               />
             </div>
             <div className="d-flex align-items-center">
-              <h1 className="font-weight-bold my-0">{subCategory.name}</h1>
+              <h1 className="fw-bold my-0">{subCategory.name}</h1>
             </div>
           </div>
         </div>
@@ -175,8 +176,22 @@ export default function ListTools() {
           ) : (
             <div className="col p-0">
               <div className="d-flex rounded my-1 justify-content-between align-content-center align-self-center shadow py-3 px-3">
-                <div className="d-flex align-items-center">
-                  <p className="my-0">Pas encore d'outil</p>
+                <div className="d-flex flex-column">
+                  <div>
+                    <p className="my-0">Pas encore d'outil disponible.</p>
+                  </div>
+                  <div>
+                    <p className="my-0 fw-bold">
+                      N'hésitez pas à nous en proposer
+                      <Button
+                        className="ms-2"
+                        onClick={() => navigate("/contact")}
+                      >
+                        ici &nbsp;
+                        <FaArrowRight />
+                      </Button>
+                    </p>
+                  </div>
                 </div>
                 <div></div>
               </div>

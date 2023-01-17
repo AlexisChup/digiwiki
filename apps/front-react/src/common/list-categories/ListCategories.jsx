@@ -27,13 +27,13 @@ export default function ListCategories() {
   }, []);
 
   return (
-    <div className="container h-100 d-flex flex-column">
+    <div className="container h-100 d-flex flex-column pt-3">
       <div
         className="d-flex flex-row justify-content-between align-content-center align-items-center"
         style={{ height: "80px" }}
       >
         <div className="d-flex align-items-center">
-          <h1 className="font-weight-bold">Choisir une catégorie</h1>
+          <h1 className="fw-bold">Choisir une catégorie</h1>
         </div>
         {isRequesting ? <Spinner /> : null}
       </div>

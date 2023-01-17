@@ -22,6 +22,7 @@ export default function Login() {
 
   let [isRequesting, setRequesting] = useState(false);
   let [formLogin, setFormLogin] = useState(initialFormLogin);
+  const [isCaptchaFilled, setIsCaptchaFilled] = useState(false);
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -92,23 +93,34 @@ export default function Login() {
     setFormLogin({ ...formLogin, [key]: value });
   };
 
+  const handleChangeOnCaptcha = (token) => {
+    if (token !== "") {
+      setIsCaptchaFilled(true);
+    } else {
+      setIsCaptchaFilled(false);
+    }
+  };
+
   const isFormValid = () => {
     let isFormValid = true;
 
     isFormValid &= formLogin.email.length > 0;
     isFormValid &= formLogin.password.length > 0;
+    isFormValid &= isCaptchaFilled;
 
     return isFormValid;
   };
 
   return (
-    <div className="container ">
+    <div className="container pt-3">
       <div className="row">
         <div className="col-6 mx-auto col-6-resized-md">
           <h1 className="mb-2">Connexion</h1>
           <Form>
             <Form.Group>
-              <Form.Label className="medium mb-2 raleway" htmlFor="login-email">Adresse mail</Form.Label>
+              <Form.Label className="medium mb-2 raleway" htmlFor="login-email">
+                Adresse mail
+              </Form.Label>
               <Form.Control
                 size="md"
                 type="email"
@@ -127,7 +139,12 @@ export default function Login() {
               </small>*/}
             </Form.Group>
             <Form.Group className="my-2">
-              <Form.Label className="medium mb-2 raleway" htmlFor="login-password">Mot de passe</Form.Label>
+              <Form.Label
+                className="medium mb-2 raleway"
+                htmlFor="login-password"
+              >
+                Mot de passe
+              </Form.Label>
               <Form.Control
                 size="md"
                 type="password"
@@ -150,6 +167,7 @@ export default function Login() {
               <ReCAPTCHA
                 sitekey={process.env.REACT_APP_SITE_KEY}
                 ref={captchaRef}
+                onChange={handleChangeOnCaptcha}
               />
             </Form.Group>
             <Button
@@ -159,7 +177,7 @@ export default function Login() {
               disabled={isRequesting || !isFormValid()}
               size="mb"
             >
-              Submit
+              Connexion
             </Button>
           </Form>
         </div>

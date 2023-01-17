@@ -17,8 +17,6 @@
 
 /tests/report/
 
-composer.lock
-
 .idea/
 
 storage/

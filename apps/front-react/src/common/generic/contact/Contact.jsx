@@ -26,13 +26,15 @@ export default function Contact() {
   };
 
   return (
-    <div className="container ">
+    <div className="container pt-3">
       <div className="row">
         <div className="col-9 mx-auto col-9-resized-md mt-3 mb-2">
           <h1>Contact</h1>
           <Form>
             <Form.Group className="mt-3 mb-2 raleway">
-              <Form.Label className="medium mb-2 raleway">Choisissez un topic</Form.Label>
+              <Form.Label className="medium mb-2 raleway">
+                Choisissez un topic
+              </Form.Label>
               <Form.Select
                 size="md"
                 value={topic}

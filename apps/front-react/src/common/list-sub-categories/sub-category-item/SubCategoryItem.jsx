@@ -16,8 +16,8 @@ export default function SubCategoryItem(props) {
           )
         }
       >
-        <div className="d-flex align-items-center">
-          <h6 className="my-0 font-weight-bold text-uppercase">
+        <div className="d-flex align-items-center pe-3">
+          <h6 className="my-0 text-break text-uppercase">
             {props.subCategory.name}
           </h6>
         </div>
