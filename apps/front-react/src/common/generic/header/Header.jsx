@@ -52,7 +52,7 @@ export default function Header() {
                   : commonClassNameNavLink + " navbar-navlink"
               }
             >
-              About
+              À propos
             </NavLink>
             <NavLink
               to="contact"
