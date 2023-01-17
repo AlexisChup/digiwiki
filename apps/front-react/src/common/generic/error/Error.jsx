@@ -7,7 +7,7 @@ export default function Error() {
   let navigate = useNavigate();
 
   return (
-    <div className="container ">
+    <div className="container pt-3">
       <div className="row justify-content-center">
         <div>
           <h1>Error 404: Page not found</h1>

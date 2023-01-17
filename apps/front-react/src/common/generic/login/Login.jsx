@@ -112,13 +112,15 @@ export default function Login() {
   };
 
   return (
-    <div className="container ">
+    <div className="container pt-3">
       <div className="row">
         <div className="col-6 mx-auto col-6-resized-md">
           <h1 className="mb-2">Connexion</h1>
           <Form>
             <Form.Group>
-              <Form.Label className="medium mb-2 raleway" htmlFor="login-email">Adresse mail</Form.Label>
+              <Form.Label className="medium mb-2 raleway" htmlFor="login-email">
+                Adresse mail
+              </Form.Label>
               <Form.Control
                 size="md"
                 type="email"
@@ -137,7 +139,12 @@ export default function Login() {
               </small>*/}
             </Form.Group>
             <Form.Group className="my-2">
-              <Form.Label className="medium mb-2 raleway" htmlFor="login-password">Mot de passe</Form.Label>
+              <Form.Label
+                className="medium mb-2 raleway"
+                htmlFor="login-password"
+              >
+                Mot de passe
+              </Form.Label>
               <Form.Control
                 size="md"
                 type="password"

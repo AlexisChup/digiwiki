@@ -116,7 +116,7 @@ export default function ListTools() {
   };
 
   return (
-    <div className="container h-100 d-flex flex-column">
+    <div className="container h-100 d-flex flex-column pt-3">
       {isToolsFound ? (
         isAuthenticated && user.roles.includes("ROLE_ADMIN") ? (
           <AdminHeaderListTools subCategory={subCategory} />
@@ -145,7 +145,7 @@ export default function ListTools() {
               />
             </div>
             <div className="d-flex align-items-center">
-              <h1 className="font-weight-bold my-0">{subCategory.name}</h1>
+              <h1 className="fw-bold my-0">{subCategory.name}</h1>
             </div>
           </div>
         </div>

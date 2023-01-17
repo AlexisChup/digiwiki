@@ -30,7 +30,7 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="container">
+    <div className="container pt-3">
       <h1>Dashboard</h1>
       <div className="shadow p-3">
         <div className="d-flex flex-row justify-content-between align-items-center">

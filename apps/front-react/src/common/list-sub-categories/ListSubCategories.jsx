@@ -79,7 +79,7 @@ export default function ListSubCategories() {
   };
 
   return (
-    <div className="container h-100 d-flex flex-column">
+    <div className="container h-100 d-flex flex-column pt-3">
       {category ? (
         isAuthenticated && user.roles.includes("ROLE_ADMIN") ? (
           <AdminHeaderListSubCategories category={category} />
@@ -108,7 +108,7 @@ export default function ListSubCategories() {
               />
             </div>
             <div className="d-flex align-items-center">
-              <h1 className="my-0 font-weight-bold">{category.name}</h1>
+              <h1 className="my-0 fw-bold">{category.name}</h1>
             </div>
           </div>
         </div>
