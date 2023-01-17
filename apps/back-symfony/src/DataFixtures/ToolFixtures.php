@@ -63,8 +63,14 @@ class ToolFixtures extends Fixture
         $tool_6_1_1 = new Tool();
         $tool_6_1_1->setName("Codepen");
         $tool_6_1_1->setUrl("codepen");
-        $tool_6_1_1->setShortDescription("Codepen description brève");
-        $tool_6_1_1->setDescription("Codepen grande description !!!");
+        $tool_6_1_1->setShortDescription("CodePen est un éditeur de code en ligne");
+        $tool_6_1_1->setDescription("CodePen est un éditeur de code en ligne qui permet de partager du code, de créer et de déployer un site web ou encore de réaliser des tests. 
+        Cet outil s’adresse aux concepteurs et développeurs front-end. Ils peuvent puiser dans les travaux de plus de 1,8 million d’autres développeurs dans le monde.
+        La plateforme permet de :
+            Écrire et tester du code : CodePen dispose d’un IDE qui vous donne la possibilité de rédiger des lignes de code HTML/CSS/JavaScript. Un volet de visualisation situé en bas de page permet de voir l’avancement de votre projet en temps réel. Vous personnalisez les paramètres comme vous le souhaitez. Vous pouvez tester des fonctionnalités et des animations facilement.
+            Partager votre travail : la plateforme vous permet de partager vos lignes de code et vos projets avec d’autres utilisateurs, mais aussi d’accéder aux travaux d’autres développeurs pour trouver l’inspiration.
+            Améliorer ses compétences : la plateforme organise des challenges hebdomadaires afin d’approfondir vos compétences et votre créativité.
+            Favoriser la collaboration : il est possible de modifier et saisir du code simultanément. Une zone de chat permet de communiquer avec son binôme à distance.");
         $tool_6_1_1->setAffiliateRef("https://codepen.io/");
         $tool_6_1_1->setCodePromo("E");
         $tool_6_1_1->setImgUrl("https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png");
@@ -92,7 +98,7 @@ class ToolFixtures extends Fixture
         $tool_9_3_1->setUrl("boursorama-banque");
         $tool_9_3_1->setShortDescription("Boursorama Banque description brève");
         $tool_9_3_1->setDescription("Boursorama Banque grande description !!!");
-        $tool_9_3_1->setAffiliateRef("​https://bour.so/9RWl2zJSVY");
+        $tool_9_3_1->setAffiliateRef("​https://bour.so/T5St2UhPFT");
         $tool_9_3_1->setCodePromo("H");
         $tool_9_3_1->setImgUrl("https://bourse.boursorama.com/bundles/boursoramaui/images/favicons/favicon-32x32.png");
 

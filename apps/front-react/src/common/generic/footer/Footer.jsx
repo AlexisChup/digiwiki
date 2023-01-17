@@ -25,7 +25,7 @@ export default function Footer() {
                     isActive ? "navbar-navlink-active" : "navbar-navlink"
                   }
                 >
-                  Terms of Service
+                  Conditions générales
                 </NavLink>
               </div>
               <div
@@ -39,7 +39,7 @@ export default function Footer() {
                     isActive ? "navbar-navlink-active" : "navbar-navlink"
                   }
                 >
-                  Privacy and Cookies
+                  Politique de confidentialité
                 </NavLink>
               </div>
             </div>
