@@ -23,13 +23,6 @@ export default function About() {
               aussi disponible pour en apprendre plus sur des secteurs et
               domaines spécifiques.
             </p>
-            <p>
-              Son principal objectif est de vous faire gagner du temps dans vos
-              recherches ou vos projets, en mettant à disposition des outils de
-              tout domaine, a porté de main. Des rubriques de formations sont
-              aussi disponible pour en apprendre plus sur des secteurs et
-              domaines spécifiques.
-            </p>
           </div>
           <div className="row mt-2 mb-2 mx-auto">
             <h2 className="mb-2">Expérience utilisateur</h2>
