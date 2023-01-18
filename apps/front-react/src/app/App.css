@@ -32,6 +32,11 @@ p,
 span,
 div {
   color: #5f6c7b;
+  text-align: left;
+}
+ul {
+  list-style-position: inside;
+  text-align: left;
 }
 
 .noselect {
@@ -43,6 +48,3 @@ div {
   user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
-
-
-

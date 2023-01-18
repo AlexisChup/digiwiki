@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { Nav, Navbar } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { FaUserCircle } from "react-icons/fa";
+import { safeSrcImg } from "../../../utils/image";
 
 export default function Header() {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -25,6 +26,13 @@ export default function Header() {
                 : commonClassNameNavLink + " navbar-navlink"
             }
           >
+            <img
+              src={safeSrcImg("logo", "logo")}
+              width="30"
+              height="30"
+              className="d-inline-block align-top me-2"
+              alt="DigiWiki logo"
+            />
             DigiWiki
           </NavLink>
         </Navbar.Brand>
