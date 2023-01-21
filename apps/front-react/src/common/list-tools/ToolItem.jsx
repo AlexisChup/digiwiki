@@ -1,9 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Image from "react-bootstrap/Image";
-import EditTool from "../admin/EditTool";
-import RemoveTool from "../admin/RemoveTool";
-import { safeSrcImg } from "../../../utils/image";
+import EditTool from "./admin/EditTool";
+import RemoveTool from "./admin/RemoveTool";
+import { safeSrcImg } from "../../utils/image";
 
 export default function ToolItem(props) {
   let navigate = useNavigate();

@@ -6,7 +6,7 @@ import { setCategories } from "../../../features/categories/categoriesSlice";
 import { AXIOS } from "../../../app/axios-http";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import CategoryForm from "../../list-categories/category/form/CategoryForm";
+import CategoryForm from "../../forms/CategoryForm";
 
 export default function EditCategory(props) {
   const dispatch = useDispatch();
