@@ -6,7 +6,7 @@ import { setCategories } from "../../features/categories/categoriesSlice";
 import { FaArrowRight } from "react-icons/fa";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
-import ToolItem from "./tool-item/ToolItem";
+import ToolItem from "./ToolItem";
 import Spinner from "../generic/spinner/Spinner";
 import { safeSrcImg } from "../../utils/image";
 import AdminHeaderListTools from "./admin/AdminHeaderListTools";

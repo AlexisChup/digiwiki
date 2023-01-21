@@ -1,5 +1,4 @@
 import React from "react";
-import "./About.css";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";

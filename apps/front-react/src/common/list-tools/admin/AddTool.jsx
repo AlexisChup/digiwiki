@@ -6,26 +6,12 @@ import { setCategories } from "../../../features/categories/categoriesSlice";
 import { AXIOS } from "../../../app/axios-http";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import AddToolForm from "../../tool/form/AddToolForm";
+import ToolForm from "../../forms/ToolForm";
 
 export default function AddTool(props) {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const [isRequesting, setIsRequesting] = useState(false);
-
-  const getActiveSubCategoriesIds = () => {
-    if (!props.tool.subCategories) {
-      return [];
-    }
-    let subCategoriesIds = [];
-
-    for (let index = 0; index < props.tool.subCategories.length; index++) {
-      subCategoriesIds.push(props.tool.subCategories[index]);
-    }
-
-    console.log("subCategoriesIds: ", subCategoriesIds);
-    return subCategoriesIds;
-  };
 
   const initialStateFormAddTool = {
     name: "",
@@ -110,7 +96,7 @@ export default function AddTool(props) {
           <FaPlus /> Outil
         </Button>
       </div>
-      <AddToolForm
+      <ToolForm
         initialStateForm={initialStateFormAddTool}
         show={show}
         handleClose={handleClose}

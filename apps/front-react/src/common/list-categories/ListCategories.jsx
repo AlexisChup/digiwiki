@@ -3,7 +3,7 @@ import { AXIOS } from "../../app/axios-http";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategories } from "../../features/categories/categoriesSlice";
 import Spinner from "../generic/spinner/Spinner";
-import CategoryItem from "./category-item/CategoryItem";
+import CategoryItem from "./CategoryItem";
 
 export default function ListCategories() {
   const dispatch = useDispatch();

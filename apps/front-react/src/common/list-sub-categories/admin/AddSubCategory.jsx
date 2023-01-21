@@ -6,7 +6,7 @@ import { setCategories } from "../../../features/categories/categoriesSlice";
 import { AXIOS } from "../../../app/axios-http";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import SubCategoryForm from "../sub-category/form/SubCategoryForm";
+import SubCategoryForm from "../../forms/SubCategoryForm";
 
 var toType = function (obj) {
   return {}.toString
