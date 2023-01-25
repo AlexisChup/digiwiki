@@ -5,7 +5,7 @@ import { AXIOS } from "../../app/axios-http";
 import { setCategories } from "../../features/categories/categoriesSlice";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
-import SubCategoryItem from "./sub-category-item/SubCategoryItem";
+import SubCategoryItem from "./SubCategoryItem";
 import Spinner from "../generic/spinner/Spinner";
 import AdminHeaderListSubCategories from "./admin/AdminHeaderListSubCategories";
 import { safeSrcImg } from "../../utils/image";

@@ -6,7 +6,7 @@ import { setCategories } from "../../../features/categories/categoriesSlice";
 import { AXIOS } from "../../../app/axios-http";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import SubCategoryForm from "../../list-sub-categories/sub-category/form/SubCategoryForm";
+import SubCategoryForm from "../../forms/SubCategoryForm";
 
 var toType = function (obj) {
   return {}.toString
@@ -20,6 +20,8 @@ export default function EditSubCategory(props) {
   const [show, setShow] = useState(false);
   const [isRequesting, setIsRequesting] = useState(false);
 
+  /* Super weird function because when editing category
+   ** the return value can be tricky */
   const getActiveCategoriesIds = () => {
     if (!props.subCategory.category) {
       return [];

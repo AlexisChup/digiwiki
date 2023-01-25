@@ -6,7 +6,7 @@ import { setCategories } from "../../../features/categories/categoriesSlice";
 import { AXIOS } from "../../../app/axios-http";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import AddToolForm from "../../tool/form/AddToolForm";
+import ToolForm from "../../forms/ToolForm";
 
 var toType = function (obj) {
   return {}.toString
@@ -20,6 +20,8 @@ export default function EditTool(props) {
   const [show, setShow] = useState(false);
   const [isRequesting, setIsRequesting] = useState(false);
 
+  /* Super weird function because when editing subcategory
+   ** the return value can be tricky */
   const getActiveSubCategoriesIds = () => {
     if (!props.tool.subCategories) {
       return [];
@@ -137,7 +139,7 @@ export default function EditTool(props) {
         </Button>
       </div>
 
-      <AddToolForm
+      <ToolForm
         show={show}
         handleClose={handleClose}
         initialStateForm={initialStateFormEditTool}

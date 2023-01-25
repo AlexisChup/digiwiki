@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import DOMPurify from "isomorphic-dompurify";
 import Form from "react-bootstrap/Form";
-import Spinner from "../../generic/spinner/Spinner";
-import { setCategories } from "../../../features/categories/categoriesSlice";
-import { AXIOS } from "../../../app/axios-http";
+import Spinner from "../generic/spinner/Spinner";
+import { setCategories } from "../../features/categories/categoriesSlice";
+import { AXIOS } from "../../app/axios-http";
 import ReactQuill from "react-quill";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
-export default function AddToolForm(props) {
+export default function ToolForm(props) {
   const dispatch = useDispatch();
   const { categories } = useSelector((state) => state.categories);
   const [uniqueSubcategories, setUniqueSubcategories] = useState([]);
