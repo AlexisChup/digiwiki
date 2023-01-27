@@ -20,12 +20,12 @@ class SubCategoryFixtures extends Fixture implements DependentFixtureInterface
 
         $subCategory1_2 = new SubCategory();
         $subCategory1_2->setName("Audio");
-        $subCategory1_2->setUrl("");
+        $subCategory1_2->setUrl("audio");
         $manager->persist($subCategory1_2);
 
         $subCategory1_3 = new SubCategory();
         $subCategory1_3->setName("Image - SVG");
-        $subCategory1_3->setUrl("");
+        $subCategory1_3->setUrl("pictures");
         $manager->persist($subCategory1_3);
 
         $subCategory1_4 = new SubCategory();
@@ -40,7 +40,7 @@ class SubCategoryFixtures extends Fixture implements DependentFixtureInterface
 
         $subCategory1_6 = new SubCategory();
         $subCategory1_6->setName("Font - Couleur");
-        $subCategory1_6->setUrl("");
+        $subCategory1_6->setUrl("font");
         $manager->persist($subCategory1_6);
 
         $subCategory1_7 = new SubCategory();
@@ -99,7 +99,7 @@ class SubCategoryFixtures extends Fixture implements DependentFixtureInterface
 
         $subCategory3_4 = new SubCategory();
         $subCategory3_4->setName("Autre");
-        $subCategory3_4->setUrl("");
+        $subCategory3_4->setUrl("other");
         $manager->persist($subCategory3_4);
 
         $subCategory3_5 = new SubCategory();
@@ -155,22 +155,22 @@ class SubCategoryFixtures extends Fixture implements DependentFixtureInterface
          
         $subCategory6_1 = new SubCategory();
         $subCategory6_1->setName("Texte");
-        $subCategory6_1->setUrl("");
+        $subCategory6_1->setUrl("text");
         $manager->persist($subCategory6_1);
 
         $subCategory6_2 = new SubCategory();
         $subCategory6_2->setName("Audio");
-        $subCategory6_2->setUrl("");
+        $subCategory6_2->setUrl("audio");
         $manager->persist($subCategory6_2);
 
         $subCategory6_3 = new SubCategory();
         $subCategory6_3->setName("Image");
-        $subCategory6_3->setUrl("");
+        $subCategory6_3->setUrl("picture");
         $manager->persist($subCategory6_3);
 
         $subCategory6_4 = new SubCategory();
         $subCategory6_4->setName("Vidéo");
-        $subCategory6_4->setUrl("design-tool");
+        $subCategory6_4->setUrl("video");
         $manager->persist($subCategory6_4);
 
         $subCategory6_5 = new SubCategory();
@@ -180,7 +180,7 @@ class SubCategoryFixtures extends Fixture implements DependentFixtureInterface
 
         $subCategory6_6 = new SubCategory();
         $subCategory6_6->setName("Autre");
-        $subCategory6_6->setUrl("");
+        $subCategory6_6->setUrl("other");
         $manager->persist($subCategory6_6);
 
         $subCategory6_7 = new SubCategory();
@@ -265,13 +265,26 @@ class SubCategoryFixtures extends Fixture implements DependentFixtureInterface
         // ADD TOOLS TO SUBCATEGORY
 
         $subCategory1_1->addTool($this->getReference("tool_1_1_1"));
-        $subCategory2_3->addTool($this->getReference("tool_2_1_1"));
-        $subCategory3_1->addTool($this->getReference("tool_3_4_1"));
-        $subCategory4_6->addTool($this->getReference("tool_4_1_1"));
+        $subCategory1_5->addTool($this->getReference("tool_1_5_1"));
+        $subCategory1_6->addTool($this->getReference("tool_1_6_1"));
+        $subCategory1_6->addTool($this->getReference("tool_1_6_2"));
+        $subCategory2_1->addTool($this->getReference("tool_2_1_1"));
+        $subCategory2_1->addTool($this->getReference("tool_2_1_2"));
+        $subCategory2_3->addTool($this->getReference("tool_2_3_1"));
+        $subCategory3_3->addTool($this->getReference("tool_3_3_1"));
+        $subCategory3_4->addTool($this->getReference("tool_3_4_1"));
+        $subCategory3_4->addTool($this->getReference("tool_3_4_2"));
+        $subCategory4_1->addTool($this->getReference("tool_4_1_1"));
         $subCategory5_1->addTool($this->getReference("tool_5_1_1"));
         $subCategory6_1->addTool($this->getReference("tool_6_1_1"));
-        $subCategory7_1->addTool($this->getReference("tool_7_5_1"));
+        $subCategory6_1->addTool($this->getReference("tool_6_1_2"));
+        $subCategory6_3->addTool($this->getReference("tool_6_3_1"));
+        $subCategory6_4->addTool($this->getReference("tool_6_4_1"));
+        $subCategory7_3->addTool($this->getReference("tool_7_3_1"));
+        $subCategory7_5->addTool($this->getReference("tool_7_5_1"));
+        $subCategory7_6->addTool($this->getReference("tool_7_6_1"));
         $subCategory8_2->addTool($this->getReference("tool_8_2_1"));
+        $subCategory8_6->addTool($this->getReference("tool_8_6_1"));
 
         // REFERENCE FOR CATEGORY FIXTURES
 

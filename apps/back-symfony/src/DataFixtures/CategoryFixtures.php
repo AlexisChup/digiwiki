@@ -19,37 +19,37 @@ class CategoryFixtures extends Fixture implements DependentFixtureInterface
         $category2 = new Category();
         $category2->setName("Marketing");
         $category2->setUrl("marketing");
-        $manager->persist($category3);
+        $manager->persist($category2);
 
         $category3 = new Category();
         $category3->setName("Productivité");
         $category3->setUrl("productivity");
-        $manager->persist($category4);
+        $manager->persist($category3);
 
         $category4 = new Category();
-        $category4->setName("Finances");
+        $category4->setName("FinancesSSXSQ");
         $category4->setUrl("finances");
-        $manager->persist($category5);
+        $manager->persist($category4);
 
         $category5 = new Category();
         $category5->setName("Programmation");
         $category5->setUrl("programming");
-        $manager->persist($category6);
+        $manager->persist($category5);
 
         $category6 = new Category();
         $category6->setName("Intelligence Artificielle");
         $category6->setUrl("ai");
-        $manager->persist($category7);
+        $manager->persist($category6);
 
         $category7 = new Category();
         $category7->setName("Cryptomonnaies");
         $category7->setUrl("cryptocurrencies");
-        $manager->persist($category8);
+        $manager->persist($category7);
 
         $category8 = new Category();
         $category8->setName("Bourses");
         $category8->setUrl("stock-market");
-        $manager->persist($category9);
+        $manager->persist($category8);
 
         //references
         $category1->addSubCategory($this->getReference("subCategory1_1"));
@@ -95,10 +95,9 @@ class CategoryFixtures extends Fixture implements DependentFixtureInterface
         $category7->addSubCategory($this->getReference("subCategory7_2"));
         $category7->addSubCategory($this->getReference("subCategory7_3"));
         $category7->addSubCategory($this->getReference("subCategory7_4"));
-        $category6->addSubCategory($this->getReference("subCategory7_5"));
-        $category6->addSubCategory($this->getReference("subCategory7_6"));
-        $category6->addSubCategory($this->getReference("subCategory7_7"));
-
+        $category7->addSubCategory($this->getReference("subCategory7_5"));
+        $category7->addSubCategory($this->getReference("subCategory7_6"));
+        $category7->addSubCategory($this->getReference("subCategory7_7"));
 
         $category8->addSubCategory($this->getReference("subCategory8_1"));
         $category8->addSubCategory($this->getReference("subCategory8_2"));
