@@ -265,24 +265,52 @@ class SubCategoryFixtures extends Fixture implements DependentFixtureInterface
         // ADD TOOLS TO SUBCATEGORY
 
         $subCategory1_1->addTool($this->getReference("tool_1_1_1"));
+        $subCategory1_4->addTool($this->getReference("tool_1_4_1"));
         $subCategory1_5->addTool($this->getReference("tool_1_5_1"));
         $subCategory1_6->addTool($this->getReference("tool_1_6_1"));
         $subCategory1_6->addTool($this->getReference("tool_1_6_2"));
+        $subCategory1_7->addTool($this->getReference("tool_1_7_1"));
+
         $subCategory2_1->addTool($this->getReference("tool_2_1_1"));
         $subCategory2_1->addTool($this->getReference("tool_2_1_2"));
         $subCategory2_3->addTool($this->getReference("tool_2_3_1"));
+
         $subCategory3_3->addTool($this->getReference("tool_3_3_1"));
         $subCategory3_4->addTool($this->getReference("tool_3_4_1"));
         $subCategory3_4->addTool($this->getReference("tool_3_4_2"));
+
         $subCategory4_1->addTool($this->getReference("tool_4_1_1"));
+        $subCategory4_2->addTool($this->getReference("tool_4_2_1"));
+        $subCategory4_2->addTool($this->getReference("tool_4_2_2"));
+        $subCategory4_2->addTool($this->getReference("tool_4_2_3"));
+        $subCategory4_3->addTool($this->getReference("tool_4_3_1"));
+        $subCategory4_3->addTool($this->getReference("tool_4_3_2"));
+
         $subCategory5_1->addTool($this->getReference("tool_5_1_1"));
+        $subCategory5_2->addTool($this->getReference("tool_5_2_1"));
+        $subCategory5_3->addTool($this->getReference("tool_5_3_1"));
+        $subCategory5_3->addTool($this->getReference("tool_5_3_2"));
+        $subCategory5_4->addTool($this->getReference("tool_5_4_1"));
+        $subCategory5_4->addTool($this->getReference("tool_5_4_2"));
+
         $subCategory6_1->addTool($this->getReference("tool_6_1_1"));
         $subCategory6_1->addTool($this->getReference("tool_6_1_2"));
+        $subCategory6_2->addTool($this->getReference("tool_6_2_1"));
+        $subCategory6_2->addTool($this->getReference("tool_6_2_2"));
+        $subCategory6_2->addTool($this->getReference("tool_6_2_3"));
         $subCategory6_3->addTool($this->getReference("tool_6_3_1"));
         $subCategory6_4->addTool($this->getReference("tool_6_4_1"));
+        $subCategory6_4->addTool($this->getReference("tool_6_4_2"));
+        $subCategory6_4->addTool($this->getReference("tool_6_4_3"));
+        $subCategory6_6->addTool($this->getReference("tool_6_6_1"));
+
         $subCategory7_3->addTool($this->getReference("tool_7_3_1"));
         $subCategory7_5->addTool($this->getReference("tool_7_5_1"));
         $subCategory7_6->addTool($this->getReference("tool_7_6_1"));
+
+        $subCategory8_1->addTool($this->getReference("tool_8_1_1"));
+        $subCategory8_1->addTool($this->getReference("tool_8_1_2"));
+        $subCategory8_1->addTool($this->getReference("tool_8_1_3"));
         $subCategory8_2->addTool($this->getReference("tool_8_2_1"));
         $subCategory8_6->addTool($this->getReference("tool_8_6_1"));
 
