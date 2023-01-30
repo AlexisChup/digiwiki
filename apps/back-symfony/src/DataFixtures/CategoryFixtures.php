@@ -27,7 +27,7 @@ class CategoryFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($category3);
 
         $category4 = new Category();
-        $category4->setName("FinancesSSXSQ");
+        $category4->setName("Finances");
         $category4->setUrl("finances");
         $manager->persist($category4);
 

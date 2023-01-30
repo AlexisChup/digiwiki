@@ -15,7 +15,7 @@ class SubCategoryFixtures extends Fixture implements DependentFixtureInterface
 
         $subCategory1_1 = new SubCategory();
         $subCategory1_1->setName("Icône - Logo");
-        $subCategory1_1->setUrl("icons-logos-illustrations");
+        $subCategory1_1->setUrl("icon-logo");
         $manager->persist($subCategory1_1);
 
         $subCategory1_2 = new SubCategory();
@@ -25,12 +25,12 @@ class SubCategoryFixtures extends Fixture implements DependentFixtureInterface
 
         $subCategory1_3 = new SubCategory();
         $subCategory1_3->setName("Image - SVG");
-        $subCategory1_3->setUrl("pictures");
+        $subCategory1_3->setUrl("picture-svg");
         $manager->persist($subCategory1_3);
 
         $subCategory1_4 = new SubCategory();
         $subCategory1_4->setName("Vidéo - Animation");
-        $subCategory1_4->setUrl("animations");
+        $subCategory1_4->setUrl("video-animation");
         $manager->persist($subCategory1_4);
 
         $subCategory1_5 = new SubCategory();
@@ -40,12 +40,12 @@ class SubCategoryFixtures extends Fixture implements DependentFixtureInterface
 
         $subCategory1_6 = new SubCategory();
         $subCategory1_6->setName("Font - Couleur");
-        $subCategory1_6->setUrl("font");
+        $subCategory1_6->setUrl("font-color");
         $manager->persist($subCategory1_6);
 
         $subCategory1_7 = new SubCategory();
         $subCategory1_7->setName("Template");
-        $subCategory1_7->setUrl("templates-inspirations");
+        $subCategory1_7->setUrl("template");
         $manager->persist($subCategory1_7);
 
         $subCategory1_8 = new SubCategory();
@@ -72,7 +72,7 @@ class SubCategoryFixtures extends Fixture implements DependentFixtureInterface
 
         $subCategory2_4 = new SubCategory();
         $subCategory2_4->setName("Réseaux sociaux");
-        $subCategory2_4->setUrl("social-network-marketing");
+        $subCategory2_4->setUrl("social-network");
         $manager->persist($subCategory2_4);
 
         $subCategory2_5 = new SubCategory();
@@ -84,7 +84,7 @@ class SubCategoryFixtures extends Fixture implements DependentFixtureInterface
 
         $subCategory3_1 = new SubCategory();
         $subCategory3_1->setName("Gestion de projet");
-        $subCategory3_1->setUrl("tasks-management");
+        $subCategory3_1->setUrl("project-management");
         $manager->persist($subCategory3_1);
 
         $subCategory3_2 = new SubCategory();
@@ -155,7 +155,7 @@ class SubCategoryFixtures extends Fixture implements DependentFixtureInterface
          
         $subCategory6_1 = new SubCategory();
         $subCategory6_1->setName("Texte");
-        $subCategory6_1->setUrl("text");
+        $subCategory6_1->setUrl("ai-text");
         $manager->persist($subCategory6_1);
 
         $subCategory6_2 = new SubCategory();
@@ -165,12 +165,12 @@ class SubCategoryFixtures extends Fixture implements DependentFixtureInterface
 
         $subCategory6_3 = new SubCategory();
         $subCategory6_3->setName("Image");
-        $subCategory6_3->setUrl("picture");
+        $subCategory6_3->setUrl("ai-picture");
         $manager->persist($subCategory6_3);
 
         $subCategory6_4 = new SubCategory();
         $subCategory6_4->setName("Vidéo");
-        $subCategory6_4->setUrl("video");
+        $subCategory6_4->setUrl("ai-video");
         $manager->persist($subCategory6_4);
 
         $subCategory6_5 = new SubCategory();
@@ -180,7 +180,7 @@ class SubCategoryFixtures extends Fixture implements DependentFixtureInterface
 
         $subCategory6_6 = new SubCategory();
         $subCategory6_6->setName("Autre");
-        $subCategory6_6->setUrl("other");
+        $subCategory6_6->setUrl("ai-other");
         $manager->persist($subCategory6_6);
 
         $subCategory6_7 = new SubCategory();
