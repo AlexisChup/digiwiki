@@ -159,7 +159,7 @@ export default function Home() {
                       <div>
                         <Image
                           className="img-landing-page"
-                          src={safeSrcImg("ai-general", "sub-categories")}
+                          src={safeSrcImg("ai-other", "sub-categories")}
                         />
                       </div>
                     </MouseParallaxChild>
@@ -217,10 +217,7 @@ export default function Home() {
                       <div>
                         <Image
                           className="img-landing-page"
-                          src={safeSrcImg(
-                            "social-network-marketing",
-                            "sub-categories"
-                          )}
+                          src={safeSrcImg("social-network", "sub-categories")}
                         />
                       </div>
                     </MouseParallaxChild>
