@@ -35,12 +35,22 @@ h5 {
   margin: 0px;
 }
 
+.title-card {
+  font-size: calc(0.7rem + 0.4vw);
+}
+
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap");
 p,
 a,
 ul,
 li {
   font-family: "Raleway";
+}
+
+ul {
+  padding-left: 0px;
+  list-style-position: inside;
+  text-align: left;
 }
 
 .raleway {
@@ -55,11 +65,25 @@ li {
   width: auto;
 }
 
+.col-responsive {
+  margin-right: auto !important;
+  margin-left: auto !important;
+  flex: 0 0 auto;
+  width: 50%;
+}
+
 // xxl
 @media (max-width: 1400px) {
   .img-landing-page {
     height: 90px;
     width: auto;
+  }
+
+  .col-responsive {
+    margin-right: auto !important;
+    margin-left: auto !important;
+    flex: 0 0 auto;
+    width: 50%;
   }
 }
 
@@ -69,6 +93,13 @@ li {
     height: 80px;
     width: auto;
   }
+
+  .col-responsive {
+    margin-right: auto !important;
+    margin-left: auto !important;
+    flex: 0 0 auto;
+    width: 60%;
+  }
 }
 
 // lg
@@ -76,6 +107,18 @@ li {
   .img-landing-page {
     height: 70px;
     width: auto;
+  }
+
+  .logo-list-item {
+    width: auto;
+    height: 55%;
+  }
+
+  .col-responsive {
+    margin-right: auto !important;
+    margin-left: auto !important;
+    flex: 0 0 auto;
+    width: 70%;
   }
 }
 
@@ -103,6 +146,17 @@ li {
     height: 60px;
     width: auto;
   }
+
+  .title-card {
+    font-size: calc(1rem + 0.4vw);
+  }
+
+  .col-responsive {
+    margin-right: auto !important;
+    margin-left: auto !important;
+    flex: 0 0 auto;
+    width: 80%;
+  }
 }
 
 // sm
@@ -115,6 +169,13 @@ li {
     height: 50px;
     width: auto;
   }
+
+  .col-responsive {
+    margin-right: auto !important;
+    margin-left: auto !important;
+    flex: 0 0 auto;
+    width: 90%;
+  }
 }
 
 @media (max-width: 400px) {
@@ -124,5 +185,11 @@ li {
   .img-landing-page {
     height: 40px;
     width: auto;
+  }
+  .col-responsive {
+    margin-right: auto !important;
+    margin-left: auto !important;
+    flex: 0 0 auto;
+    width: 100%;
   }
 }

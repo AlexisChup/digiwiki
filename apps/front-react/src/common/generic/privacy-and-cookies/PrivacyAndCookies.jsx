@@ -4,9 +4,9 @@ export default function PrivacyAndCookies() {
   return (
     <div className="container pt-3">
       <div className="row justify-content-center">
-        <div className="col-9 mx-auto col-9-resized-md">
+        <div className="col-responsive">
           <div className="mt-3 mb-2">
-            <h1 className="mb-2">Politique de confidentialité</h1>
+            <h1 className="mb-2 fw-bold">Politique de confidentialité</h1>
             <p>Dernière mise à jour : 26 Decembre 2022</p>
             <p>
               La présente politique de confidentialité décrit nos politiques et

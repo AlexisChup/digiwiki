@@ -9,7 +9,7 @@ export default function About() {
   return (
     <div className="container pt-3">
       <div className="row">
-        <div className="col-9 mx-auto col-9-resized-md">
+        <div className="col-responsive">
           <div className="row mt-3 mb-2 mx-auto">
             <h1 className="mb-3 fw-bold">À propos de DigiWiki</h1>
             <h2 className="mb-2 fw-bold">

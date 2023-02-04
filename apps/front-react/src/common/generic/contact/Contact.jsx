@@ -28,8 +28,8 @@ export default function Contact() {
   return (
     <div className="container pt-3">
       <div className="row">
-        <div className="col-9 mx-auto col-9-resized-md mt-3 mb-2">
-          <h1>Contact</h1>
+        <div className="col-responsive  mt-3 mb-2">
+          <h1 className="fw-bold">Contact</h1>
           <Form>
             <Form.Group className="mt-3 mb-2 raleway">
               <Form.Label className="medium mb-2 raleway">

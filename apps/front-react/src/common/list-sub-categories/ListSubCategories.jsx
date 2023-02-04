@@ -20,11 +20,22 @@ export default function ListSubCategories() {
 
   const [isSubCategoriesFound, setIsSubCategoriesFound] = useState(false);
   const [category, setCategory] = useState(false);
+  const [mobileView, setMobileView] = useState(window.innerWidth < 767);
 
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const handleMobileView = () => {
+      if (window.innerWidth < 767) {
+        setMobileView(true);
+      } else {
+        setMobileView(false);
+      }
+    };
+
+    window.addEventListener("resize", handleMobileView);
+
     findSubCatetegories();
   }, []);
 
@@ -94,6 +105,7 @@ export default function ListSubCategories() {
                 className=""
                 onClick={() => navigate("/explorer")}
                 size="md"
+                hidden={mobileView}
               >
                 Retour
               </Button>
@@ -119,6 +131,17 @@ export default function ListSubCategories() {
       )}
 
       <hr className="solid" />
+      <div className="d-flex align-content-center justify-content-center mb-2">
+        <Button
+          variant="outline-primary"
+          className=""
+          onClick={() => navigate("/explorer")}
+          size="md"
+          hidden={!mobileView}
+        >
+          Retour
+        </Button>
+      </div>
       {isSubCategoriesFound ? (
         category.subCategories.length === 0 ? (
           <div className="row flex-grow-1">
@@ -147,6 +170,17 @@ export default function ListSubCategories() {
           </div>
         )
       ) : null}
+      <div className="d-flex align-content-center justify-content-center mt-3">
+        <Button
+          variant="outline-primary"
+          className=""
+          onClick={() => navigate("/explorer")}
+          size="md"
+          hidden={!mobileView}
+        >
+          Retour
+        </Button>
+      </div>
     </div>
   );
 }

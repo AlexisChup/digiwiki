@@ -4,9 +4,9 @@ export default function TermOfService() {
   return (
     <div className="container pt-3">
       <div className="row justify-content-center">
-        <div className="col-9 mx-auto col-9-resized-md">
+        <div className="col-responsive">
           <div className="mt-3 mb-2">
-            <h1 className="mb-2">Conditions générales d'utilisation</h1>
+            <h1 className="mb-2 fw-bold">Conditions générales d'utilisation</h1>
             <p>CGU - Dernière mise à jour : 17 Janvier 2023</p>
             <p>
               Veuillez lire attentivement les présentes conditions générales
