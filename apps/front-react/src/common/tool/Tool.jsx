@@ -128,12 +128,12 @@ export default function Tool() {
     <div className="container h-100 d-flex flex-column pt-3">
       {isToolFound ? (
         <div className="row justify-content-between mx-3">
-          <div className="col shadow p-3 rounded mx-auto">
-            <div className="d-flex flex-row justify-content-between">
+          <div className="col-responsive">
+            <div className="d-flex flex-row justify-content-center">
               <div>
                 <Button
                   variant="outline-primary"
-                  className="mb-2"
+                  className="mb-2 me-1"
                   onClick={() => navigate(-1)}
                   size="md"
                 >
@@ -142,7 +142,9 @@ export default function Tool() {
               </div>
               <div>
                 <a href={tool.affiliateRef} target="_blank">
-                  <Button size="md">Site Web</Button>
+                  <Button size="md" className="ms-1">
+                    Site Web
+                  </Button>
                 </a>
               </div>
             </div>
@@ -163,30 +165,35 @@ export default function Tool() {
                 <div>{tool.shortDescription}</div>
               </div>
             </div>
+            <hr className="solid" />
             {
               <div
+                className="container-description"
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(tool.description),
                 }}
               />
             }
-            {/*<div className="row justify-content-between">
-              <div className="col">
+            <hr className="solid" />
+            <div className="d-flex flex-row justify-content-center mt-2">
+              <div>
                 <Button
                   variant="outline-primary"
-                  className="mb-2"
+                  className="mb-2 me-1"
                   onClick={() => navigate(-1)}
-                  size="sm"
+                  size="md"
                 >
                   Retour
                 </Button>
               </div>
-              <div className="col text-end">
+              <div>
                 <a href={tool.affiliateRef} target="_blank">
-                  <Button size="sm">Site Web</Button>
+                  <Button size="md" className="ms-1">
+                    Site Web
+                  </Button>
                 </a>
               </div>
-          </div>*/}
+            </div>
           </div>
         </div>
       ) : (
@@ -194,8 +201,6 @@ export default function Tool() {
           <Spinner />
         </div>
       )}
-
-      <div className="row justify-content-center"></div>
     </div>
   );
 }

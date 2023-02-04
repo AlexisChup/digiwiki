@@ -34,10 +34,6 @@ div {
   color: #5f6c7b;
   text-align: left;
 }
-ul {
-  list-style-position: inside;
-  text-align: left;
-}
 
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */

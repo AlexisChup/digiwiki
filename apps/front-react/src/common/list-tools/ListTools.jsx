@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useLayoutEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { AXIOS } from "../../app/axios-http";
@@ -22,11 +22,22 @@ export default function ListTools() {
 
   const [isToolsFound, setIsToolsFound] = useState(false);
   const [subCategory, setSubCategory] = useState(false);
+  const [mobileView, setMobileView] = useState(window.innerWidth < 767);
 
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const handleMobileView = () => {
+      if (window.innerWidth < 767) {
+        setMobileView(true);
+      } else {
+        setMobileView(false);
+      }
+    };
+
+    window.addEventListener("resize", handleMobileView);
+
     findTools();
   }, []);
 
@@ -132,6 +143,7 @@ export default function ListTools() {
                 className=""
                 onClick={() => navigate(-1)}
                 size="md"
+                hidden={mobileView}
               >
                 Retour
               </Button>
@@ -157,6 +169,17 @@ export default function ListTools() {
       )}
 
       <hr className="solid" />
+      <div className="d-flex align-content-center justify-content-center mb-2">
+        <Button
+          variant="outline-primary"
+          className=""
+          onClick={() => navigate(-1)}
+          size="md"
+          hidden={!mobileView}
+        >
+          Retour
+        </Button>
+      </div>
       <div className="container h-100 px-0">
         {isToolsFound ? (
           subCategory.tools.length > 0 ? (
@@ -198,6 +221,17 @@ export default function ListTools() {
             </div>
           )
         ) : null}
+        <div className="d-flex align-content-center justify-content-center mt-3">
+          <Button
+            variant="outline-primary"
+            className=""
+            onClick={() => navigate(-1)}
+            size="md"
+            hidden={!mobileView}
+          >
+            Retour
+          </Button>
+        </div>
       </div>
     </div>
   );
