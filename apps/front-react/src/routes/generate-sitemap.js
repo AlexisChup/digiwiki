@@ -1,5 +1,4 @@
-const { SitemapStream, streamToPromise } = require("sitemap");
-const { Readable } = require("stream");
+const { SitemapStream } = require("sitemap");
 const { createWriteStream } = require("fs");
 const axios = require("axios");
 
