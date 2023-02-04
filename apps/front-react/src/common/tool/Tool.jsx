@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import DOMPurify from "isomorphic-dompurify";
 import { AXIOS } from "../../app/axios-http";
@@ -19,6 +19,8 @@ export default function Tool() {
   const urlTool = urlSplitted[urlSplitted.length - 1];
 
   const [isToolFound, setIsToolFound] = useState(false);
+  const [category, setCategory] = useState(false);
+  const [subCategory, setSubCategory] = useState(false);
   const [tool, setTool] = useState(false);
 
   let navigate = useNavigate();
@@ -58,6 +60,10 @@ export default function Tool() {
                         toolIndex
                       ].url === urlTool
                     ) {
+                      setCategory(res.data[catIndex]);
+                      setSubCategory(
+                        res.data[catIndex].subCategories[subIndex]
+                      );
                       setTool(
                         res.data[catIndex].subCategories[subIndex].tools[
                           toolIndex
@@ -103,6 +109,8 @@ export default function Tool() {
                   categories[catIndex].subCategories[subIndex].tools[toolIndex]
                     .url === urlTool
                 ) {
+                  setCategory(categories[catIndex]);
+                  setSubCategory(categories[catIndex].subCategories[subIndex]);
                   setTool(
                     categories[catIndex].subCategories[subIndex].tools[
                       toolIndex
@@ -127,75 +135,86 @@ export default function Tool() {
   return (
     <div className="container h-100 d-flex flex-column pt-3">
       {isToolFound ? (
-        <div className="row justify-content-between mx-3">
-          <div className="col-responsive">
-            <div className="d-flex flex-row justify-content-center">
-              <div>
-                <Button
-                  variant="outline-primary"
-                  className="mb-2 me-1"
-                  onClick={() => navigate(-1)}
-                  size="md"
-                >
-                  Retour
-                </Button>
-              </div>
-              <div>
-                <a href={tool.affiliateRef} target="_blank">
-                  <Button size="md" className="ms-1">
-                    Site Web
-                  </Button>
-                </a>
-              </div>
-            </div>
-            <div className="d-flex flex-row">
-              <div
-                className="d-flex align-items-center me-3"
-                style={{ height: "80px" }}
+        <>
+          <div className="col-responsive mx-3">
+            <div>
+              <NavLink to="/explorer" className="dashboard-navlink">
+                Explorer &nbsp;{">"}
+              </NavLink>
+              <NavLink
+                to={"/explorer/" + category.url}
+                className="dashboard-navlink"
               >
-                <Image
-                  src={safeSrcImg(tool.imgUrl, "tools")}
-                  className="logo-tool-page"
-                />
-              </div>
-              <div className="d-flex flex-column justify-content-center">
-                <div>
-                  <h3 className="my-0 fw-bold">{tool.name}</h3>
-                </div>
-                <div>{tool.shortDescription}</div>
-              </div>
+                &nbsp;{category.name} &nbsp;{">"}
+              </NavLink>
+              <NavLink
+                to={"/explorer/" + category.url + "/" + subCategory.url}
+                className="dashboard-navlink"
+              >
+                &nbsp;{subCategory.name} &nbsp;{">"}
+              </NavLink>
+              <NavLink
+                to={
+                  "/explorer/" +
+                  category.url +
+                  "/" +
+                  subCategory.url +
+                  "/" +
+                  tool.url
+                }
+                className="dashboard-navlink-active"
+              >
+                &nbsp;{tool.name}
+              </NavLink>
             </div>
             <hr className="solid" />
-            {
-              <div
-                className="container-description"
-                dangerouslySetInnerHTML={{
-                  __html: DOMPurify.sanitize(tool.description),
-                }}
-              />
-            }
-            <hr className="solid" />
-            <div className="d-flex flex-row justify-content-center mt-2">
-              <div>
-                <Button
-                  variant="outline-primary"
-                  className="mb-2 me-1"
-                  onClick={() => navigate(-1)}
-                  size="md"
+            <div className="row justify-content-between">
+              <div className="d-flex flex-row align-items-center">
+                <div
+                  className="d-flex align-items-center me-3"
+                  style={{ height: "80px" }}
                 >
-                  Retour
-                </Button>
+                  <Image
+                    src={safeSrcImg(tool.imgUrl, "tools")}
+                    className="logo-tool-page"
+                  />
+                </div>
+                <div className="d-flex flex-column justify-content-center pe-2">
+                  <div>
+                    <h3 className="my-0 fw-bold">{tool.name}</h3>
+                  </div>
+                  <div>{tool.shortDescription}</div>
+                </div>
+                <div className="ms-auto">
+                  <a href={tool.affiliateRef} target="_blank">
+                    <Button size="sm" className="ms-1">
+                      Site Web
+                    </Button>
+                  </a>
+                </div>
               </div>
-              <div>
-                <a href={tool.affiliateRef} target="_blank">
-                  <Button size="md" className="ms-1">
-                    Site Web
-                  </Button>
-                </a>
+              <hr className="solid" />
+              {
+                <div
+                  className="container-description mb-2"
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(tool.description),
+                  }}
+                />
+              }
+              <hr className="solid" />
+              <div className="d-flex flex-row justify-content-center">
+                <div>
+                  <a href={tool.affiliateRef} target="_blank">
+                    <Button size="md" className="ms-1">
+                      Site Web
+                    </Button>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </>
       ) : (
         <div className="d-flex justify-content-center">
           <Spinner />

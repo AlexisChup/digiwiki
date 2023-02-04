@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AXIOS } from "../../app/axios-http";
+import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategories } from "../../features/categories/categoriesSlice";
 import Spinner from "../generic/spinner/Spinner";
@@ -28,8 +29,14 @@ export default function ListCategories() {
 
   return (
     <div className="container h-100 d-flex flex-column pt-3">
+      <div>
+        <NavLink to="/explorer" className="dashboard-navlink-active">
+          Explorer &nbsp;{">"}
+        </NavLink>
+      </div>
+      <hr className="solid" />
       <div
-        className="d-flex flex-row justify-content-between align-content-center align-items-center"
+        className="d-flex flex-row justify-content-center align-content-center align-items-center"
         style={{ height: "80px" }}
       >
         <div className="d-flex align-items-center">

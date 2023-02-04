@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AXIOS } from "../../app/axios-http";
 import { setCategories } from "../../features/categories/categoriesSlice";
@@ -97,33 +97,36 @@ export default function ListSubCategories() {
         ) : null
       ) : null}
       {isSubCategoriesFound ? (
-        <div className="row justify-content-center">
-          <div className="d-flex align-content-center">
-            <div className="d-flex align-items-center me-3">
-              <Button
-                variant="outline-primary"
-                className=""
-                onClick={() => navigate("/explorer")}
-                size="md"
-                hidden={mobileView}
-              >
-                Retour
-              </Button>
-            </div>
-            <div
-              className="d-flex align-items-center me-3"
-              style={{ height: "80px" }}
+        <>
+          <div>
+            <NavLink to="/explorer" className="dashboard-navlink">
+              Explorer &nbsp;{">"}
+            </NavLink>
+            <NavLink
+              to={"/explorer/" + category.url}
+              className="dashboard-navlink-active"
             >
-              <Image
-                src={safeSrcImg(category.url, "categories")}
-                className="logo-list-header"
-              />
-            </div>
-            <div className="d-flex align-items-center">
-              <h1 className="my-0 fw-bold">{category.name}</h1>
+              &nbsp;{category.name}
+            </NavLink>
+          </div>
+          <hr className="solid" />
+          <div className="row justify-content-center">
+            <div className="d-flex align-content-center justify-content-center">
+              <div
+                className="d-flex align-items-center me-3"
+                style={{ height: "80px" }}
+              >
+                <Image
+                  src={safeSrcImg(category.url, "categories")}
+                  className="logo-list-header"
+                />
+              </div>
+              <div className="d-flex align-items-center">
+                <h1 className="my-0 fw-bold">{category.name}</h1>
+              </div>
             </div>
           </div>
-        </div>
+        </>
       ) : (
         <div className="d-flex justify-content-center">
           <Spinner />
@@ -131,17 +134,6 @@ export default function ListSubCategories() {
       )}
 
       <hr className="solid" />
-      <div className="d-flex align-content-center justify-content-center mb-2">
-        <Button
-          variant="outline-primary"
-          className=""
-          onClick={() => navigate("/explorer")}
-          size="md"
-          hidden={!mobileView}
-        >
-          Retour
-        </Button>
-      </div>
       {isSubCategoriesFound ? (
         category.subCategories.length === 0 ? (
           <div className="row flex-grow-1">
@@ -170,17 +162,6 @@ export default function ListSubCategories() {
           </div>
         )
       ) : null}
-      <div className="d-flex align-content-center justify-content-center mt-3">
-        <Button
-          variant="outline-primary"
-          className=""
-          onClick={() => navigate("/explorer")}
-          size="md"
-          hidden={!mobileView}
-        >
-          Retour
-        </Button>
-      </div>
     </div>
   );
 }

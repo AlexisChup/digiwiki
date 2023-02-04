@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { AXIOS } from "../../app/axios-http";
 import { setCategories } from "../../features/categories/categoriesSlice";
@@ -21,23 +21,13 @@ export default function ListTools() {
   const urlSubCategory = urlSplitted[urlSplitted.length - 1];
 
   const [isToolsFound, setIsToolsFound] = useState(false);
+  const [category, setCategory] = useState(false);
   const [subCategory, setSubCategory] = useState(false);
-  const [mobileView, setMobileView] = useState(window.innerWidth < 767);
 
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const handleMobileView = () => {
-      if (window.innerWidth < 767) {
-        setMobileView(true);
-      } else {
-        setMobileView(false);
-      }
-    };
-
-    window.addEventListener("resize", handleMobileView);
-
     findTools();
   }, []);
 
@@ -55,6 +45,7 @@ export default function ListTools() {
               categories[catIndex].subCategories[subIndex].url ===
               urlSubCategory
             ) {
+              setCategory(categories[catIndex]);
               setSubCategory(categories[catIndex].subCategories[subIndex]);
               break;
             }
@@ -83,6 +74,7 @@ export default function ListTools() {
                   res.data[catIndex].subCategories[subIndex].url ===
                   urlSubCategory
                 ) {
+                  setCategory(res.data[catIndex]);
                   setSubCategory(res.data[catIndex].subCategories[subIndex]);
                   setIsToolsFound(true);
                   isFound = true;
@@ -112,6 +104,7 @@ export default function ListTools() {
               categories[catIndex].subCategories[subIndex].url ===
               urlSubCategory
             ) {
+              setCategory(categories[catIndex]);
               setSubCategory(categories[catIndex].subCategories[subIndex]);
               setIsToolsFound(true);
               isFound = true;
@@ -135,51 +128,48 @@ export default function ListTools() {
         ) : null
       ) : null}
       {isToolsFound ? (
-        <div className="row justify-content-center">
-          <div className="d-flex flex-row align-content-center">
-            <div className="d-flex align-items-center me-3">
-              <Button
-                variant="outline-primary"
-                className=""
-                onClick={() => navigate(-1)}
-                size="md"
-                hidden={mobileView}
-              >
-                Retour
-              </Button>
-            </div>
-            <div
-              className="d-flex align-items-center me-3"
-              style={{ height: "80px" }}
+        <>
+          <div>
+            <NavLink to="/explorer" className="dashboard-navlink">
+              Explorer &nbsp;{">"}
+            </NavLink>
+            <NavLink
+              to={"/explorer/" + category.url}
+              className="dashboard-navlink"
             >
-              <Image
-                src={safeSrcImg(subCategory.url, "sub-categories")}
-                className="logo-list-header"
-              />
-            </div>
-            <div className="d-flex align-items-center">
-              <h1 className="fw-bold my-0">{subCategory.name}</h1>
+              &nbsp;{category.name}&nbsp;{">"}
+            </NavLink>
+            <NavLink
+              to={"/explorer/" + category.url + "/" + subCategory.url}
+              className="dashboard-navlink-active"
+            >
+              &nbsp;{subCategory.name}
+            </NavLink>
+          </div>
+          <hr className="solid" />
+          <div className="row justify-content-center">
+            <div className="d-flex flex-row align-content-center justify-content-center">
+              <div
+                className="d-flex align-items-center me-3"
+                style={{ height: "80px" }}
+              >
+                <Image
+                  src={safeSrcImg(subCategory.url, "sub-categories")}
+                  className="logo-list-header"
+                />
+              </div>
+              <div className="d-flex align-items-center">
+                <h1 className="fw-bold my-0">{subCategory.name}</h1>
+              </div>
             </div>
           </div>
-        </div>
+        </>
       ) : (
         <div className="d-flex justify-content-center">
           <Spinner />
         </div>
       )}
-
       <hr className="solid" />
-      <div className="d-flex align-content-center justify-content-center mb-2">
-        <Button
-          variant="outline-primary"
-          className=""
-          onClick={() => navigate(-1)}
-          size="md"
-          hidden={!mobileView}
-        >
-          Retour
-        </Button>
-      </div>
       <div className="container h-100 px-0">
         {isToolsFound ? (
           subCategory.tools.length > 0 ? (
@@ -221,17 +211,6 @@ export default function ListTools() {
             </div>
           )
         ) : null}
-        <div className="d-flex align-content-center justify-content-center mt-3">
-          <Button
-            variant="outline-primary"
-            className=""
-            onClick={() => navigate(-1)}
-            size="md"
-            hidden={!mobileView}
-          >
-            Retour
-          </Button>
-        </div>
       </div>
     </div>
   );
