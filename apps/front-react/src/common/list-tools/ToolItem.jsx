@@ -34,7 +34,9 @@ export default function ToolItem(props) {
           </div>
           <div className="d-flex flex-column justify-content-center">
             <div>
-              <h3 className="my-0 fw-bold text-break">{props.tool.name}</h3>
+              <h2 className="my-0 fw-bold text-break title-card text-capitalize">
+                {props.tool.name}
+              </h2>
             </div>
             <div>{props.tool.shortDescription}</div>
           </div>

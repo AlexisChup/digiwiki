@@ -7,6 +7,7 @@ import { AXIOS } from "../../../app/axios-http";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import ToolForm from "../../forms/ToolForm";
+import Spinner from "../../generic/spinner/Spinner";
 
 var toType = function (obj) {
   return {}.toString
@@ -22,17 +23,19 @@ export default function EditTool(props) {
   const [initialSubCategoriesIds, setInitialSubCategoriesIds] = useState(false);
 
   const handleShow = (user) => {
+    setShow(true);
     if (!initialSubCategoriesIds) {
+      setIsRequesting(true);
       AXIOS.get("/admin/tool/" + props.tool.id + "/get-subcategories-id")
         .then((res) => {
           setInitialSubCategoriesIds(res.data);
-          setShow(true);
         })
         .catch((e) => {
           console.log("error: ", e);
+        })
+        .finally(() => {
+          setIsRequesting(false);
         });
-    } else {
-      setShow(true);
     }
   };
 
@@ -115,7 +118,7 @@ export default function EditTool(props) {
     <div className="me-3">
       <div>
         <Button size="sm" variant="warning" onClick={handleShow}>
-          <FaPen />
+          {isRequesting ? <Spinner sm /> : <FaPen />}
         </Button>
       </div>
 

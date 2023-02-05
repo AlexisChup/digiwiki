@@ -39,6 +39,14 @@ class ToolRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllIds(): array
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t.id')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Tool[] Returns an array of Tool objects
 //     */

@@ -20,12 +20,6 @@ export default function ToolForm(props) {
     }
   }, [props.show]);
 
-  // AXIOS.get("/admin/tool/" + props.tool.id + "/get-subcategories-id")
-  // .then((res) => {})
-  // .catch((e) => {
-  //   console.log("error: ", e);
-  // });
-
   useEffect(() => {
     if (!categories) {
       setIsRequesting(true);
@@ -218,7 +212,7 @@ export default function ToolForm(props) {
             </Form.Group>
             <Form.Group>
               <Form.Label className="my-0 small">
-                Petit description inférieur à 80 charactères
+                Petite description inférieur à 80 charactères
               </Form.Label>
               <Form.Control
                 size="sm"
@@ -230,6 +224,15 @@ export default function ToolForm(props) {
                   handleFormAddTool("shortDescription", e.target.value)
                 }
               />
+              <div className="text-end">
+                <small
+                  className={
+                    shortDescription.length > 80 ? "text-danger fw-bold" : ""
+                  }
+                >
+                  {shortDescription.length} / 80
+                </small>
+              </div>
             </Form.Group>
             <Form.Group>
               <Form.Label className="my-0 small">Description</Form.Label>

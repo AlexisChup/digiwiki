@@ -55,6 +55,7 @@ export default function EditSubCategory(props) {
   };
 
   const handleShow = (user) => {
+    setShow(true);
     if (!initialCategoriesIds) {
       AXIOS.get(
         "/admin/sub-category/" + props.subCategory.id + "/get-categories-id"
@@ -66,13 +67,10 @@ export default function EditSubCategory(props) {
             initialCategoriesIds: res.data,
             categoriesIds: res.data,
           });
-          setShow(true);
         })
         .catch((e) => {
           console.log("error: ", e);
         });
-    } else {
-      setShow(true);
     }
   };
 
@@ -177,7 +175,9 @@ export default function EditSubCategory(props) {
               handleForm={handleForm}
             />
           ) : (
-            <Spinner />
+            <div className="d-flex justify-content-center">
+              <Spinner />
+            </div>
           )}
         </Modal.Body>
         <Modal.Footer>

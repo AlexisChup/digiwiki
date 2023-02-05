@@ -17,7 +17,7 @@ export default function SubCategoryItem(props) {
         }
       >
         <div className="d-flex align-items-center pe-3">
-          <h2 className="my-0 text-break text-uppercase title-card">
+          <h2 className="my-0 text-break text-capitalize title-card">
             {props.subCategory.name}
           </h2>
         </div>

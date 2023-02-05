@@ -13,7 +13,7 @@ export default function CategoryItem(props) {
         onClick={() => navigate("/explorer/" + props.category.url)}
       >
         <div className="d-flex align-items-center pe-3">
-          <h2 className="my-0 text-break text-uppercase title-card">
+          <h2 className="my-0 text-break text-capitalize title-card">
             {props.category.name}
           </h2>
         </div>

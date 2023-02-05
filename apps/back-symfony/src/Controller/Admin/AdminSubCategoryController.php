@@ -51,6 +51,44 @@ class AdminSubCategoryController extends AbstractController
         return $this->json($catIds);
     }
 
+    #[Route('/orphan-subcategories', name: 'get_orphan_subcategories', methods: 'GET')]
+    public function getOrphanSubCategories(CategoryRepository $categoryRepository, SubCategoryRepository $subCategoryRepository)
+    {
+        $subCatsIdsArrayObject = $subCategoryRepository->findAllIds();
+        $allSubCatsIds = array_column($subCatsIdsArrayObject, "id");
+
+        $categories = $categoryRepository->findAll();
+
+        $subCatIdsUsed = array();
+        for($iC = 0; $iC < count($categories); $iC++)
+        {
+            $subCategories = $categories[$iC]->getSubCategories();
+            for($iSubCat = 0; $iSubCat < count($subCategories); $iSubCat++)
+            {
+                if(!in_array($subCategories[$iSubCat]->getId(), $subCatIdsUsed))
+                {
+                    $subCatIdsUsed[] = $subCategories[$iSubCat]->getId();
+                }
+            }
+        }
+
+        $orphanIdsSubCatsObject = array_diff($allSubCatsIds, $subCatIdsUsed);
+        $orphanIdsSubCats = array();
+
+        foreach($orphanIdsSubCatsObject as $x => $val) {
+            $orphanIdsSubCats[] = $val;
+        }
+
+        $orphanSubCats = array();
+        for ($i = 0; $i < count($orphanIdsSubCats); $i++)
+        {
+            $orphanSubCats[] = $subCategoryRepository->find($orphanIdsSubCats[$i]);
+        }
+
+
+        return $this->json($orphanSubCats);
+    }
+
     #[Route('/create', name: 'create_sub_category', methods: 'POST')]
     public function createSubCategory(CategoryRepository $categoryRepository, SubCategoryRepository $subCategoryRepository, Request $request): Response
     {

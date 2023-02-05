@@ -15,7 +15,7 @@ export default function Footer() {
           <footer className="Footer d-flex justify-content-center py-1">
             <div className="row row-cols-sm-3 row-cols-1 g-2 justify-content-center">
               <div className="col text-center">
-                <span className="">Copyright © 2022</span>
+                <span className="">Copyright © 2023</span>
               </div>
               <div className="col text-center">
                 {" "}

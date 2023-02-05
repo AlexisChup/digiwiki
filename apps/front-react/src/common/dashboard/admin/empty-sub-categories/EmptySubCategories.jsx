@@ -8,7 +8,7 @@ import AddSubCategory from "../../../list-sub-categories/admin/AddSubCategory";
 
 export default function EmptySubCategories() {
   let [isRequesting, setIsRequesting] = useState(false);
-  const [emptySubCategories, setEmptySubCategories] = useState([]);
+  const [emptySubCategories, setEmptySubCategories] = useState(false);
 
   useEffect(() => {
     fetchSubCategories();
@@ -17,25 +17,14 @@ export default function EmptySubCategories() {
   const fetchSubCategories = () => {
     setIsRequesting(true);
 
-    AXIOS.get("public/sub-category/all")
+    AXIOS.get("/admin/sub-category/orphan-subcategories")
       .then((res) => {
         setEmptySubCategories(res.data);
-        // findEmptySubCategories(res.data);
       })
-      .catch((e) => console.log("ERROR public/sub-category/all: ", e))
+      .catch((e) =>
+        console.log("ERROR /admin/sub-category/orphan-subcategorie: ", e)
+      )
       .finally(() => setIsRequesting(false));
-  };
-
-  const findEmptySubCategories = (subCatagories) => {
-    let listEmptySubCategories = [];
-
-    for (let index = 0; index < subCatagories.length; index++) {
-      if (subCatagories[index].category.length === 0) {
-        listEmptySubCategories.push(subCatagories[index]);
-      }
-    }
-
-    setEmptySubCategories(listEmptySubCategories);
   };
 
   return (
