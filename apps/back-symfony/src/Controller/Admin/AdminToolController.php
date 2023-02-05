@@ -31,6 +31,27 @@ class AdminToolController extends AbstractController
         $this->serializeCircular = new Serializer([$normalizer], [$encoder]);
     }
 
+    #[Route('/{id}/get-subcategories-id', name: 'get_subcategories_by_tool_id', methods: 'GET')]
+    public function getSubCategoriesId(SubCategoryRepository $subCategoryRepository, int $id)
+    {
+        $subCatIds = array();
+        $subCategories = $subCategoryRepository->findAll();
+
+        for($iSC = 0; $iSC < count($subCategories); $iSC++)
+        {
+            $tools = $subCategories[$iSC]->getTools();
+            for($iTool = 0; $iTool < count($tools); $iTool++)
+            {
+                if($id === $tools[$iTool]->getId())
+                {
+                    $subCatIds[] = $subCategories[$iSC]->getId();
+                }
+            }
+        }
+
+        return $this->json($subCatIds);
+    }
+
     #[Route('/create', name: 'create_tool', methods: 'POST')]
     public function createTool(CategoryRepository $categoryRepository, SubCategoryRepository $subCategoryRepository, ToolRepository $toolRepository, Request $request): Response
     {

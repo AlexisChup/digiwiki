@@ -19,7 +19,8 @@ export default function EmptySubCategories() {
 
     AXIOS.get("public/sub-category/all")
       .then((res) => {
-        findEmptySubCategories(res.data);
+        setEmptySubCategories(res.data);
+        // findEmptySubCategories(res.data);
       })
       .catch((e) => console.log("ERROR public/sub-category/all: ", e))
       .finally(() => setIsRequesting(false));

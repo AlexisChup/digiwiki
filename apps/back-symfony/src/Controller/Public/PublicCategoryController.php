@@ -36,6 +36,7 @@ class PublicCategoryController extends AbstractController
     public function showAll(CategoryRepository $categoryRepository, SubCategoryRepository $subCategoryRepository): Response
     {
         $categories = $categoryRepository->findAll();
+        return $this->json($categories);
 
         $content = $this->serializeCircular->serialize($categories, 'json');
         $response = new Response($content);

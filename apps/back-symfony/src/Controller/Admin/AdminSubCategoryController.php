@@ -30,6 +30,27 @@ class AdminSubCategoryController extends AbstractController
         $this->serializeCircular = new Serializer([$normalizer], [$encoder]);
     }
 
+    #[Route('/{id}/get-categories-id', name: 'get_categories_by_tool_id', methods: 'GET')]
+    public function getCategoriesId(CategoryRepository $categoryRepository, int $id)
+    {
+        $catIds = array();
+        $categories = $categoryRepository->findAll();
+
+        for($iC = 0; $iC < count($categories); $iC++)
+        {
+            $subCategories = $categories[$iC]->getSubCategories();
+            for($iSubCat = 0; $iSubCat < count($subCategories); $iSubCat++)
+            {
+                if($id === $subCategories[$iSubCat]->getId())
+                {
+                    $catIds[] = $categories[$iC]->getId();
+                }
+            }
+        }
+
+        return $this->json($catIds);
+    }
+
     #[Route('/create', name: 'create_sub_category', methods: 'POST')]
     public function createSubCategory(CategoryRepository $categoryRepository, SubCategoryRepository $subCategoryRepository, Request $request): Response
     {

@@ -16,6 +16,17 @@ export default function ToolForm(props) {
   const [isRequesting, setIsRequesting] = useState(false);
 
   useEffect(() => {
+    if (props.show) {
+    }
+  }, [props.show]);
+
+  // AXIOS.get("/admin/tool/" + props.tool.id + "/get-subcategories-id")
+  // .then((res) => {})
+  // .catch((e) => {
+  //   console.log("error: ", e);
+  // });
+
+  useEffect(() => {
     if (!categories) {
       setIsRequesting(true);
       AXIOS.get("/public/category/all")

@@ -1,9 +1,29 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { AXIOS } from "../../app/axios-http";
+import { setCategories } from "../../features/categories/categoriesSlice";
 import Form from "react-bootstrap/Form";
 
 export default function SubCategoryForm(props) {
+  const dispatch = useDispatch();
   const { categories } = useSelector((state) => state.categories);
+  let [isRequesting, setIsRequesting] = useState(false);
+
+  useEffect(() => {
+    if (!categories) {
+      setIsRequesting(true);
+      AXIOS.get("/public/category/all")
+        .then((res) => {
+          dispatch(setCategories(res.data));
+        })
+        .catch((e) => {
+          console.log(e);
+        })
+        .finally(() => {
+          setIsRequesting(false);
+        });
+    }
+  }, []);
 
   const handleMultipleSelect = (event) => {
     let selectOptionsInt = [];
@@ -50,11 +70,12 @@ export default function SubCategoryForm(props) {
           value={props.formSubCategory.categoriesIds}
           onChange={(e) => handleMultipleSelect(e)}
         >
-          {categories.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          ))}
+          {categories &&
+            categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
         </Form.Control>
       </Form.Group>
     </Form>

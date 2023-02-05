@@ -19,37 +19,21 @@ export default function EditTool(props) {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const [isRequesting, setIsRequesting] = useState(false);
+  const [initialSubCategoriesIds, setInitialSubCategoriesIds] = useState(false);
 
-  /* Super weird function because when editing subcategory
-   ** the return value can be tricky */
-  const getActiveSubCategoriesIds = () => {
-    if (!props.tool.subCategories) {
-      return [];
+  const handleShow = (user) => {
+    if (!initialSubCategoriesIds) {
+      AXIOS.get("/admin/tool/" + props.tool.id + "/get-subcategories-id")
+        .then((res) => {
+          setInitialSubCategoriesIds(res.data);
+          setShow(true);
+        })
+        .catch((e) => {
+          console.log("error: ", e);
+        });
+    } else {
+      setShow(true);
     }
-    let subCategoriesIds = [];
-
-    if (toType(props.tool.subCategories) === toType([])) {
-      for (let index = 0; index < props.tool.subCategories.length; index++) {
-        if (toType(props.tool.subCategories[index]) === toType(1)) {
-          subCategoriesIds.push(props.tool.subCategories[index]);
-        } else if (toType(props.tool.subCategories[index]) === toType({})) {
-          subCategoriesIds.push(props.tool.subCategories[index].id);
-        }
-      }
-    } else if (toType(props.tool.subCategories) === toType({})) {
-      const valuesOfObject = Object.values(props.tool.subCategories);
-
-      for (let indObject = 0; indObject < valuesOfObject.length; indObject++) {
-        const valObj = valuesOfObject[indObject];
-        if (toType(valObj) === toType(1)) {
-          subCategoriesIds.push(valObj);
-        } else if (toType(valObj) === toType({})) {
-          subCategoriesIds.push(valObj.id);
-        }
-      }
-    }
-
-    return subCategoriesIds;
   };
 
   const initialStateFormEditTool = {
@@ -62,8 +46,8 @@ export default function EditTool(props) {
     affiliateRef: props.tool.affiliateRef ? props.tool.affiliateRef : "",
     codePromo: props.tool.codePromo ? props.tool.codePromo : "",
     imgUrl: props.tool.imgUrl ? props.tool.imgUrl : "",
-    subCategoriesIds: getActiveSubCategoriesIds(),
-    initialSubCategoriesIds: getActiveSubCategoriesIds(),
+    subCategoriesIds: initialSubCategoriesIds,
+    initialSubCategoriesIds: initialSubCategoriesIds,
   };
 
   const getSubCategoriesIdsToRemove = (formEditTool) => {
@@ -127,10 +111,6 @@ export default function EditTool(props) {
     }
   };
 
-  const handleShow = (user) => {
-    setShow(true);
-  };
-
   return (
     <div className="me-3">
       <div>
@@ -139,13 +119,15 @@ export default function EditTool(props) {
         </Button>
       </div>
 
-      <ToolForm
-        show={show}
-        handleClose={handleClose}
-        initialStateForm={initialStateFormEditTool}
-        type="EDIT"
-        isRequesting={isRequesting}
-      />
+      {initialSubCategoriesIds ? (
+        <ToolForm
+          show={show}
+          handleClose={handleClose}
+          initialStateForm={initialStateFormEditTool}
+          type="EDIT"
+          isRequesting={isRequesting}
+        />
+      ) : null}
     </div>
   );
 }

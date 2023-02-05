@@ -7,6 +7,7 @@ import { AXIOS } from "../../../app/axios-http";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import SubCategoryForm from "../../forms/SubCategoryForm";
+import Spinner from "../../generic/spinner/Spinner";
 
 var toType = function (obj) {
   return {}.toString
@@ -19,6 +20,7 @@ export default function EditSubCategory(props) {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const [isRequesting, setIsRequesting] = useState(false);
+  const [initialCategoriesIds, setInitialCategoriesIds] = useState(false);
 
   /* Super weird function because when editing category
    ** the return value can be tricky */
@@ -52,11 +54,33 @@ export default function EditSubCategory(props) {
     return categoriesIds;
   };
 
+  const handleShow = (user) => {
+    if (!initialCategoriesIds) {
+      AXIOS.get(
+        "/admin/sub-category/" + props.subCategory.id + "/get-categories-id"
+      )
+        .then((res) => {
+          setInitialCategoriesIds(res.data);
+          setFormSubCategory({
+            ...formSubCategory,
+            initialCategoriesIds: res.data,
+            categoriesIds: res.data,
+          });
+          setShow(true);
+        })
+        .catch((e) => {
+          console.log("error: ", e);
+        });
+    } else {
+      setShow(true);
+    }
+  };
+
   const initialStateFormSubCategory = {
     name: props.subCategory.name,
     url: props.subCategory.url,
-    categoriesIds: getActiveCategoriesIds(),
-    initialCategoriesIds: getActiveCategoriesIds(),
+    categoriesIds: initialCategoriesIds,
+    initialCategoriesIds: initialCategoriesIds,
   };
 
   const [formSubCategory, setFormSubCategory] = useState(
@@ -125,10 +149,6 @@ export default function EditSubCategory(props) {
     }
   };
 
-  const handleShow = (user) => {
-    setShow(true);
-  };
-
   const handleForm = (key, value) => {
     setFormSubCategory({ ...formSubCategory, [key]: value });
   };
@@ -151,10 +171,14 @@ export default function EditSubCategory(props) {
           <Modal.Title>Editer {props.subCategory.name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <SubCategoryForm
-            formSubCategory={formSubCategory}
-            handleForm={handleForm}
-          />
+          {initialCategoriesIds ? (
+            <SubCategoryForm
+              formSubCategory={formSubCategory}
+              handleForm={handleForm}
+            />
+          ) : (
+            <Spinner />
+          )}
         </Modal.Body>
         <Modal.Footer>
           <Button
