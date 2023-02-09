@@ -10,7 +10,7 @@ import ToolItem from "./ToolItem";
 import Spinner from "../generic/spinner/Spinner";
 import { safeSrcImg } from "../../utils/image";
 import AdminHeaderListTools from "./admin/AdminHeaderListTools";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 
 export default function ListTools() {
   const { categories } = useSelector((state) => state.categories);
@@ -122,20 +122,29 @@ export default function ListTools() {
     }
   };
 
-  const subCategoryName = () => {
-    switch(urlSubCategory) {
-        case "design" :
-          nameSubCategory = "de Design";
-          break;
-    }
-  }
-
   return (
     <div className="container h-100 d-flex flex-column pt-3">
       <Helmet>
         <title>{"Digiwiki - Outils " + subCategory.name}</title>
-        <meta name="description" content={"La liste des meilleurs outils de "+ subCategory.name}/>
-        <link rel="canonical" href={"https://www.digiwiki.io/explorer/" + category.url + "/" + subCategory.url}/>
+        <meta
+          name="description"
+          content={
+            "La liste des meilleurs outils digitaux de " +
+            subCategory.name +
+            " dans " +
+            category.name +
+            "."
+          }
+        />
+        <link
+          rel="canonical"
+          href={
+            "https://www.digiwiki.io/explorer/" +
+            category.url +
+            "/" +
+            subCategory.url
+          }
+        />
       </Helmet>
       {isToolsFound ? (
         isAuthenticated && user.roles.includes("ROLE_ADMIN") ? (
