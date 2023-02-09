@@ -1,8 +1,17 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 
 export default function TermOfService() {
   return (
     <div className="container pt-3">
+      <Helmet>
+        <title>Digiwiki - Conditions générales d'utilisation</title>
+        <meta
+          name="description"
+          content="Voici les conditions générales d'utilisation du site DigiWiki."
+        />
+        <link rel="canonical" href="https://www.digiwiki.io/terms-of-service" />
+      </Helmet>
       <div className="row justify-content-center">
         <div className="col-responsive">
           <div className="mt-3 mb-2">

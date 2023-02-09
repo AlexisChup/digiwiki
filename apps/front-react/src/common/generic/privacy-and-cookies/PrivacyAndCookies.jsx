@@ -1,8 +1,20 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 
 export default function PrivacyAndCookies() {
   return (
     <div className="container pt-3">
+      <Helmet>
+        <title>Digiwiki - Politique de confidentialité</title>
+        <meta
+          name="description"
+          content="Voici la politique de confidentialité du site DigiWiki."
+        />
+        <link
+          rel="canonical"
+          href="https://www.digiwiki.io/privacy-and-cookies"
+        />
+      </Helmet>
       <div className="row justify-content-center">
         <div className="col-responsive">
           <div className="mt-3 mb-2">
