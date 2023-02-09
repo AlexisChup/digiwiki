@@ -2,12 +2,18 @@ import React from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import {Helmet} from "react-helmet";
 
 export default function About() {
   let navigate = useNavigate();
 
   return (
     <div className="container pt-3">
+      <Helmet>
+        <title>Digiwiki - À propos</title>
+        <meta name="description" content={"À propos de Digiwiki, la transparence de nos valeurs"}/>
+        <link rel="canonical" href="https://www.digiwiki.io/about"/>
+      </Helmet>
       <div className="row">
         <div className="col-responsive">
           <div className="row mt-3 mb-2 mx-auto">

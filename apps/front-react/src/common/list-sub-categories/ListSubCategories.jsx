@@ -9,6 +9,7 @@ import SubCategoryItem from "./SubCategoryItem";
 import Spinner from "../generic/spinner/Spinner";
 import AdminHeaderListSubCategories from "./admin/AdminHeaderListSubCategories";
 import { safeSrcImg } from "../../utils/image";
+import {Helmet} from "react-helmet";
 
 export default function ListSubCategories() {
   const { categories } = useSelector((state) => state.categories);
@@ -17,6 +18,7 @@ export default function ListSubCategories() {
   const location = useLocation();
   const urlSplitted = location.pathname.split("/");
   const urlCategory = urlSplitted[urlSplitted.length - 1];
+  const nameCategory = "";
 
   const [isSubCategoriesFound, setIsSubCategoriesFound] = useState(false);
   const [category, setCategory] = useState(false);
@@ -88,12 +90,24 @@ export default function ListSubCategories() {
       }
     }
   };
-
+  
+  const subCategoryName = () => {
+    switch(urlCategory) {
+        case "design" :
+          nameCategory = "de Design";
+          break;
+    }
+  }
   return (
     <div className="container h-100 d-flex flex-column pt-3">
+      <Helmet>
+        <title>{"Digiwiki - Sous-catégorie " + category.name}</title>
+        <meta name="description" content={"Les meilleurs outils de " + category.name + " regroupés au même endroit !"}/>
+        <link rel="canonical" href={"https://www.digiwiki.io" + location.pathname}/>
+      </Helmet>
       {category ? (
         isAuthenticated && user.roles.includes("ROLE_ADMIN") ? (
-          <AdminHeaderListSubCategories category={category} />
+          <AdminHeaderListSubCategories category={category} /> 
         ) : null
       ) : null}
       {isSubCategoriesFound ? (

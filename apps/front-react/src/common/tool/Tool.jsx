@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 import Spinner from "../generic/spinner/Spinner";
 import { safeSrcImg } from "../../utils/image";
+import {Helmet} from "react-helmet";
 
 export default function Tool() {
   const { categories } = useSelector((state) => state.categories);
@@ -134,6 +135,11 @@ export default function Tool() {
 
   return (
     <div className="container h-100 d-flex flex-column pt-3">
+       <Helmet>
+        <title>Digiwiki - La référence des outils digitaux</title>
+        <meta name="description" content={tool.name + " - L'un des meilleurs outils de "+ subCategory.name + " du moment !" }/>
+        <link rel="canonical" href={"https://www.digiwiki.io/explorer/" + category.url + "/" + subCategory.url + "/" + tool.url}/>
+      </Helmet>
       {isToolFound ? (
         <>
           <div className="col-responsive mx-3">
