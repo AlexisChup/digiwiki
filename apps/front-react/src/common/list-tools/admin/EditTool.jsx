@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import "./EditTool.css";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
+import { FaPen } from "react-icons/fa";
 import { setCategories } from "../../../features/categories/categoriesSlice";
 import { AXIOS } from "../../../app/axios-http";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import AddToolForm from "../../tool/form/AddToolForm";
+import ToolForm from "../../forms/ToolForm";
+import Spinner from "../../generic/spinner/Spinner";
 
 var toType = function (obj) {
   return {}.toString
@@ -18,35 +19,24 @@ var toType = function (obj) {
 export default function EditTool(props) {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+  const [isRequesting, setIsRequesting] = useState(false);
+  const [initialSubCategoriesIds, setInitialSubCategoriesIds] = useState(false);
 
-  const getActiveSubCategoriesIds = () => {
-    if (!props.tool.subCategories) {
-      return [];
+  const handleShow = (user) => {
+    setShow(true);
+    if (!initialSubCategoriesIds) {
+      setIsRequesting(true);
+      AXIOS.get("/admin/tool/" + props.tool.id + "/get-subcategories-id")
+        .then((res) => {
+          setInitialSubCategoriesIds(res.data);
+        })
+        .catch((e) => {
+          console.log("error: ", e);
+        })
+        .finally(() => {
+          setIsRequesting(false);
+        });
     }
-    let subCategoriesIds = [];
-
-    if (toType(props.tool.subCategories) === toType([])) {
-      for (let index = 0; index < props.tool.subCategories.length; index++) {
-        if (toType(props.tool.subCategories[index]) === toType(1)) {
-          subCategoriesIds.push(props.tool.subCategories[index]);
-        } else if (toType(props.tool.subCategories[index]) === toType({})) {
-          subCategoriesIds.push(props.tool.subCategories[index].id);
-        }
-      }
-    } else if (toType(props.tool.subCategories) === toType({})) {
-      const valuesOfObject = Object.values(props.tool.subCategories);
-
-      for (let indObject = 0; indObject < valuesOfObject.length; indObject++) {
-        const valObj = valuesOfObject[indObject];
-        if (toType(valObj) === toType(1)) {
-          subCategoriesIds.push(valObj);
-        } else if (toType(valObj) === toType({})) {
-          subCategoriesIds.push(valObj.id);
-        }
-      }
-    }
-
-    return subCategoriesIds;
   };
 
   const initialStateFormEditTool = {
@@ -59,13 +49,11 @@ export default function EditTool(props) {
     affiliateRef: props.tool.affiliateRef ? props.tool.affiliateRef : "",
     codePromo: props.tool.codePromo ? props.tool.codePromo : "",
     imgUrl: props.tool.imgUrl ? props.tool.imgUrl : "",
-    subCategoriesIds: getActiveSubCategoriesIds(),
-    initialSubCategoriesIds: getActiveSubCategoriesIds(),
+    subCategoriesIds: initialSubCategoriesIds,
+    initialSubCategoriesIds: initialSubCategoriesIds,
   };
 
-  const [formEditTool, setformEditTool] = useState(initialStateFormEditTool);
-
-  const getSubCategoriesIdsToRemove = () => {
+  const getSubCategoriesIdsToRemove = (formEditTool) => {
     let subCategoriesIdsToRemove = [];
 
     for (
@@ -82,11 +70,12 @@ export default function EditTool(props) {
     return subCategoriesIdsToRemove;
   };
 
-  const handleClose = (isConfirmed) => {
+  const handleClose = (isConfirmed, formEditTool) => {
     if (isConfirmed) {
+      setIsRequesting(true);
       let payload = {
         ...formEditTool,
-        subCategoriesIdsToRemove: getSubCategoriesIdsToRemove(),
+        subCategoriesIdsToRemove: getSubCategoriesIdsToRemove(formEditTool),
       };
 
       const id = toast.loading("Please wait...");
@@ -117,63 +106,31 @@ export default function EditTool(props) {
             closeOnClick: true,
           });
         })
-        .finally(() => {});
+        .finally(() => {
+          setIsRequesting(false);
+        });
     } else {
       setShow(false);
     }
   };
 
-  const handleShow = (user) => {
-    setShow(true);
-  };
-
-  const handleFormEditTool = (key, value) => {
-    setformEditTool({ ...formEditTool, [key]: value });
-  };
-
-  const isFormIsValid = () => {
-    const { name, url, shortDescription, description, affiliateRef } =
-      formEditTool;
-
-    return (
-      name.length &&
-      url.length &&
-      shortDescription.length &&
-      description.length &&
-      affiliateRef.length
-    );
-  };
-
   return (
-    <div className="mr-3">
+    <div className="me-3">
       <div>
-        <Button variant="warning" onClick={handleShow}>
-          Modifier
+        <Button size="sm" variant="warning" onClick={handleShow}>
+          {isRequesting ? <Spinner sm /> : <FaPen />}
         </Button>
       </div>
-      <Modal show={show} onHide={() => handleClose(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Editer {props.tool.name}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <AddToolForm
-            handleFormAddTool={handleFormEditTool}
-            formAddTool={formEditTool}
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => handleClose(false)}>
-            Fermer
-          </Button>
-          <Button
-            disabled={!isFormIsValid()}
-            variant="success"
-            onClick={() => handleClose(true)}
-          >
-            Confirmer
-          </Button>
-        </Modal.Footer>
-      </Modal>
+
+      {initialSubCategoriesIds ? (
+        <ToolForm
+          show={show}
+          handleClose={handleClose}
+          initialStateForm={initialStateFormEditTool}
+          type="EDIT"
+          isRequesting={isRequesting}
+        />
+      ) : null}
     </div>
   );
 }

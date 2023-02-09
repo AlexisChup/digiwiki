@@ -1,17 +1,21 @@
-import React, { useState } from "react";
-import "./Login.css";
+import React, { useState, useRef } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import { login } from "../../../features/auth/authSlice";
 import { AXIOS } from "../../../app/axios-http";
+import {Helmet} from "react-helmet";
 
 export default function Login() {
+  const AXIOS_GOOGLE = axios.create({
+    headers: { "Access-Control-Allow-Origin": "*" },
+  });
+
+  const captchaRef = useRef(null);
   const initialFormLogin = {
     email: "",
     password: "",
@@ -19,95 +23,171 @@ export default function Login() {
 
   let [isRequesting, setRequesting] = useState(false);
   let [formLogin, setFormLogin] = useState(initialFormLogin);
+  const [isCaptchaFilled, setIsCaptchaFilled] = useState(false);
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const id = toast.loading("Please wait...");
     setRequesting(true);
-    AXIOS.post("/login_check", formLogin)
-      .then((response) => {
-        toast.update(id, {
-          render: "Login successfully !",
-          type: "success",
-          isLoading: false,
-          autoClose: 3000,
-          closeOnClick: true,
-        });
-        //get token from response
-        const token = response.data.token;
+    const id = toast.loading("Please wait...", { closeOnClick: true });
+    let token = captchaRef.current.getValue();
+    AXIOS.post("/captcha/check", {
+      token,
+    })
+      .then((res) => {
+        if (res.data.success) {
+          AXIOS.post("/login_check", formLogin)
+            .then((response) => {
+              toast.update(id, {
+                render: "Login successfully !",
+                type: "success",
+                isLoading: false,
+                autoClose: 3000,
+                closeOnClick: true,
+              });
+              //get token from response
+              const token = response.data.token;
 
-        dispatch(login(token));
+              dispatch(login(token));
 
-        //redirect user to dashboard page
-        navigate("/dashboard");
+              //redirect user to dashboard page
+              navigate("/dashboard");
+            })
+            .catch((err) => {
+              toast.update(id, {
+                render: err.response.data.message,
+                type: "error",
+                isLoading: false,
+                autoClose: 3000,
+                closeOnClick: true,
+              });
+              console.log(err);
+            })
+            .finally(() => setRequesting(false));
+        } else {
+          setRequesting(false);
+          toast.update(id, {
+            render: "Error captcha",
+            type: "error",
+            isLoading: false,
+            autoClose: 3000,
+            closeOnClick: true,
+          });
+          console.log("error captcha: ", res);
+        }
       })
-      .catch((err) => {
+      .catch((e) => {
+        console.log("error captcha: ", e);
         toast.update(id, {
-          render: err.response.data.message,
+          render: e,
           type: "error",
           isLoading: false,
           autoClose: 3000,
           closeOnClick: true,
         });
-        console.log(err);
-      })
-      .finally(() => setRequesting(false));
+        setRequesting(false);
+      });
   };
 
   const handleFormLogin = (key, value) => {
     setFormLogin({ ...formLogin, [key]: value });
   };
 
+  const handleChangeOnCaptcha = (token) => {
+    if (token !== "") {
+      setIsCaptchaFilled(true);
+    } else {
+      setIsCaptchaFilled(false);
+    }
+  };
+
+  const isFormValid = () => {
+    let isFormValid = true;
+
+    isFormValid &= formLogin.email.length > 0;
+    isFormValid &= formLogin.password.length > 0;
+    isFormValid &= isCaptchaFilled;
+
+    return isFormValid;
+  };
+
   return (
-    <div>
-      <Row className="justify-content-center">
-        <div>
-          <h2>Login</h2>
+    <div className="container pt-3">
+      <Helmet>
+        <title>Digiwiki - Connexion</title>
+        <meta name="description" content={"Page de connexion de Digiwiki"}/>
+        <link rel="canonical" href={"https://www.digiwiki.io/auth"}/>
+      </Helmet>
+      <div className="row">
+        <div className="col-6 mx-auto col-6-resized-md">
+          <h1 className="mb-2">Connexion</h1>
+          <Form>
+            <Form.Group>
+              <Form.Label className="medium mb-2 raleway" htmlFor="login-email">
+                Adresse mail
+              </Form.Label>
+              <Form.Control
+                size="md"
+                type="email"
+                className="form-control"
+                id="login-email"
+                aria-describedby="login-email-help"
+                placeholder="Enter email"
+                onChange={(e) => handleFormLogin("email", e.target.value)}
+                value={formLogin.email}
+              />
+              {/*<small
+                id="login-email-help"
+                className="form-text text-muted mt-0 medium mb-2 raleway"
+              >
+                user@gmail.com
+              </small>*/}
+            </Form.Group>
+            <Form.Group className="my-2">
+              <Form.Label
+                className="medium mb-2 raleway"
+                htmlFor="login-password"
+              >
+                Mot de passe
+              </Form.Label>
+              <Form.Control
+                size="md"
+                type="password"
+                autoComplete="on"
+                className="form-control mb-2"
+                id="login-password"
+                aria-describedby="login-password-help"
+                placeholder="Password"
+                onChange={(e) => handleFormLogin("password", e.target.value)}
+                value={formLogin.password}
+              />
+              {/*<small
+                id="login-password-help"
+                className="form-text text-muted mt-0 medium mb-2 raleway"
+              >
+                user
+              </small>*/}
+            </Form.Group>
+            <Form.Group>
+              <ReCAPTCHA
+                sitekey={process.env.REACT_APP_SITE_KEY}
+                ref={captchaRef}
+                onChange={handleChangeOnCaptcha}
+              />
+            </Form.Group>
+            <Button
+              type="submit"
+              className="mt-2 raleway"
+              onClick={(e) => handleSubmit(e)}
+              disabled={isRequesting || !isFormValid()}
+              size="mb"
+            >
+              Connexion
+            </Button>
+          </Form>
         </div>
-        <Form>
-          <Form.Group>
-            <Form.Label htmlFor="login-email">Email address</Form.Label>
-            <Form.Control
-              type="email"
-              className="form-control"
-              id="login-email"
-              aria-describedby="login-email-help"
-              placeholder="Enter email"
-              onChange={(e) => handleFormLogin("email", e.target.value)}
-              value={formLogin.email}
-            />
-            <small id="login-email-help" className="form-text text-muted">
-              user@gmail.com
-            </small>
-          </Form.Group>
-          <Form.Group>
-            <Form.Label htmlFor="login-password">Password</Form.Label>
-            <Form.Control
-              type="password"
-              autoComplete="on"
-              className="form-control"
-              id="login-password"
-              aria-describedby="login-password-help"
-              placeholder="Password"
-              onChange={(e) => handleFormLogin("password", e.target.value)}
-              value={formLogin.password}
-            />
-            <small id="login-password-help" className="form-text text-muted">
-              user
-            </small>
-          </Form.Group>
-          <Button
-            type="submit"
-            onClick={(e) => handleSubmit(e)}
-            disabled={isRequesting}
-            size="sm"
-          >
-            Submit
-          </Button>
-        </Form>
-      </Row>
+      </div>
     </div>
   );
 }

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import "./ListCategories.css";
+import {Helmet} from "react-helmet";
 import { AXIOS } from "../../app/axios-http";
+import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategories } from "../../features/categories/categoriesSlice";
 import Spinner from "../generic/spinner/Spinner";
-import CategoryItem from "./category-item/CategoryItem";
+import CategoryItem from "./CategoryItem";
+
 
 export default function ListCategories() {
   const dispatch = useDispatch();
@@ -27,97 +29,38 @@ export default function ListCategories() {
     }
   }, []);
 
-  const renderFirstRow = () => {
-    if (categories) {
-      if (categories.length > 2) {
-        return (
-          <div className="row flex-grow-1">
-            {categories.slice(0, 3).map((category, index) => {
-              return <CategoryItem key={category.id} category={category} />;
-            })}
-          </div>
-        );
-      } else {
-        return (
-          <div className="row flex-grow-1">
-            {categories.slice(0, categories.length).map((category, index) => {
-              return <CategoryItem key={category.id} category={category} />;
-            })}
-          </div>
-        );
-      }
-    } else {
-      return null;
-    }
-  };
-
-  const renderSecondRow = () => {
-    if (categories) {
-      if (categories.length <= 3) {
-        return null;
-      }
-
-      if (categories.length > 5) {
-        return (
-          <div className="row flex-grow-1">
-            {categories.slice(3, 6).map((category, index) => {
-              return <CategoryItem key={category.id} category={category} />;
-            })}
-          </div>
-        );
-      } else {
-        return (
-          <div className="row flex-grow-1">
-            {categories.slice(3, categories.length).map((category, index) => {
-              return <CategoryItem key={category.id} category={category} />;
-            })}
-          </div>
-        );
-      }
-    } else {
-      return null;
-    }
-  };
-
-  const renderThirdRow = () => {
-    if (categories) {
-      if (categories.length <= 6) {
-        return null;
-      }
-
-      if (categories.length > 8) {
-        return (
-          <div className="row flex-grow-1">
-            {categories.slice(6, 9).map((category, index) => {
-              return <CategoryItem key={category.id} category={category} />;
-            })}
-          </div>
-        );
-      } else {
-        return (
-          <div className="row flex-grow-1">
-            {categories.slice(6, categories.length).map((category, index) => {
-              return <CategoryItem key={category.id} category={category} />;
-            })}
-          </div>
-        );
-      }
-    } else {
-      return null;
-    }
-  };
-
   return (
-    <div className="container h-100 d-flex flex-column">
-      <div className="row justify-content-center" style={{ height: "80px" }}>
-        <div className="d-flex align-items-center">
-          <h1 className="font-weight-bold">Choisir une catégorie</h1>
-        </div>
+    <div className="container h-100 d-flex flex-column pt-3">
+      <Helmet>
+        <title>Digiwiki - Liste des catégories d'outils</title>
+        <meta name="description" content={"La liste des outils digitaux incontournables du moment technologique et financier"}/>
+        <link rel="canonical" href={"https://www.digiwiki.io/explorer"}/>
+      </Helmet>
+      <div>
+        <NavLink to="/explorer" className="dashboard-navlink-active">
+          Explorer &nbsp;{">"}
+        </NavLink>
       </div>
       <hr className="solid" />
-      {!categories ? <Spinner /> : renderFirstRow()}
-      {!categories ? null : renderSecondRow()}
-      {!categories ? null : renderThirdRow()}
+      <div
+        className="d-flex flex-row justify-content-center align-content-center align-items-center"
+        style={{ height: "80px" }}
+      >
+        <div className="d-flex align-items-center">
+          <h1 className="fw-bold">Choisir une catégorie</h1>
+        </div>
+        {isRequesting ? <Spinner /> : null}
+      </div>
+      <hr className="solid" />
+      <div>
+        <div className="row row-cols-md-3 row-cols-1 g-2">
+          {!categories || isRequesting
+            ? null
+            : categories.map((category, index) => {
+                return <CategoryItem key={category.id} category={category} />;
+              })}
+        </div>
+      </div>
     </div>
   );
 }

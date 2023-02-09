@@ -1,83 +1,105 @@
 import "./Header.css";
 import { NavLink } from "react-router-dom";
+import { Nav, Navbar } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { FaUserCircle } from "react-icons/fa";
+import { safeSrcImg } from "../../../utils/image";
 
 export default function Header() {
   const { isAuthenticated } = useSelector((state) => state.auth);
 
+  const commonClassNameNavLink = "me-4";
+
   return (
     <header>
-      <nav className="d-flex justify-content-between align-content-center flex-row p-3 shadow mb-3">
-        <div className="ml-3">
+      <Navbar
+        collapseOnSelect
+        expand="md"
+        className="d-flex fixed justify-content-between align-content-center flex-row p-3 shadow"
+      >
+        <Navbar.Brand className="ms-3">
           <NavLink
             to=""
             className={({ isActive }) =>
-              isActive ? "navbar-navlink-active" : "navbar-navlink"
+              isActive
+                ? commonClassNameNavLink + " navbar-navlink-active"
+                : commonClassNameNavLink + " navbar-navlink"
             }
           >
+            <img
+              src={safeSrcImg("logo", "logo")}
+              width="30"
+              height="30"
+              className="d-inline-block align-top me-2"
+              alt="DigiWiki logo"
+            />
             DigiWiki
           </NavLink>
-        </div>
-        <div className="d-flex flex-row">
-          <div className="ml-2">
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="me-auto">
+            {/* <Nav.Link href="#serach">Search</Nav.Link> */}
+          </Nav>
+          <Nav className="justify-content-center align-content-center align-items-center">
             <NavLink
               to="explorer"
               className={({ isActive }) =>
-                isActive ? "navbar-navlink-active" : "navbar-navlink"
+                isActive
+                  ? commonClassNameNavLink + " navbar-navlink-active"
+                  : commonClassNameNavLink + " navbar-navlink"
               }
             >
               Explorer
             </NavLink>
-          </div>
-          <div className="ml-2">
             <NavLink
               to="about"
               className={({ isActive }) =>
-                isActive ? "navbar-navlink-active" : "navbar-navlink"
+                isActive
+                  ? commonClassNameNavLink + " navbar-navlink-active"
+                  : commonClassNameNavLink + " navbar-navlink"
               }
             >
-              About
+              À propos
             </NavLink>
-          </div>
-          <div className="ml-2">
             <NavLink
               to="contact"
               className={({ isActive }) =>
-                isActive ? "navbar-navlink-active" : "navbar-navlink"
+                isActive
+                  ? commonClassNameNavLink + " navbar-navlink-active"
+                  : commonClassNameNavLink + " navbar-navlink"
               }
             >
               Contact
             </NavLink>
-          </div>
-
-          {isAuthenticated ? (
-            <div className="ml-2">
+            {isAuthenticated ? (
               <NavLink
                 to="dashboard"
                 className={({ isActive }) =>
-                  isActive ? "navbar-navlink-active" : "navbar-navlink"
+                  isActive
+                    ? commonClassNameNavLink + " navbar-navlink-active"
+                    : commonClassNameNavLink + " navbar-navlink"
                 }
               >
                 <FaUserCircle className="mb-1" />
               </NavLink>
-            </div>
-          ) : (
-            <>
-              <div className="ml-2">
+            ) : (
+              <>
                 <NavLink
                   to="auth"
                   className={({ isActive }) =>
-                    isActive ? "navbar-navlink-active" : "navbar-navlink"
+                    isActive
+                      ? commonClassNameNavLink + " navbar-navlink-active"
+                      : commonClassNameNavLink + " navbar-navlink"
                   }
                 >
                   <FaUserCircle className="mb-1" />
                 </NavLink>
-              </div>
-            </>
-          )}
-        </div>
-      </nav>
+              </>
+            )}
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
     </header>
   );
 }

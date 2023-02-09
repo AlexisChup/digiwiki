@@ -125,11 +125,12 @@ class Tool
     }
 
     /**
-     * @return array<int, SubCategory>
+     * @return array<int, SubCategory>|null
      */
-    public function getSubCategories(): array
+    public function getSubCategories(): ?array
     {
-        return $this->subCategories->getValues();
+//        return $this->subCategories->getValues();
+        return null;
     }
 
     public function addSubCategory(SubCategory $subCategory): self

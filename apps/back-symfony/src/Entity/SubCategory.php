@@ -90,11 +90,12 @@ class SubCategory
     }
 
     /**
-     * @return array<int, Category>
+     * @return array<int, Category>|null
      */
-    public function getCategory(): array
+    public function getCategory(): ?array
     {
-        return $this->category->getValues();
+        return null;
+//        return $this->category->getValues();
     }
 
     public function addCategory(Category $category): self

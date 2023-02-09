@@ -17,11 +17,11 @@
 
 /tests/report/
 
-composer.lock
-
 .idea/
 
 storage/
+
+.env.local
 
 ###> lexik/jwt-authentication-bundle ###
 /config/jwt/*.pem

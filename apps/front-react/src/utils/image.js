@@ -3,7 +3,12 @@ export const safeSrcImg = (imgUrl, origin) => {
     return require(`../assets/png/common/default.png`);
   }
 
-  if (origin === "categories" || origin === "sub-categories") {
+  if (
+    origin === "categories" ||
+    origin === "sub-categories" ||
+    origin === "landingpage" ||
+    origin === "logo"
+  ) {
     let imgFromUrl = null;
     let isImgExist = null;
 

@@ -70,6 +70,11 @@
 2. Run `php bin/console make:entity`
 3. Run `php bin/console make:controller XXXXController`
 
+#### Backup
+
+1. Run `heroku pg:backups:capture --app dw-back`
+2. Run `heroku pg:backups:download --app dw-back`
+
 #### Miscellaneous
 
 See [SymfonyDoc](https://symfony.com/doc/current/doctrine.html) for more
@@ -88,3 +93,7 @@ See [SymfonyDoc](https://symfony.com/doc/current/doctrine.html) for more
 
 1. Run `docker exec -it front-react sh`
 2. Run `npm install my-lib`
+
+## Production
+
+heroku git:remote -a <app-name>

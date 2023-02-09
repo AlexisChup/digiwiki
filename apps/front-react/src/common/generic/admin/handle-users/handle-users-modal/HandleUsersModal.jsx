@@ -1,146 +1,96 @@
-import React, { useState, useEffect } from "react";
-import "./HandleUsersModal.css";
-import { toast } from "react-toastify";
+import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { AXIOS } from "../../../../../app/axios-http";
-import Spinner from "../../../spinner/Spinner";
 
 export default function HandleUsersModal(props) {
-  let [formEditUser, setFormEditUser] = useState(null);
-  let [newPassword, setNewPassword] = useState("");
+  const { userIdentifier, email, password, passwordEdited, roles } =
+    props.formUser.user;
+  const { type } = props.formUser;
+  const { show } = props;
 
-  const handleFormEditUser = (key, value) => {
-    if (!key.includes("ROLE")) {
-      setFormEditUser({ ...formEditUser, [key]: value });
-    } else {
-      let copyRoles = [...formEditUser.roles];
-      if (value) {
-        copyRoles.push(key);
-      } else {
-        // Removing the specified element by value from the array
-        for (let i = 0; i < copyRoles.length; i++) {
-          if (copyRoles[i] === key) {
-            copyRoles.splice(i, 1);
-          }
-        }
-      }
-      setFormEditUser({ ...formEditUser, roles: copyRoles });
-    }
-  };
+  const isFormValid = () => {
+    let isFormValid = true;
 
-  const handleEditUser = () => {
-    let payload = { ...formEditUser };
-    payload = {
-      ...payload,
-      isPasswordChanged: newPassword.length > 0,
-    };
-
-    if (payload.isPasswordChanged) {
-      payload.password = newPassword;
+    if (type === "ADD") {
+      isFormValid &= email.length > 0;
+      isFormValid &= password.length > 0;
     }
 
-    const id = toast.loading("Please wait...");
-    AXIOS.post("/admin/user/edit", payload)
-      .then((response) => {
-        toast.update(id, {
-          render: "Edit successfully !",
-          type: "success",
-          isLoading: false,
-          autoClose: 3000,
-          closeOnClick: true,
-        });
-        props.handleClose(true);
-      })
-      .catch((err) => {
-        toast.update(id, {
-          render: err.response.data.message,
-          type: "error",
-          isLoading: false,
-          autoClose: 3000,
-          closeOnClick: true,
-        });
-        console.log(err);
-      })
-      .finally(() => {});
+    return isFormValid;
   };
-
-  useEffect(() => {
-    setFormEditUser(props.userEditing);
-    setNewPassword("");
-  }, [props.userEditing]);
 
   return (
-    <Modal
-      show={props.show}
-      onHide={() => props.handleClose(false)}
-      keyboard={false}
-    >
-      {formEditUser ? (
-        <>
-          <Modal.Header closeButton>
-            <Modal.Title>Edit {props.userEditing.userIdentifier}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Enter email"
-                  value={formEditUser.email}
-                  disabled
-                />
-              </Form.Group>
+    <Modal show={show} onHide={() => props.handleClose(false)} keyboard={false}>
+      <Modal.Header closeButton>
+        {type === "ADD" ? (
+          <Modal.Title>Ajouter un nouvel utilisateur</Modal.Title>
+        ) : (
+          <Modal.Title>Edit {userIdentifier}</Modal.Title>
+        )}
+      </Modal.Header>
+      <Modal.Body>
+        <Form>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              value={email}
+              disabled={type === "EDIT"}
+              onChange={(e) => props.handleFormUser("email", e.target.value)}
+            />
+          </Form.Group>
 
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  autoComplete="on"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                />
-              </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              autoComplete="on"
+              value={type === "ADD" ? password : passwordEdited}
+              onChange={(e) =>
+                props.handleFormUser(
+                  type === "ADD" ? "password" : "passwordEdited",
+                  e.target.value
+                )
+              }
+            />
+          </Form.Group>
 
-              <Form.Group className="mb-3" controlId="formBasicRoles">
-                <Form.Label>Roles</Form.Label>
-                <Form.Check
-                  disabled
-                  type="switch"
-                  id="switch-role-user"
-                  label="Role User"
-                  checked={true}
-                />
-                <Form.Check
-                  type="switch"
-                  id="switch-role-admin"
-                  label="Role Admin"
-                  checked={formEditUser.roles.includes("ROLE_ADMIN")}
-                  onChange={(e) =>
-                    handleFormEditUser("ROLE_ADMIN", e.target.checked)
-                  }
-                />
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              variant="secondary"
-              onClick={() => props.handleClose(false)}
-            >
-              Close
-            </Button>
-            <Button variant="primary" onClick={handleEditUser}>
-              Confirm
-            </Button>
-          </Modal.Footer>
-        </>
-      ) : (
-        <Spinner />
-      )}
+          <Form.Group className="mb-3" controlId="formBasicRoles">
+            <Form.Label>Roles</Form.Label>
+            <Form.Check
+              disabled
+              type="switch"
+              id="switch-role-user"
+              label="Role User"
+              checked={true}
+            />
+            <Form.Check
+              type="switch"
+              id="switch-role-admin"
+              label="Role Admin"
+              checked={roles.includes("ROLE_ADMIN")}
+              onChange={(e) =>
+                props.handleFormUserRoleAdmin("ROLE_ADMIN", e.target.checked)
+              }
+            />
+          </Form.Group>
+        </Form>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={() => props.handleClose(false)}>
+          Close
+        </Button>
+        <Button
+          disabled={!isFormValid()}
+          variant="primary"
+          onClick={() => props.handleClose(true)}
+        >
+          Confirm
+        </Button>
+      </Modal.Footer>
     </Modal>
   );
 }

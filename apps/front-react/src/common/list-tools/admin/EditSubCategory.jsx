@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import "./EditSubCategory.css";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
+import { FaPen } from "react-icons/fa";
 import { setCategories } from "../../../features/categories/categoriesSlice";
 import { AXIOS } from "../../../app/axios-http";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import SubCategoryForm from "../../list-sub-categories/sub-category/form/SubCategoryForm";
+import SubCategoryForm from "../../forms/SubCategoryForm";
+import Spinner from "../../generic/spinner/Spinner";
 
 var toType = function (obj) {
   return {}.toString
@@ -18,7 +19,11 @@ var toType = function (obj) {
 export default function EditSubCategory(props) {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+  const [isRequesting, setIsRequesting] = useState(false);
+  const [initialCategoriesIds, setInitialCategoriesIds] = useState(false);
 
+  /* Super weird function because when editing category
+   ** the return value can be tricky */
   const getActiveCategoriesIds = () => {
     if (!props.subCategory.category) {
       return [];
@@ -49,11 +54,31 @@ export default function EditSubCategory(props) {
     return categoriesIds;
   };
 
+  const handleShow = (user) => {
+    setShow(true);
+    if (!initialCategoriesIds) {
+      AXIOS.get(
+        "/admin/sub-category/" + props.subCategory.id + "/get-categories-id"
+      )
+        .then((res) => {
+          setInitialCategoriesIds(res.data);
+          setFormSubCategory({
+            ...formSubCategory,
+            initialCategoriesIds: res.data,
+            categoriesIds: res.data,
+          });
+        })
+        .catch((e) => {
+          console.log("error: ", e);
+        });
+    }
+  };
+
   const initialStateFormSubCategory = {
     name: props.subCategory.name,
     url: props.subCategory.url,
-    categoriesIds: getActiveCategoriesIds(),
-    initialCategoriesIds: getActiveCategoriesIds(),
+    categoriesIds: initialCategoriesIds,
+    initialCategoriesIds: initialCategoriesIds,
   };
 
   const [formSubCategory, setFormSubCategory] = useState(
@@ -79,6 +104,7 @@ export default function EditSubCategory(props) {
 
   const handleClose = (isConfirmed) => {
     if (isConfirmed) {
+      setIsRequesting(true);
       const id = toast.loading("Please wait...");
 
       let payload = { ...formSubCategory };
@@ -113,14 +139,12 @@ export default function EditSubCategory(props) {
             closeOnClick: true,
           });
         })
-        .finally(() => {});
+        .finally(() => {
+          setIsRequesting(false);
+        });
     } else {
       setShow(false);
     }
-  };
-
-  const handleShow = (user) => {
-    setShow(true);
   };
 
   const handleForm = (key, value) => {
@@ -134,10 +158,10 @@ export default function EditSubCategory(props) {
   };
 
   return (
-    <div className="mr-3">
+    <div className="me-3">
       <div>
-        <Button variant="warning" onClick={handleShow}>
-          Editer la sous catégorie
+        <Button variant="warning" onClick={handleShow} size="sm">
+          <FaPen /> SubCat
         </Button>
       </div>
       <Modal show={show} onHide={() => handleClose(false)}>
@@ -145,19 +169,30 @@ export default function EditSubCategory(props) {
           <Modal.Title>Editer {props.subCategory.name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <SubCategoryForm
-            formSubCategory={formSubCategory}
-            handleForm={handleForm}
-          />
+          {initialCategoriesIds ? (
+            <SubCategoryForm
+              formSubCategory={formSubCategory}
+              handleForm={handleForm}
+            />
+          ) : (
+            <div className="d-flex justify-content-center">
+              <Spinner />
+            </div>
+          )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => handleClose(false)}>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => handleClose(false)}
+          >
             Fermer
           </Button>
           <Button
-            disabled={!isFormIsValid()}
+            disabled={isRequesting || !isFormIsValid()}
             variant="success"
             onClick={() => handleClose(true)}
+            size="sm"
           >
             Confirmer
           </Button>

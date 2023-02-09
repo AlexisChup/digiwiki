@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import "./ListSubCategories.css";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AXIOS } from "../../app/axios-http";
 import { setCategories } from "../../features/categories/categoriesSlice";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
-import SubCategoryItem from "./sub-category-item/SubCategoryItem";
+import SubCategoryItem from "./SubCategoryItem";
 import Spinner from "../generic/spinner/Spinner";
 import AdminHeaderListSubCategories from "./admin/AdminHeaderListSubCategories";
 import { safeSrcImg } from "../../utils/image";
+import {Helmet} from "react-helmet";
 
 export default function ListSubCategories() {
   const { categories } = useSelector((state) => state.categories);
@@ -18,14 +18,26 @@ export default function ListSubCategories() {
   const location = useLocation();
   const urlSplitted = location.pathname.split("/");
   const urlCategory = urlSplitted[urlSplitted.length - 1];
+  const nameCategory = "";
 
   const [isSubCategoriesFound, setIsSubCategoriesFound] = useState(false);
   const [category, setCategory] = useState(false);
+  const [mobileView, setMobileView] = useState(window.innerWidth < 767);
 
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const handleMobileView = () => {
+      if (window.innerWidth < 767) {
+        setMobileView(true);
+      } else {
+        setMobileView(false);
+      }
+    };
+
+    window.addEventListener("resize", handleMobileView);
+
     findSubCatetegories();
   }, []);
 
@@ -78,152 +90,61 @@ export default function ListSubCategories() {
       }
     }
   };
-
-  const renderFirstRow = () => {
-    if (category.subCategories.length > 2) {
-      return (
-        <div className="row flex-grow-1">
-          {category.subCategories.slice(0, 3).map((subCategory, index) => {
-            return (
-              <SubCategoryItem
-                key={subCategory.id}
-                urlCategory={urlCategory}
-                subCategory={subCategory}
-              />
-            );
-          })}
-        </div>
-      );
-    } else {
-      return (
-        <div className="row flex-grow-1">
-          {category.subCategories
-            .slice(0, category.subCategories.length)
-            .map((subCategory, index) => {
-              return (
-                <SubCategoryItem
-                  key={subCategory.id}
-                  urlCategory={urlCategory}
-                  subCategory={subCategory}
-                />
-              );
-            })}
-        </div>
-      );
+  
+  const subCategoryName = () => {
+    switch(urlCategory) {
+        case "design" :
+          nameCategory = "de Design";
+          break;
     }
-  };
-
-  const renderSecondRow = () => {
-    if (category.subCategories.length <= 3) {
-      return <div className="row flex-grow-1"></div>;
-    }
-
-    if (category.subCategories.length > 5) {
-      return (
-        <div className="row flex-grow-1">
-          {category.subCategories.slice(3, 6).map((subCategory, index) => {
-            return (
-              <SubCategoryItem
-                key={subCategory.id}
-                urlCategory={urlCategory}
-                subCategory={subCategory}
-              />
-            );
-          })}
-        </div>
-      );
-    } else {
-      return (
-        <div className="row flex-grow-1">
-          {category.subCategories
-            .slice(3, category.subCategories.length)
-            .map((subCategory, index) => {
-              return (
-                <SubCategoryItem
-                  key={subCategory.id}
-                  urlCategory={urlCategory}
-                  subCategory={subCategory}
-                />
-              );
-            })}
-        </div>
-      );
-    }
-  };
-
-  const renderThirdRow = () => {
-    if (category.subCategories.length <= 6) {
-      return <div className="row flex-grow-1"></div>;
-    }
-
-    if (category.subCategories.length > 8) {
-      return (
-        <div className="row flex-grow-1">
-          {category.subCategories.slice(6, 9).map((subCategory, index) => {
-            return (
-              <SubCategoryItem
-                key={subCategory.id}
-                urlCategory={urlCategory}
-                subCategory={subCategory}
-              />
-            );
-          })}
-        </div>
-      );
-    } else {
-      return (
-        <div className="row flex-grow-1">
-          {category.subCategories
-            .slice(6, category.subCategories.length)
-            .map((subCategory, index) => {
-              return (
-                <SubCategoryItem
-                  key={subCategory.id}
-                  urlCategory={urlCategory}
-                  subCategory={subCategory}
-                />
-              );
-            })}
-        </div>
-      );
-    }
-  };
-
+  }
   return (
-    <div className="container h-100 d-flex flex-column">
+    <div className="container h-100 d-flex flex-column pt-3">
+      <Helmet>
+        <title>{"Digiwiki - Sous-catégorie " + category.name}</title>
+        <meta name="description" content={"Les meilleurs outils de " + category.name + " regroupés au même endroit !"}/>
+        <link rel="canonical" href={"https://www.digiwiki.io" + location.pathname}/>
+      </Helmet>
       {category ? (
         isAuthenticated && user.roles.includes("ROLE_ADMIN") ? (
-          <AdminHeaderListSubCategories category={category} />
+          <AdminHeaderListSubCategories category={category} /> 
         ) : null
       ) : null}
       {isSubCategoriesFound ? (
-        <div className="row justify-content-center">
-          <div className="d-flex flex-row align-content-center">
-            <div className="d-flex align-items-center mr-3">
-              <Button
-                variant="outline-primary"
-                className=""
-                onClick={() => navigate("/explorer")}
-              >
-                Retour
-              </Button>
-            </div>
-            <div
-              className="d-flex align-items-center mr-3"
-              style={{ height: "80px" }}
+        <>
+          <div>
+            <NavLink to="/explorer" className="dashboard-navlink">
+              Explorer &nbsp;{">"}
+            </NavLink>
+            <NavLink
+              to={"/explorer/" + category.url}
+              className="dashboard-navlink-active"
             >
-              <Image
-                src={safeSrcImg(category.url, "categories")}
-                style={{ height: "80%", width: "auto" }}
-              />
-            </div>
-            <div className="d-flex align-items-center">
-              <h1 className="my-0 font-weight-bold">{category.name}</h1>
+              &nbsp;{category.name}
+            </NavLink>
+          </div>
+          <hr className="solid" />
+          <div className="row justify-content-center">
+            <div className="d-flex align-content-center justify-content-center">
+              <div
+                className="d-flex align-items-center me-3"
+                style={{ height: "80px" }}
+              >
+                <Image
+                  src={safeSrcImg(category.url, "categories")}
+                  className="logo-list-header"
+                />
+              </div>
+              <div className="d-flex align-items-center">
+                <h1 className="my-0 fw-bold">{category.name}</h1>
+              </div>
             </div>
           </div>
-        </div>
+        </>
       ) : (
-        <Spinner />
+        <div className="d-flex justify-content-center">
+          <Spinner />
+        </div>
       )}
 
       <hr className="solid" />
@@ -237,13 +158,24 @@ export default function ListSubCategories() {
                 </div>
                 <div></div>
               </div>
-            </div>{" "}
+            </div>
           </div>
-        ) : null
+        ) : (
+          <div className="container h-100 px-0">
+            <div className="row row-cols-md-3 row-cols-1 g-2">
+              {category.subCategories.map((subCategory, index) => {
+                return (
+                  <SubCategoryItem
+                    key={subCategory.id}
+                    urlCategory={urlCategory}
+                    subCategory={subCategory}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        )
       ) : null}
-      {isSubCategoriesFound ? renderFirstRow() : null}
-      {isSubCategoriesFound ? renderSecondRow() : null}
-      {isSubCategoriesFound ? renderThirdRow() : null}
     </div>
   );
 }

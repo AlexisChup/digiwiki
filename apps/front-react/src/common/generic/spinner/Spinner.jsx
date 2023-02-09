@@ -1,11 +1,12 @@
 import React from "react";
 
-export default function Spinner() {
+export default function Spinner(props) {
   return (
-    <div className="d-flex justify-content-center">
-      <div className="spinner-border" role="status">
-        <span className="sr-only">Loading...</span>
-      </div>
+    <div
+      className={"spinner-grow" + (props.sm ? " spinner-grow-sm" : "")}
+      role="status"
+    >
+      <span className="visually-hidden">Loading...</span>
     </div>
   );
 }

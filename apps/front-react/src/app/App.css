@@ -32,6 +32,7 @@ p,
 span,
 div {
   color: #5f6c7b;
+  text-align: left;
 }
 
 .noselect {

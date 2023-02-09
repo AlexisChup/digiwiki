@@ -45,6 +45,14 @@ class SubCategoryRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function findAllIds(): array
+    {
+        return $this->createQueryBuilder('s')
+            ->select('s.id')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return SubCategory[] Returns an array of SubCategory objects
 //     */

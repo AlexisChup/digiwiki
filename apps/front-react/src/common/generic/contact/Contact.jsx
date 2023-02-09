@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Contact.css";
 import { Form, Button } from "react-bootstrap";
+import {Helmet} from "react-helmet";
 
 export default function Contact() {
   const optionsSelect = [
@@ -17,20 +18,31 @@ export default function Contact() {
   const placeHolderInput =
     "Bonjour ! \nJe connais un outil génial pour mieux gérer ses finances, voici le lien :\nhttps://mon-outil-genial.com.\n\nBonne journée ! :)";
 
+  const isFormValid = () => {
+    let isFormValid = true;
+
+    isFormValid &= message.length > 0;
+
+    return isFormValid;
+  };
+
   return (
-    <div className="container ">
-      <div className="row justify-content-center">
-        <div>
-          <h1>Contact</h1>
-        </div>
-      </div>
+    <div className="container pt-3">
+      <Helmet>
+        <title>Digiwiki - Contact</title>
+        <meta name="description" content={"Contact de Digiwiki, vos suggestions et recommendations"}/>
+        <link rel="canonical" href="https://www.digiwiki.io/contact"/>
+      </Helmet>
       <div className="row">
-        <div className="col-6">
+        <div className="col-responsive  mt-3 mb-2">
+          <h1 className="fw-bold">Contact</h1>
           <Form>
-            <Form.Group className="">
-              <Form.Label className="small">Choisissez un topic</Form.Label>
+            <Form.Group className="mt-3 mb-2 raleway">
+              <Form.Label className="medium mb-2 raleway">
+                Choisissez un topic
+              </Form.Label>
               <Form.Select
-                size="sm"
+                size="md"
                 value={topic}
                 onChange={(event) => setTopic(event.target.value)}
               >
@@ -40,10 +52,10 @@ export default function Contact() {
               </Form.Select>
             </Form.Group>
 
-            <Form.Group controlId="formMessage">
-              <Form.Label className="small">Message</Form.Label>
+            <Form.Group controlId="formMessage" className="raleway mb-2">
+              <Form.Label className="medium mb-2 raleway">Message</Form.Label>
               <Form.Control
-                size="sm"
+                size="md"
                 as="textarea"
                 rows="5"
                 placeholder={placeHolderInput}
@@ -55,7 +67,9 @@ export default function Contact() {
             <Button
               variant="primary"
               type="submit"
+              size="md"
               className="mt-2 btn-submit-href"
+              disabled={!isFormValid()}
             >
               <a
                 href={
