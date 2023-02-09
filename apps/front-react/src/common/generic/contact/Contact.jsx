@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Contact.css";
 import { Form, Button } from "react-bootstrap";
+import {Helmet} from "react-helmet";
 
 export default function Contact() {
   const optionsSelect = [
@@ -27,6 +28,11 @@ export default function Contact() {
 
   return (
     <div className="container pt-3">
+      <Helmet>
+        <title>Digiwiki - Contact</title>
+        <meta name="description" content={"Contact de Digiwiki, vos suggestions et recommendations"}/>
+        <link rel="canonical" href="https://www.digiwiki.io/contact"/>
+      </Helmet>
       <div className="row">
         <div className="col-responsive  mt-3 mb-2">
           <h1 className="fw-bold">Contact</h1>

@@ -83,8 +83,7 @@ export default function Home() {
                 <div className="col d-flex flex-column mx-0">
                   <h1 className="mb-1 fw-bold">DigiWiki</h1>
                   <p className="">
-                    Le site qui vous aide à trouver l'outil adapté à tous vos
-                    besoins.
+                    Le site qui vous aide à trouver l'outil digital adapté à tous vos besoins.
                   </p>
                   <Button
                     className="btn btn-primary btn-lg"
@@ -95,14 +94,6 @@ export default function Home() {
                   </Button>
                 </div>
               </div>
-              {/* <div
-                className="row rows-col-3 d-flex flex-column mx-0"
-                style={{ height: "5%" }}
-              >
-                <div className="col mx-0 flex-grow-1"> </div>
-                <div className="col mx-0 flex-grow-1"> </div>
-                <div className="col mx-0 flex-grow-1 align-items-end"></div>
-              </div> */}
             </div>
           </div>
         ) : (

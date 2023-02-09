@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { login } from "../../../features/auth/authSlice";
 import { AXIOS } from "../../../app/axios-http";
+import {Helmet} from "react-helmet";
 
 export default function Login() {
   const AXIOS_GOOGLE = axios.create({
@@ -113,6 +114,11 @@ export default function Login() {
 
   return (
     <div className="container pt-3">
+      <Helmet>
+        <title>Digiwiki - Connexion</title>
+        <meta name="description" content={"Page de connexion de Digiwiki"}/>
+        <link rel="canonical" href={"https://www.digiwiki.io/auth"}/>
+      </Helmet>
       <div className="row">
         <div className="col-6 mx-auto col-6-resized-md">
           <h1 className="mb-2">Connexion</h1>
