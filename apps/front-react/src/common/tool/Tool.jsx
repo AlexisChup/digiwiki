@@ -137,15 +137,7 @@ export default function Tool() {
     <div className="container h-100 d-flex flex-column pt-3">
       <Helmet>
         <title>{"Digiwiki - " + tool.name}</title>
-        <meta
-          name="description"
-          content={
-            tool.name +
-            " - L'un des meilleurs outils de " +
-            subCategory.name +
-            " du moment !"
-          }
-        />
+        <meta name="description" content={tool.shortDescription} />
         <link
           rel="canonical"
           href={
