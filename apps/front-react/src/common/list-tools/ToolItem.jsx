@@ -29,6 +29,7 @@ export default function ToolItem(props) {
           >
             <Image
               src={safeSrcImg(props.tool.imgUrl, "tools")}
+              alt={props.tool.name}
               className="logo-list-item"
             />
           </div>

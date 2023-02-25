@@ -25,6 +25,7 @@ export default function SubCategoryItem(props) {
           <div className="d-flex align-items-center" style={{ height: "80px" }}>
             <Image
               src={safeSrcImg(props.subCategory.url, "sub-categories")}
+              alt={props.subCategory.name}
               className="logo-list-item"
             />
           </div>

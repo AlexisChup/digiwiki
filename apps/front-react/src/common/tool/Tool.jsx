@@ -136,7 +136,7 @@ export default function Tool() {
   return (
     <div className="container h-100 d-flex flex-column pt-3">
        <Helmet>
-        <title>Digiwiki - La référence des outils digitaux</title>
+        <title>{"Digiwiki - " + tool.name}</title>
         <meta name="description" content={tool.name + " - L'un des meilleurs outils de "+ subCategory.name + " du moment !" }/>
         <link rel="canonical" href={"https://www.digiwiki.io/explorer/" + category.url + "/" + subCategory.url + "/" + tool.url}/>
       </Helmet>
