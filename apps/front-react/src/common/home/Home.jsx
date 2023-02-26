@@ -75,6 +75,7 @@ export default function Home() {
                   <Image
                     className=""
                     src={safeSrcImg("logo-landing-mobile", "landingpage")}
+                    alt="landing-background"
                     style={{ height: "auto", width: widthLogoLanding() }}
                   />
                 }
@@ -130,6 +131,7 @@ export default function Home() {
                     <div>
                       <Image
                         className="img-landing-page"
+                        alt="data-science"
                         src={safeSrcImg("data-science", "sub-categories")}
                       />
                     </div>
@@ -150,6 +152,7 @@ export default function Home() {
                       <div>
                         <Image
                           className="img-landing-page"
+                          alt="ia-general"
                           src={safeSrcImg("ai-other", "sub-categories")}
                         />
                       </div>
@@ -164,6 +167,7 @@ export default function Home() {
                       <div>
                         <Image
                           className="img-landing-page"
+                          alt="ia-programming"
                           src={safeSrcImg("ai-programming", "sub-categories")}
                         />
                       </div>
@@ -186,6 +190,7 @@ export default function Home() {
                       <div>
                         <Image
                           className="img-landing-page"
+                          alt="finance"
                           src={safeSrcImg("finances", "categories")}
                         />
                       </div>
@@ -208,6 +213,7 @@ export default function Home() {
                       <div>
                         <Image
                           className="img-landing-page"
+                          alt="social-network"
                           src={safeSrcImg("social-network", "sub-categories")}
                         />
                       </div>
@@ -222,6 +228,7 @@ export default function Home() {
                       <div>
                         <Image
                           className="img-landing-page"
+                          alt="technical-analysis"
                           src={safeSrcImg(
                             "technical-analysis",
                             "sub-categories"
@@ -247,6 +254,7 @@ export default function Home() {
                       <div>
                         <Image
                           className="img-landing-page"
+                          alt="learning"
                           src={safeSrcImg("learning", "sub-categories")}
                         />
                       </div>
@@ -261,6 +269,7 @@ export default function Home() {
                       <div>
                         <Image
                           className="img-landing-page"
+                          alt="growth-tips"
                           src={safeSrcImg("growth-tips", "sub-categories")}
                         />
                       </div>
@@ -283,6 +292,7 @@ export default function Home() {
                       <div>
                         <Image
                           className="img-landing-page"
+                          alt="fundamental-analysis"
                           src={safeSrcImg(
                             "fundamental-analysis",
                             "sub-categories"
@@ -300,6 +310,7 @@ export default function Home() {
                       <div>
                         <Image
                           className="img-landing-page"
+                          alt="marketing"
                           src={safeSrcImg("marketing", "categories")}
                         />
                       </div>
