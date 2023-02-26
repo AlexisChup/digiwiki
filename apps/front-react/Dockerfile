@@ -15,4 +15,4 @@ ENV PATH ./node_modules/.bin:$PATH
 RUN npm install
 # EXPOSE 9100
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]

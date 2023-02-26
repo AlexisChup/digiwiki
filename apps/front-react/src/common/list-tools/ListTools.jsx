@@ -180,6 +180,7 @@ export default function ListTools() {
                 <Image
                   src={safeSrcImg(subCategory.url, "sub-categories")}
                   className="logo-list-header"
+                  alt={subCategory.url}
                 />
               </div>
               <div className="d-flex align-items-center">

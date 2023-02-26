@@ -87,6 +87,7 @@ export default function Header() {
               <>
                 <NavLink
                   to="auth"
+                  aria-label="auth"
                   className={({ isActive }) =>
                     isActive
                       ? commonClassNameNavLink + " navbar-navlink-active"
