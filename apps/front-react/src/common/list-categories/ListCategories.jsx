@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 import { AXIOS } from "../../app/axios-http";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategories } from "../../features/categories/categoriesSlice";
 import Spinner from "../generic/spinner/Spinner";
 import CategoryItem from "./CategoryItem";
-
 
 export default function ListCategories() {
   const dispatch = useDispatch();
@@ -33,8 +32,11 @@ export default function ListCategories() {
     <div className="container h-100 d-flex flex-column pt-3">
       <Helmet>
         <title>Digiwiki - Liste des catégories d'outils</title>
-        <meta name="description" content={"La liste des outils digitaux incontournables du moment technologique et financier"}/>
-        <link rel="canonical" href={"https://www.digiwiki.io/explorer"}/>
+        <meta
+          name="description"
+          content={"Voici toutes les catégories que nous référençons."}
+        />
+        <link rel="canonical" href={"https://www.digiwiki.io/explorer"} />
       </Helmet>
       <div>
         <NavLink to="/explorer" className="dashboard-navlink-active">
