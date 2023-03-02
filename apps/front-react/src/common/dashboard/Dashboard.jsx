@@ -95,6 +95,19 @@ export default function Dashboard() {
               </NavLink>
             </div>
           ) : null}
+          {user.roles.includes("ROLE_ADMIN") ? (
+            <div className="me-2">
+              <NavLink
+                to="list-tags"
+                className={({ isActive }) =>
+                  isActive ? "dashboard-navlink-active" : "dashboard-navlink"
+                }
+              >
+                <FaRegFolderOpen />
+                {mobileView ? "LT" : "List Tags"}
+              </NavLink>
+            </div>
+          ) : null}
         </div>
         <hr className="solid" />
         <Outlet />

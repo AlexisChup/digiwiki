@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { AXIOS } from "../../../../app/axios-http";
 import { Spinner } from "react-bootstrap";
 import { FaCheck } from "react-icons/fa";

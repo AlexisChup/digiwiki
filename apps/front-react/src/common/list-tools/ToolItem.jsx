@@ -4,6 +4,7 @@ import Image from "react-bootstrap/Image";
 import EditTool from "./admin/EditTool";
 import RemoveTool from "./admin/RemoveTool";
 import { safeSrcImg } from "../../utils/image";
+import { Label } from "semantic-ui-react";
 
 export default function ToolItem(props) {
   let navigate = useNavigate();
@@ -23,6 +24,18 @@ export default function ToolItem(props) {
         }
       >
         <div className="d-flex flex-row">
+          <div className="d-flex flex-column">
+            <div className="mb-2">
+              <Label as="a" color="red" ribbon>
+                Popular
+              </Label>
+            </div>
+            <div className="mb-2">
+              <Label as="a" color="red" ribbon>
+                Popular
+              </Label>
+            </div>
+          </div>
           <div
             className="d-flex align-items-center me-3"
             style={{ height: "80px" }}
@@ -42,7 +55,20 @@ export default function ToolItem(props) {
             <div>{props.tool.shortDescription}</div>
           </div>
         </div>
-        <div className="d-flex align-items-center"></div>
+        <div className="d-flex align-items-end">
+          <div className="d-flex flex-row">
+            <div className="ms-2">
+              <Label as="span" color="green" tag>
+                Free
+              </Label>
+            </div>
+            <div className="ms-2">
+              <Label as="span" color="green" tag>
+                Free
+              </Label>
+            </div>
+          </div>
+        </div>
       </div>
       {props.isAuthenticated && props.user.roles.includes("ROLE_ADMIN") ? (
         <div className="d-flex flex-row">
