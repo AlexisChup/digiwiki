@@ -14,6 +14,7 @@ export default function ToolForm(props) {
   const { categories } = useSelector((state) => state.categories);
   const [uniqueSubcategories, setUniqueSubcategories] = useState([]);
   const [isRequesting, setIsRequesting] = useState(false);
+  const [tags, setTags] = useState([]);
 
   useEffect(() => {
     if (props.show) {
@@ -21,21 +22,44 @@ export default function ToolForm(props) {
   }, [props.show]);
 
   useEffect(() => {
+    setIsRequesting(true);
     if (!categories) {
-      setIsRequesting(true);
       AXIOS.get("/public/category/all")
         .then((res) => {
           dispatch(setCategories(res.data));
           setUniqueSubcategories(fetchUniqueSubCategories(res.data));
+          if (!tags.length) {
+            AXIOS.get("/admin/tag/all")
+              .then((resTags) => {
+                setTags(resTags.data);
+              })
+              .catch((e) => console.log(e))
+              .finally(() => {
+                setIsRequesting(false);
+              });
+          } else {
+            setIsRequesting(false);
+          }
         })
         .catch((e) => {
           console.log(e);
-        })
-        .finally(() => {
           setIsRequesting(false);
-        });
+        })
+        .finally(() => {});
     } else {
       setUniqueSubcategories(fetchUniqueSubCategories(categories));
+      if (!tags.length) {
+        AXIOS.get("/admin/tag/all")
+          .then((resTags) => {
+            setTags(resTags.data);
+          })
+          .catch((e) => console.log(e))
+          .finally(() => {
+            setIsRequesting(false);
+          });
+      } else {
+        setIsRequesting(false);
+      }
     }
   }, []);
 
@@ -62,7 +86,7 @@ export default function ToolForm(props) {
     );
   };
 
-  const handleMultipleSelect = (event) => {
+  const handleMultipleSelect = (key, event) => {
     let selectOptionsInt = [];
     const selectedOptionsHTML = event.target.selectedOptions;
 
@@ -70,7 +94,7 @@ export default function ToolForm(props) {
       selectOptionsInt.push(parseInt(selectedOptionsHTML[index].value));
     }
 
-    handleFormAddTool("subCategoriesIds", selectOptionsInt);
+    handleFormAddTool(key, selectOptionsInt);
   };
 
   const isSubCategoryIdIsPresent = (id, arrayOfSubCategory) => {
@@ -127,7 +151,7 @@ export default function ToolForm(props) {
     return listOfUniqueSubCategories;
   };
 
-  const buildOptionString = (subCategory) => {
+  const buildOptionStringSubCategory = (subCategory) => {
     let strReturn = subCategory.name;
 
     strReturn = strReturn + " - [";
@@ -142,6 +166,10 @@ export default function ToolForm(props) {
     return strReturn;
   };
 
+  const buildOptionStringTag = (tag) => {
+    return tag.name + "-" + tag.type + "-" + tag.color;
+  };
+
   const {
     name,
     url,
@@ -151,6 +179,7 @@ export default function ToolForm(props) {
     codePromo,
     imgUrl,
     subCategoriesIds,
+    tagsIds,
   } = formTool;
 
   var toolbarOptions = {
@@ -169,6 +198,8 @@ export default function ToolForm(props) {
       ["clean"], // remove formatting button
     ],
   };
+
+  console.log("formTool: ", formTool);
 
   return (
     <Modal show={props.show} onHide={() => props.handleClose(false, null)}>
@@ -289,15 +320,34 @@ export default function ToolForm(props) {
                 as="select"
                 multiple
                 value={subCategoriesIds}
-                onChange={(e) => handleMultipleSelect(e)}
+                onChange={(e) => handleMultipleSelect("subCategoriesIds", e)}
               >
                 {uniqueSubcategories.map((subCategory) => (
                   <option key={subCategory.id} value={subCategory.id}>
-                    {buildOptionString(subCategory)}
+                    {buildOptionStringSubCategory(subCategory)}
                   </option>
                 ))}
               </Form.Control>
             </Form.Group>
+            {tags.length > 0 ? (
+              <Form.Group>
+                <Form.Label className="my-0 small">
+                  Tags - {"[name - type - color]"}
+                </Form.Label>
+                <Form.Control
+                  as="select"
+                  multiple
+                  value={tagsIds}
+                  onChange={(e) => handleMultipleSelect("tagsIds", e)}
+                >
+                  {tags.map((tag) => (
+                    <option key={tag.id} value={tag.id}>
+                      {buildOptionStringTag(tag)}
+                    </option>
+                  ))}
+                </Form.Control>
+              </Form.Group>
+            ) : null}
           </Form>
         )}
       </Modal.Body>

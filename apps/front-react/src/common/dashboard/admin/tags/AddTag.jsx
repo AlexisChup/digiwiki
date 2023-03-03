@@ -3,7 +3,7 @@ import { FaPlus } from "react-icons/fa";
 import Button from "react-bootstrap/Button";
 import Spinner from "../../../generic/spinner/Spinner";
 import TagForm from "../../../forms/TagForm";
-import { TAG_COLORS } from "./const";
+import { TAG_COLORS, TAG_TYPES } from "./const";
 import { toast } from "react-toastify";
 import { AXIOS } from "../../../../app/axios-http";
 
@@ -14,6 +14,7 @@ export default function AddTag(props) {
   const initialStateFormTag = {
     name: "",
     color: TAG_COLORS[0],
+    type: TAG_TYPES.Tag,
   };
 
   const [formTag, setFormTag] = useState(initialStateFormTag);

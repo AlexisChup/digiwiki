@@ -169,11 +169,11 @@ class Tool
     }
 
     /**
-     * @return Collection<int, Tag>
+     * @return array<int, Tag>
      */
-    public function getTags(): Collection
+    public function getTags(): array
     {
-        return $this->tags;
+        return $this->tags->getValues();
     }
 
     public function addTag(Tag $tag): self

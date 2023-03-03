@@ -2,6 +2,7 @@ import React from "react";
 import EditTag from "./EditTag";
 import RemoveTag from "./RemoveTag";
 import { Label } from "semantic-ui-react";
+import { TAG_TYPES } from "./const";
 
 function TagItem(props) {
   return (
@@ -10,7 +11,12 @@ function TagItem(props) {
         {props.tag.name}
       </th>
       <td className="align-middle">
-        <Label as="span" color={props.tag.color} tag>
+        <Label
+          as="span"
+          color={props.tag.color}
+          tag={props.tag.type === TAG_TYPES.Tag}
+          ribbon={props.tag.type === TAG_TYPES.Ribbon}
+        >
           {props.tag.name}
         </Label>
       </td>

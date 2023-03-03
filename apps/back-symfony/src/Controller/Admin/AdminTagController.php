@@ -31,6 +31,7 @@ class AdminTagController extends AbstractController
         $tag = new Tag();
         $tag->setName($data["name"]);
         $tag->setColor($data["color"]);
+        $tag->setType($data["type"]);
         
         $tagRepository->save($tag, true);
 
@@ -52,6 +53,7 @@ class AdminTagController extends AbstractController
 
         $tag->setName($data["name"]);
         $tag->setColor($data["color"]);
+        $tag->setType($data["type"]);
 
         $tagRepository->save($tag, true);
 

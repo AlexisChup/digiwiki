@@ -3,7 +3,7 @@ import { FaPen } from "react-icons/fa";
 import Button from "react-bootstrap/Button";
 import Spinner from "../../../../common/generic/spinner/Spinner";
 import TagForm from "../../../forms/TagForm";
-import { TAG_COLORS } from "./const";
+import { TAG_COLORS, TAG_TYPES } from "./const";
 import { toast } from "react-toastify";
 import { AXIOS } from "../../../../app/axios-http";
 
@@ -14,6 +14,7 @@ export default function EditTag(props) {
   const initialStateFormTag = {
     name: props.tag.name,
     color: props.tag.color ? props.tag.color : TAG_COLORS[0],
+    type: props.tag.type ? props.tag.type : TAG_TYPES.Tag,
   };
 
   const [formTag, setFormTag] = useState(initialStateFormTag);

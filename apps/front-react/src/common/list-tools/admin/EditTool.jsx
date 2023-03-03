@@ -21,6 +21,7 @@ export default function EditTool(props) {
   const [show, setShow] = useState(false);
   const [isRequesting, setIsRequesting] = useState(false);
   const [initialSubCategoriesIds, setInitialSubCategoriesIds] = useState(false);
+  const [initialTagsIds, setInitialTagsIds] = useState(false);
 
   const handleShow = (user) => {
     setShow(true);
@@ -34,9 +35,22 @@ export default function EditTool(props) {
           console.log("error: ", e);
         })
         .finally(() => {
+          if (!initialTagsIds) {
+            setInitialTagsIds(getIdsFromTags(props.tool.tags));
+          }
           setIsRequesting(false);
         });
+    } else {
+      if (!initialTagsIds) {
+        setInitialTagsIds(getIdsFromTags(props.tool.tags));
+      }
     }
+  };
+
+  const getIdsFromTags = (tags) => {
+    const tagsIds = tags.map((tag) => tag.id);
+    console.log("tagsIds: ", tagsIds);
+    return tagsIds;
   };
 
   const initialStateFormEditTool = {
@@ -51,6 +65,8 @@ export default function EditTool(props) {
     imgUrl: props.tool.imgUrl ? props.tool.imgUrl : "",
     subCategoriesIds: initialSubCategoriesIds,
     initialSubCategoriesIds: initialSubCategoriesIds,
+    tagsIds: initialTagsIds,
+    initialTagsIds: initialTagsIds,
   };
 
   const getSubCategoriesIdsToRemove = (formEditTool) => {
@@ -70,12 +86,28 @@ export default function EditTool(props) {
     return subCategoriesIdsToRemove;
   };
 
+  const getTagsIdsToRemove = (formEditTool) => {
+    let tagsIdsToRemove = [];
+
+    for (let index = 0; index < formEditTool.initialTagsIds.length; index++) {
+      const idTag = formEditTool.initialTagsIds[index];
+      if (!formEditTool.tagsIds.includes(idTag)) {
+        tagsIdsToRemove.push(idTag);
+      }
+    }
+
+    console.log("tagsIdsToRemove: ", tagsIdsToRemove);
+
+    return tagsIdsToRemove;
+  };
+
   const handleClose = (isConfirmed, formEditTool) => {
     if (isConfirmed) {
       setIsRequesting(true);
       let payload = {
         ...formEditTool,
         subCategoriesIdsToRemove: getSubCategoriesIdsToRemove(formEditTool),
+        tagsIdsToRemove: getTagsIdsToRemove(formEditTool),
       };
 
       const id = toast.loading("Please wait...");

@@ -2,7 +2,7 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { TAG_COLORS } from "../dashboard/admin/tags/const";
+import { TAG_COLORS, TAG_TYPES } from "../dashboard/admin/tags/const";
 
 export default function TagForm(props) {
   const isFormValid = () => {
@@ -45,6 +45,20 @@ export default function TagForm(props) {
               {TAG_COLORS.map((color, index) => (
                 <option value={color} key={index} style={{ color }}>
                   {color}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label className="my-0 small">Type</Form.Label>
+            <Form.Select
+              size="sm"
+              value={props.formTag.type}
+              onChange={(e) => props.handleForm("type", e.target.value)}
+            >
+              {Object.values(TAG_TYPES).map((type, index) => (
+                <option value={type} key={index}>
+                  {type}
                 </option>
               ))}
             </Form.Select>

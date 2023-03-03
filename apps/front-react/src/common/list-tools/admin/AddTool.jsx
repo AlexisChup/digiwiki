@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { FaPlus } from "react-icons/fa";
 import { setCategories } from "../../../features/categories/categoriesSlice";
 import { AXIOS } from "../../../app/axios-http";
-import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import ToolForm from "../../forms/ToolForm";
 
@@ -23,6 +22,8 @@ export default function AddTool(props) {
     imgUrl: "",
     subCategoriesIds: props.subCategoryId ? [props.subCategoryId] : [],
     initialSubCategoriesIds: [],
+    tagsIds: [],
+    initialTagsIds: [],
   };
 
   const getSubCategoriesIdsToRemove = (formAddTool) => {
@@ -49,6 +50,8 @@ export default function AddTool(props) {
         ...formAddTool,
         subCategoriesIdsToRemove: getSubCategoriesIdsToRemove(formAddTool),
       };
+
+      console.log("PAYLOAD: ", payload);
 
       const id = toast.loading("Please wait...");
       AXIOS.post("/admin/tool/create", payload)

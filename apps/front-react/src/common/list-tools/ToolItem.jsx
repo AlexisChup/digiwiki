@@ -5,9 +5,12 @@ import EditTool from "./admin/EditTool";
 import RemoveTool from "./admin/RemoveTool";
 import { safeSrcImg } from "../../utils/image";
 import { Label } from "semantic-ui-react";
+import { TAG_TYPES } from "../dashboard/admin/tags/const";
 
 export default function ToolItem(props) {
   let navigate = useNavigate();
+  console.log("TAG : ", props.tool.tags);
+
   return (
     <div className="col ">
       <div
@@ -25,16 +28,15 @@ export default function ToolItem(props) {
       >
         <div className="d-flex flex-row">
           <div className="d-flex flex-column">
-            <div className="mb-2">
-              <Label as="a" color="red" ribbon>
-                Popular
-              </Label>
-            </div>
-            <div className="mb-2">
-              <Label as="a" color="red" ribbon>
-                Popular
-              </Label>
-            </div>
+            {props.tool.tags
+              .filter((tag) => tag.type === TAG_TYPES.Ribbon)
+              .map((tag, index) => (
+                <div className="mb-2" key={index}>
+                  <Label as="span" color={tag.color} ribbon>
+                    {tag.name}
+                  </Label>
+                </div>
+              ))}
           </div>
           <div
             className="d-flex align-items-center me-3"
@@ -57,16 +59,15 @@ export default function ToolItem(props) {
         </div>
         <div className="d-flex align-items-end">
           <div className="d-flex flex-row">
-            <div className="ms-2">
-              <Label as="span" color="green" tag>
-                Free
-              </Label>
-            </div>
-            <div className="ms-2">
-              <Label as="span" color="green" tag>
-                Free
-              </Label>
-            </div>
+            {props.tool.tags
+              .filter((tag) => tag.type === TAG_TYPES.Tag)
+              .map((tag, index) => (
+                <div className="ms-2" key={index}>
+                  <Label as="span" color={tag.color} tag>
+                    {tag.name}
+                  </Label>
+                </div>
+              ))}
           </div>
         </div>
       </div>

@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Tool;
 use App\Repository\CategoryRepository;
 use App\Repository\SubCategoryRepository;
+use App\Repository\TagRepository;
 use App\Repository\ToolRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -91,7 +92,7 @@ class AdminToolController extends AbstractController
     }
 
     #[Route('/create', name: 'create_tool', methods: 'POST')]
-    public function createTool(CategoryRepository $categoryRepository, SubCategoryRepository $subCategoryRepository, ToolRepository $toolRepository, Request $request): Response
+    public function createTool(CategoryRepository $categoryRepository, SubCategoryRepository $subCategoryRepository, ToolRepository $toolRepository, TagRepository $tagRepository, Request $request): Response
     {
         $tool = new Tool();
 
@@ -127,6 +128,21 @@ class AdminToolController extends AbstractController
             }
         }
 
+        if(isset($data["tagsIds"]))
+        {
+            // New tags
+            $tagIds = $data["tagsIds"];
+
+            for($i = 0; $i < count($tagIds); $i++)
+            {
+                $tagToAdd = $tagRepository->find($tagIds[$i]);
+                if($tagToAdd)
+                {
+                    $tool->addTag($tagToAdd);
+                }
+            }
+        }
+
         $toolRepository->save($tool, true);
 
         $categories = $categoryRepository->findAll();
@@ -139,7 +155,7 @@ class AdminToolController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'edit_tool', methods: 'PUT')]
-    public function editTool(CategoryRepository $categoryRepository, SubCategoryRepository $subCategoryRepository, ToolRepository $toolRepository, Request $request, int $id): Response
+    public function editTool(CategoryRepository $categoryRepository, SubCategoryRepository $subCategoryRepository, ToolRepository $toolRepository, Request $request, TagRepository $tagRepository, int $id): Response
     {
         $tool = $toolRepository->find($id);
 
@@ -188,6 +204,32 @@ class AdminToolController extends AbstractController
                 if($subCategoryToAdd)
                 {
                     $tool->addSubCategory($subCategoryToAdd);
+                }
+            }
+        }
+
+        if(isset($data["tagsIds"]))
+        {
+            // Remove old tags
+            $tagsIdsToRemove = $data["tagsIdsToRemove"];
+
+            for ($i = 0; $i<count($tagsIdsToRemove); $i++) {
+                $tagToRemove = $tagRepository->find($tagsIdsToRemove[$i]);
+
+                if ($tagToRemove) {
+                    $tool->removeTag($tagToRemove);
+                }
+            }
+
+            // New tags
+            $tagsIds = $data["tagsIds"];
+
+            for($i = 0; $i < count($tagsIds); $i++)
+            {
+                $tagToAdd = $tagRepository->find($tagsIds[$i]);
+                if($tagToAdd)
+                {
+                    $tool->addTag($tagToAdd);
                 }
             }
         }

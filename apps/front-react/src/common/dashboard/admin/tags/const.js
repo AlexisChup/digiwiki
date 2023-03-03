@@ -13,3 +13,8 @@ export const TAG_COLORS = [
   "grey",
   "black",
 ];
+
+export const TAG_TYPES = {
+  Tag: "tag",
+  Ribbon: "ribbon",
+};
