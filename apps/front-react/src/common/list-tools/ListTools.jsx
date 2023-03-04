@@ -12,6 +12,8 @@ import { safeSrcImg } from "../../utils/image";
 import AdminHeaderListTools from "./admin/AdminHeaderListTools";
 import { Helmet } from "react-helmet";
 import { TAG_TYPES } from "../dashboard/admin/tags/const";
+import PlaceHolderList from "../generic/placeholder/PlaceHolderList";
+import PlaceHolderTitleList from "../generic/placeholder/PlaceHolderTitleList";
 
 export default function ListTools() {
   const { categories } = useSelector((state) => state.categories);
@@ -22,6 +24,8 @@ export default function ListTools() {
   const urlCategory = urlSplitted[urlSplitted.length - 2];
   const urlSubCategory = urlSplitted[urlSplitted.length - 1];
   const nameSubCategory = "";
+
+  const [isRequesting, setIsRequesting] = useState(false);
 
   const [isToolsFound, setIsToolsFound] = useState(false);
   const [category, setCategory] = useState(false);
@@ -77,6 +81,7 @@ export default function ListTools() {
     let isFound = false;
 
     if (!categories) {
+      setIsRequesting(true);
       AXIOS.get("/public/category/all")
         .then((res) => {
           dispatch(setCategories(res.data));
@@ -102,12 +107,15 @@ export default function ListTools() {
             }
           }
 
+          setIsRequesting(false);
+
           if (!isFound) {
             navigate("/explorer");
           }
         })
         .catch((e) => {
           console.log(e);
+          setIsRequesting(false);
         })
         .finally(() => {});
     } else {
@@ -222,92 +230,99 @@ export default function ListTools() {
           <AdminHeaderListTools subCategory={subCategory} />
         ) : null
       ) : null}
-      {isToolsFound ? (
-        <>
-          <div>
-            <NavLink to="/explorer" className="dashboard-navlink">
-              Explorer &nbsp;{">"}
-            </NavLink>
-            <NavLink
-              to={"/explorer/" + category.url}
-              className="dashboard-navlink"
-            >
-              &nbsp;{category.name}&nbsp;{">"}
-            </NavLink>
-            <NavLink
-              to={"/explorer/" + category.url + "/" + subCategory.url}
-              className="dashboard-navlink-active"
-            >
-              &nbsp;{subCategory.name}
-            </NavLink>
-          </div>
-          <hr className="solid" />
-          <div className="row justify-content-center">
-            <div className="d-flex flex-row align-content-center justify-content-center">
-              <div
-                className="d-flex align-items-center me-3"
-                style={{ height: "80px" }}
+      {!isRequesting ? (
+        isToolsFound ? (
+          <>
+            <div>
+              <NavLink to="/explorer" className="dashboard-navlink">
+                Explorer &nbsp;{">"}
+              </NavLink>
+              <NavLink
+                to={"/explorer/" + category.url}
+                className="dashboard-navlink"
               >
-                <Image
-                  src={safeSrcImg(subCategory.url, "sub-categories")}
-                  className="logo-list-header"
-                  alt={subCategory.url}
-                />
-              </div>
-              <div className="d-flex align-items-center">
-                <h1 className="fw-bold my-0">{subCategory.name}</h1>
+                &nbsp;{category.name}&nbsp;{">"}
+              </NavLink>
+              <NavLink
+                to={"/explorer/" + category.url + "/" + subCategory.url}
+                className="dashboard-navlink-active"
+              >
+                &nbsp;{subCategory.name}
+              </NavLink>
+            </div>
+            <hr className="solid" />
+            <div className="row justify-content-center">
+              <div className="d-flex flex-row align-content-center justify-content-center">
+                <div
+                  className="d-flex align-items-center me-3"
+                  style={{ height: "80px" }}
+                >
+                  <Image
+                    src={safeSrcImg(subCategory.url, "sub-categories")}
+                    className="logo-list-header"
+                    alt={subCategory.url}
+                  />
+                </div>
+                <div className="d-flex align-items-center">
+                  <h1 className="fw-bold my-0">{subCategory.name}</h1>
+                </div>
               </div>
             </div>
-          </div>
-        </>
+          </>
+        ) : null
       ) : (
         <div className="d-flex justify-content-center">
+          <PlaceHolderTitleList />
           <Spinner />
         </div>
       )}
       <hr className="solid" />
       <div className="container h-100 px-0">
-        {isToolsFound ? (
-          subCategory.tools.length > 0 ? (
-            <div className="row row-cols-1 g-2">
-              {sortByRibbonTag(subCategory.tools).map((tool, index) => (
-                <ToolItem
-                  urlCategory={urlCategory}
-                  urlSubCategory={urlSubCategory}
-                  tool={tool}
-                  key={tool.id}
-                  isAuthenticated={isAuthenticated}
-                  user={user}
-                  subCategoryId={subCategory.id}
-                  mobileView={mobileView}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="col p-0">
-              <div className="d-flex rounded my-1 justify-content-between align-content-center align-self-center shadow py-3 px-3">
-                <div className="d-flex flex-column">
-                  <div>
-                    <p className="my-0">Pas encore d'outil disponible.</p>
-                  </div>
-                  <div>
-                    <p className="my-0 fw-bold">
-                      N'hésitez pas à nous en proposer
-                      <Button
-                        className="ms-2"
-                        onClick={() => navigate("/contact")}
-                      >
-                        ici &nbsp;
-                        <FaArrowRight />
-                      </Button>
-                    </p>
-                  </div>
-                </div>
-                <div></div>
+        {!isRequesting ? (
+          isToolsFound ? (
+            subCategory.tools.length > 0 ? (
+              <div className="row row-cols-1 g-2">
+                {sortByRibbonTag(subCategory.tools).map((tool, index) => (
+                  <ToolItem
+                    urlCategory={urlCategory}
+                    urlSubCategory={urlSubCategory}
+                    tool={tool}
+                    key={tool.id}
+                    isAuthenticated={isAuthenticated}
+                    user={user}
+                    subCategoryId={subCategory.id}
+                    mobileView={mobileView}
+                  />
+                ))}
               </div>
-            </div>
-          )
-        ) : null}
+            ) : (
+              <div className="col p-0">
+                <div className="d-flex rounded my-1 justify-content-between align-content-center align-self-center shadow py-3 px-3">
+                  <div className="d-flex flex-column">
+                    <div>
+                      <p className="my-0">Pas encore d'outil disponible.</p>
+                    </div>
+                    <div>
+                      <p className="my-0 fw-bold">
+                        N'hésitez pas à nous en proposer
+                        <Button
+                          className="ms-2"
+                          onClick={() => navigate("/contact")}
+                        >
+                          ici &nbsp;
+                          <FaArrowRight />
+                        </Button>
+                      </p>
+                    </div>
+                  </div>
+                  <div></div>
+                </div>
+              </div>
+            )
+          ) : null
+        ) : (
+          <PlaceHolderList flat />
+        )}
       </div>
     </div>
   );
