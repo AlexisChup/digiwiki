@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCategories } from "../../features/categories/categoriesSlice";
 import Spinner from "../generic/spinner/Spinner";
 import CategoryItem from "./CategoryItem";
+import PlaceHolderList from "../generic/placeholder/PlaceHolderList";
 
 export default function ListCategories() {
   const dispatch = useDispatch();
@@ -48,20 +49,22 @@ export default function ListCategories() {
         className="d-flex flex-row justify-content-center align-content-center align-items-center"
         style={{ height: "80px" }}
       >
-        <div className="d-flex align-items-center">
+        <div className="d-flex align-items-center mx-3">
           <h1 className="fw-bold">Choisir une catégorie</h1>
         </div>
         {isRequesting ? <Spinner /> : null}
       </div>
       <hr className="solid" />
       <div>
-        <div className="row row-cols-md-3 row-cols-1 g-2">
-          {!categories || isRequesting
-            ? null
-            : categories.map((category, index) => {
-                return <CategoryItem key={category.id} category={category} />;
-              })}
-        </div>
+        {!categories || isRequesting ? (
+          <PlaceHolderList />
+        ) : (
+          <div className="row row-cols-md-3 row-cols-1 g-2">
+            {categories.map((category, index) => {
+              return <CategoryItem key={category.id} category={category} />;
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

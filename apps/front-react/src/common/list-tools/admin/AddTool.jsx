@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { FaPlus } from "react-icons/fa";
 import { setCategories } from "../../../features/categories/categoriesSlice";
 import { AXIOS } from "../../../app/axios-http";
-import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import ToolForm from "../../forms/ToolForm";
 
@@ -23,18 +22,26 @@ export default function AddTool(props) {
     imgUrl: "",
     subCategoriesIds: props.subCategoryId ? [props.subCategoryId] : [],
     initialSubCategoriesIds: [],
+    tagsIds: [],
+    initialTagsIds: [],
   };
 
-  const getSubCategoriesIdsToRemove = (formAddTool) => {
+  const [formTool, setFormTool] = useState(initialStateFormAddTool);
+
+  const handleFormTool = (key, value) => {
+    setFormTool({ ...formTool, [key]: value });
+  };
+
+  const getSubCategoriesIdsToRemove = () => {
     let subCategoriesIdsToRemove = [];
 
     for (
       let index = 0;
-      index < formAddTool.initialSubCategoriesIds.length;
+      index < formTool.initialSubCategoriesIds.length;
       index++
     ) {
-      const idSubCategory = formAddTool.initialSubCategoriesIds[index];
-      if (!formAddTool.subCategoriesIds.includes(idSubCategory)) {
+      const idSubCategory = formTool.initialSubCategoriesIds[index];
+      if (!formTool.subCategoriesIds.includes(idSubCategory)) {
         subCategoriesIdsToRemove.push(idSubCategory);
       }
     }
@@ -42,13 +49,15 @@ export default function AddTool(props) {
     return subCategoriesIdsToRemove;
   };
 
-  const handleClose = (isConfirmed, formAddTool) => {
+  const handleClose = (isConfirmed) => {
     if (isConfirmed) {
       setIsRequesting(true);
       let payload = {
-        ...formAddTool,
-        subCategoriesIdsToRemove: getSubCategoriesIdsToRemove(formAddTool),
+        ...formTool,
+        subCategoriesIdsToRemove: getSubCategoriesIdsToRemove(),
       };
+
+      console.log("PAYLOAD: ", payload);
 
       const id = toast.loading("Please wait...");
       AXIOS.post("/admin/tool/create", payload)
@@ -96,13 +105,16 @@ export default function AddTool(props) {
           <FaPlus /> Outil
         </Button>
       </div>
-      <ToolForm
-        initialStateForm={initialStateFormAddTool}
-        show={show}
-        handleClose={handleClose}
-        type="ADD"
-        isRequesting={isRequesting}
-      />
+      {formTool ? (
+        <ToolForm
+          show={show}
+          handleClose={handleClose}
+          type="ADD"
+          isRequesting={isRequesting}
+          handleFormTool={handleFormTool}
+          formTool={formTool}
+        />
+      ) : null}
     </div>
   );
 }

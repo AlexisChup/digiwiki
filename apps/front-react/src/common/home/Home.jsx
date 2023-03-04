@@ -6,8 +6,8 @@ import {
 import "./Home.css";
 import Image from "react-bootstrap/Image";
 import { safeSrcImg } from "../../utils/image";
-import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
+import { Button, Icon } from "semantic-ui-react";
 
 export default function Home() {
   let navigate = useNavigate();
@@ -75,6 +75,7 @@ export default function Home() {
                   <Image
                     className=""
                     src={safeSrcImg("logo-landing-mobile", "landingpage")}
+                    alt="landing-background"
                     style={{ height: "auto", width: widthLogoLanding() }}
                   />
                 }
@@ -83,14 +84,19 @@ export default function Home() {
                 <div className="col d-flex flex-column mx-0">
                   <h1 className="mb-1 fw-bold">DigiWiki</h1>
                   <p className="">
-                    Le site qui vous aide à trouver l'outil digital adapté à tous vos besoins.
+                    Le site qui vous aide à trouver l'outil digital adapté à
+                    tous vos besoins.
                   </p>
                   <Button
+                    animated
+                    primary
                     className="btn btn-primary btn-lg"
-                    variant="primary"
                     onClick={() => navigate("/explorer")}
                   >
-                    Explorer
+                    <Button.Content visible>Explorer</Button.Content>
+                    <Button.Content hidden>
+                      <Icon name="linkify" />
+                    </Button.Content>
                   </Button>
                 </div>
               </div>
@@ -112,11 +118,16 @@ export default function Home() {
                   </p>
                   <div>
                     <Button
+                      animated
+                      primary
+                      size="large"
                       className="btn btn-primary btn-lg"
-                      variant="primary"
                       onClick={() => navigate("/explorer")}
                     >
-                      Explorer
+                      <Button.Content visible>Explorer</Button.Content>
+                      <Button.Content hidden>
+                        <Icon name="search" />
+                      </Button.Content>
                     </Button>
                   </div>
                 </div>
@@ -130,6 +141,7 @@ export default function Home() {
                     <div>
                       <Image
                         className="img-landing-page"
+                        alt="data-science"
                         src={safeSrcImg("data-science", "sub-categories")}
                       />
                     </div>
@@ -150,6 +162,7 @@ export default function Home() {
                       <div>
                         <Image
                           className="img-landing-page"
+                          alt="ia-general"
                           src={safeSrcImg("ai-other", "sub-categories")}
                         />
                       </div>
@@ -164,6 +177,7 @@ export default function Home() {
                       <div>
                         <Image
                           className="img-landing-page"
+                          alt="ia-programming"
                           src={safeSrcImg("ai-programming", "sub-categories")}
                         />
                       </div>
@@ -186,6 +200,7 @@ export default function Home() {
                       <div>
                         <Image
                           className="img-landing-page"
+                          alt="finance"
                           src={safeSrcImg("finances", "categories")}
                         />
                       </div>
@@ -208,6 +223,7 @@ export default function Home() {
                       <div>
                         <Image
                           className="img-landing-page"
+                          alt="social-network"
                           src={safeSrcImg("social-network", "sub-categories")}
                         />
                       </div>
@@ -222,6 +238,7 @@ export default function Home() {
                       <div>
                         <Image
                           className="img-landing-page"
+                          alt="technical-analysis"
                           src={safeSrcImg(
                             "technical-analysis",
                             "sub-categories"
@@ -247,6 +264,7 @@ export default function Home() {
                       <div>
                         <Image
                           className="img-landing-page"
+                          alt="learning"
                           src={safeSrcImg("learning", "sub-categories")}
                         />
                       </div>
@@ -261,6 +279,7 @@ export default function Home() {
                       <div>
                         <Image
                           className="img-landing-page"
+                          alt="growth-tips"
                           src={safeSrcImg("growth-tips", "sub-categories")}
                         />
                       </div>
@@ -283,6 +302,7 @@ export default function Home() {
                       <div>
                         <Image
                           className="img-landing-page"
+                          alt="fundamental-analysis"
                           src={safeSrcImg(
                             "fundamental-analysis",
                             "sub-categories"
@@ -300,6 +320,7 @@ export default function Home() {
                       <div>
                         <Image
                           className="img-landing-page"
+                          alt="marketing"
                           src={safeSrcImg("marketing", "categories")}
                         />
                       </div>

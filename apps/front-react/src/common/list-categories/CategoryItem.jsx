@@ -21,6 +21,7 @@ export default function CategoryItem(props) {
           <div className="d-flex align-items-center" style={{ height: "80px" }}>
             <Image
               src={safeSrcImg(props.category.url, "categories")}
+              alt={props.category.name}
               className="logo-list-item"
             />
           </div>

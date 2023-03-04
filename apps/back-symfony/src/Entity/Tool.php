@@ -42,9 +42,13 @@ class Tool
     #[ORM\Column(length: 1024, nullable: true)]
     private ?string $img_url = null;
 
+    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'tools')]
+    private Collection $tags;
+
     public function __construct()
     {
         $this->subCategories = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -160,6 +164,30 @@ class Tool
     public function setImgUrl(?string $img_url): self
     {
         $this->img_url = $img_url;
+
+        return $this;
+    }
+
+    /**
+     * @return array<int, Tag>
+     */
+    public function getTags(): array
+    {
+        return $this->tags->getValues();
+    }
+
+    public function addTag(Tag $tag): self
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags->add($tag);
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): self
+    {
+        $this->tags->removeElement($tag);
 
         return $this;
     }

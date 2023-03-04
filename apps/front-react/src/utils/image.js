@@ -1,6 +1,6 @@
 export const safeSrcImg = (imgUrl, origin) => {
   if (!imgUrl) {
-    return require(`../assets/png/common/default.png`);
+    return require(`../assets/webp/common/default.webp`);
   }
 
   if (
@@ -13,7 +13,7 @@ export const safeSrcImg = (imgUrl, origin) => {
     let isImgExist = null;
 
     try {
-      imgFromUrl = require(`../assets/png/${origin}/${imgUrl}.png`);
+      imgFromUrl = require(`../assets/webp/${origin}/${imgUrl}.webp`);
       isImgExist = true;
     } catch (error) {
       console.log("No image for url: ", imgUrl);
@@ -22,16 +22,16 @@ export const safeSrcImg = (imgUrl, origin) => {
     if (isImgExist) {
       return imgFromUrl;
     } else {
-      return require(`../assets/png/common/default.png`);
+      return require(`../assets/webp/common/default.webp`);
     }
   } else if (origin === "tools") {
     if (isImage(imgUrl)) {
       return imgUrl;
     } else {
-      return require(`../assets/png/common/default.png`);
+      return require(`../assets/webp/common/default.webp`);
     }
   } else {
-    return require(`../assets/png/common/default.png`);
+    return require(`../assets/webp/common/default.webp`);
   }
 };
 

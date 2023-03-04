@@ -5,6 +5,7 @@ import App from "./app/App";
 import reportWebVitals from "./reportWebVitals";
 import store from "./app/store.js";
 import { Provider } from "react-redux";
+// import "semantic-ui-css/semantic.min.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

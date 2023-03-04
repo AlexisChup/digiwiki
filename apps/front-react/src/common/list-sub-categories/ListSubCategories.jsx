@@ -10,6 +10,8 @@ import Spinner from "../generic/spinner/Spinner";
 import AdminHeaderListSubCategories from "./admin/AdminHeaderListSubCategories";
 import { safeSrcImg } from "../../utils/image";
 import { Helmet } from "react-helmet";
+import PlaceHolderList from "../generic/placeholder/PlaceHolderList";
+import PlaceHolderTitleList from "../generic/placeholder/PlaceHolderTitleList";
 
 export default function ListSubCategories() {
   const { categories } = useSelector((state) => state.categories);
@@ -19,6 +21,8 @@ export default function ListSubCategories() {
   const urlSplitted = location.pathname.split("/");
   const urlCategory = urlSplitted[urlSplitted.length - 1];
   const nameCategory = "";
+
+  const [isRequesting, setIsRequesting] = useState(false);
 
   const [isSubCategoriesFound, setIsSubCategoriesFound] = useState(false);
   const [category, setCategory] = useState(false);
@@ -56,6 +60,7 @@ export default function ListSubCategories() {
   const findSubCatetegories = () => {
     let isFound = false;
     if (!categories) {
+      setIsRequesting(true);
       AXIOS.get("/public/category/all")
         .then((res) => {
           dispatch(setCategories(res.data));
@@ -68,12 +73,14 @@ export default function ListSubCategories() {
               break;
             }
           }
+          setIsRequesting(false);
           if (!isFound) {
             navigate("/explorer");
           }
         })
         .catch((e) => {
           console.log(e);
+          setIsRequesting(false);
         })
         .finally(() => {});
     } else {
@@ -113,72 +120,80 @@ export default function ListSubCategories() {
           <AdminHeaderListSubCategories category={category} />
         ) : null
       ) : null}
-      {isSubCategoriesFound ? (
-        <>
-          <div>
-            <NavLink to="/explorer" className="dashboard-navlink">
-              Explorer &nbsp;{">"}
-            </NavLink>
-            <NavLink
-              to={"/explorer/" + category.url}
-              className="dashboard-navlink-active"
-            >
-              &nbsp;{category.name}
-            </NavLink>
-          </div>
-          <hr className="solid" />
-          <div className="row justify-content-center">
-            <div className="d-flex align-content-center justify-content-center">
-              <div
-                className="d-flex align-items-center me-3"
-                style={{ height: "80px" }}
+      {!isRequesting ? (
+        isSubCategoriesFound ? (
+          <>
+            <div>
+              <NavLink to="/explorer" className="dashboard-navlink">
+                Explorer &nbsp;{">"}
+              </NavLink>
+              <NavLink
+                to={"/explorer/" + category.url}
+                className="dashboard-navlink-active"
               >
-                <Image
-                  src={safeSrcImg(category.url, "categories")}
-                  className="logo-list-header"
-                />
-              </div>
-              <div className="d-flex align-items-center">
-                <h1 className="my-0 fw-bold">{category.name}</h1>
+                &nbsp;{category.name}
+              </NavLink>
+            </div>
+            <hr className="solid" />
+            <div className="row justify-content-center">
+              <div className="d-flex align-content-center justify-content-center">
+                <div
+                  className="d-flex align-items-center me-3"
+                  style={{ height: "80px" }}
+                >
+                  <Image
+                    src={safeSrcImg(category.url, "categories")}
+                    className="logo-list-header"
+                    alt={category.url}
+                  />
+                </div>
+                <div className="d-flex align-items-center">
+                  <h1 className="my-0 fw-bold">{category.name}</h1>
+                </div>
               </div>
             </div>
-          </div>
-        </>
+          </>
+        ) : null
       ) : (
         <div className="d-flex justify-content-center">
+          <PlaceHolderTitleList />
           <Spinner />
         </div>
       )}
 
       <hr className="solid" />
-      {isSubCategoriesFound ? (
-        category.subCategories.length === 0 ? (
-          <div className="row flex-grow-1">
-            <div className="col p-0">
-              <div className="d-flex rounded my-1 justify-content-between align-content-center align-self-center shadow py-3 px-3">
-                <div className="d-flex align-items-center">
-                  <p className="my-0">Pas encore de sous catégories</p>
+      {!isRequesting ? (
+        isSubCategoriesFound ? (
+          category.subCategories.length === 0 ? (
+            <div className="row flex-grow-1">
+              <div className="col p-0">
+                <div className="d-flex rounded my-1 justify-content-between align-content-center align-self-center shadow py-3 px-3">
+                  <div className="d-flex align-items-center">
+                    <p className="my-0">Pas encore de sous catégories</p>
+                  </div>
+                  <div></div>
                 </div>
-                <div></div>
               </div>
             </div>
-          </div>
-        ) : (
-          <div className="container h-100 px-0">
-            <div className="row row-cols-md-3 row-cols-1 g-2">
-              {category.subCategories.map((subCategory, index) => {
-                return (
-                  <SubCategoryItem
-                    key={subCategory.id}
-                    urlCategory={urlCategory}
-                    subCategory={subCategory}
-                  />
-                );
-              })}
+          ) : (
+            <div className="container h-100 px-0">
+              <div className="row row-cols-md-3 row-cols-1 g-2">
+                {category.subCategories.map((subCategory, index) => {
+                  return (
+                    <SubCategoryItem
+                      key={subCategory.id}
+                      urlCategory={urlCategory}
+                      subCategory={subCategory}
+                    />
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        )
-      ) : null}
+          )
+        ) : null
+      ) : (
+        <PlaceHolderList />
+      )}
     </div>
   );
 }
