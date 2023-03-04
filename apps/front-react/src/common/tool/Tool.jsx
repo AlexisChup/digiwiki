@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, NavLink } from "react-router-dom";
+import { Label } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import DOMPurify from "isomorphic-dompurify";
 import { AXIOS } from "../../app/axios-http";
 import { setCategories } from "../../features/categories/categoriesSlice";
-import Button from "react-bootstrap/Button";
+import { Button, Icon } from "semantic-ui-react";
 import Image from "react-bootstrap/Image";
 import Spinner from "../generic/spinner/Spinner";
 import { safeSrcImg } from "../../utils/image";
 import { Helmet } from "react-helmet";
+import { TAG_TYPES } from "../dashboard/admin/tags/const";
 
 export default function Tool() {
   const { categories } = useSelector((state) => state.categories);
@@ -203,8 +205,11 @@ export default function Tool() {
                 </div>
                 <div className="ms-auto">
                   <a href={tool.affiliateRef} target="_blank">
-                    <Button size="sm" className="ms-1">
-                      Site Web
+                    <Button animated primary size="small" className="ms-1">
+                      <Button.Content visible>Site Web</Button.Content>
+                      <Button.Content hidden>
+                        <Icon name="linkify" />
+                      </Button.Content>
                     </Button>
                   </a>
                 </div>
@@ -218,12 +223,37 @@ export default function Tool() {
                   }}
                 />
               }
+              {tool.tags.length ? (
+                <div className="mb-1">
+                  <div>
+                    <h2>Tags</h2>
+                  </div>
+                  <div className="text-center mb-1">
+                    {tool.tags.map((tag, index) => (
+                      <Label
+                        key={index}
+                        className="mx-3 mt-2 mb-2 text-wrap"
+                        as="p"
+                        color={tag.color}
+                        tag
+                        // tag={tag.type === TAG_TYPES.Tag}
+                        // ribbon={tag.type === TAG_TYPES.Ribbon}
+                      >
+                        {tag.name}
+                      </Label>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
               <hr className="solid" />
               <div className="d-flex flex-row justify-content-center">
                 <div>
                   <a href={tool.affiliateRef} target="_blank">
-                    <Button size="md" className="ms-1">
-                      Site Web
+                    <Button animated primary className="ms-1">
+                      <Button.Content visible>Site Web</Button.Content>
+                      <Button.Content hidden>
+                        <Icon name="linkify" />
+                      </Button.Content>
                     </Button>
                   </a>
                 </div>

@@ -6,8 +6,8 @@ import {
 import "./Home.css";
 import Image from "react-bootstrap/Image";
 import { safeSrcImg } from "../../utils/image";
-import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
+import { Button, Icon } from "semantic-ui-react";
 
 export default function Home() {
   let navigate = useNavigate();
@@ -84,14 +84,19 @@ export default function Home() {
                 <div className="col d-flex flex-column mx-0">
                   <h1 className="mb-1 fw-bold">DigiWiki</h1>
                   <p className="">
-                    Le site qui vous aide à trouver l'outil digital adapté à tous vos besoins.
+                    Le site qui vous aide à trouver l'outil digital adapté à
+                    tous vos besoins.
                   </p>
                   <Button
+                    animated
+                    primary
                     className="btn btn-primary btn-lg"
-                    variant="primary"
                     onClick={() => navigate("/explorer")}
                   >
-                    Explorer
+                    <Button.Content visible>Explorer</Button.Content>
+                    <Button.Content hidden>
+                      <Icon name="linkify" />
+                    </Button.Content>
                   </Button>
                 </div>
               </div>
@@ -113,11 +118,16 @@ export default function Home() {
                   </p>
                   <div>
                     <Button
+                      animated
+                      primary
+                      size="large"
                       className="btn btn-primary btn-lg"
-                      variant="primary"
                       onClick={() => navigate("/explorer")}
                     >
-                      Explorer
+                      <Button.Content visible>Explorer</Button.Content>
+                      <Button.Content hidden>
+                        <Icon name="search" />
+                      </Button.Content>
                     </Button>
                   </div>
                 </div>

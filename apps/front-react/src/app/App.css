@@ -28,11 +28,14 @@ h4 {
   color: #094067;
 }
 
+hr {
+  box-sizing: border-box;
+}
+
 p,
 span,
 div {
-  color: #5f6c7b;
-  text-align: left;
+  /* color: #5f6c7b; */
 }
 
 .noselect {

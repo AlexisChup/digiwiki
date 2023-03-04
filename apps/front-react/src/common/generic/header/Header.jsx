@@ -15,7 +15,7 @@ export default function Header() {
       <Navbar
         collapseOnSelect
         expand="md"
-        className="d-flex fixed justify-content-between align-content-center flex-row p-3 shadow"
+        className="d-flex fixed justify-content-between align-content-center align-items-center flex-row p-3 shadow"
       >
         <Navbar.Brand className="ms-3">
           <NavLink

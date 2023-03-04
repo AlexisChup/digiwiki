@@ -27,11 +27,26 @@ export default function ListTools() {
   const [category, setCategory] = useState(false);
   const [subCategory, setSubCategory] = useState(false);
 
+  const [mobileView, setMobileView] = useState(window.innerWidth < 576);
+
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     findTools();
+    const handleMobileView = () => {
+      if (window.innerWidth < 576) {
+        setMobileView(true);
+      } else {
+        setMobileView(false);
+      }
+    };
+
+    window.addEventListener("resize", handleMobileView);
+
+    return () => {
+      window.removeEventListener("resize", handleMobileView);
+    };
   }, []);
 
   // used when modifying tools
@@ -264,6 +279,7 @@ export default function ListTools() {
                   isAuthenticated={isAuthenticated}
                   user={user}
                   subCategoryId={subCategory.id}
+                  mobileView={mobileView}
                 />
               ))}
             </div>

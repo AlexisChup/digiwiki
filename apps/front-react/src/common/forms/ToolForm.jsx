@@ -192,6 +192,9 @@ export default function ToolForm(props) {
 
       ["clean"], // remove formatting button
     ],
+    clipboard: {
+      matchVisual: false,
+    },
   };
 
   return (
