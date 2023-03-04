@@ -11,6 +11,7 @@ import Spinner from "../generic/spinner/Spinner";
 import { safeSrcImg } from "../../utils/image";
 import AdminHeaderListTools from "./admin/AdminHeaderListTools";
 import { Helmet } from "react-helmet";
+import { TAG_TYPES } from "../dashboard/admin/tags/const";
 
 export default function ListTools() {
   const { categories } = useSelector((state) => state.categories);
@@ -122,6 +123,61 @@ export default function ListTools() {
     }
   };
 
+  const sortByRibbonTag = (array) => {
+    let copyOfOriginalArray = [...array];
+    let toolIdsSorted = [];
+    let isContainsRibbonTag = false;
+    let isContainsTagTag = false;
+
+    for (let index = 0; index < copyOfOriginalArray.length; index++) {
+      const tool = copyOfOriginalArray[index];
+      isContainsRibbonTag = false;
+      for (let iTag = 0; iTag < tool.tags.length; iTag++) {
+        if (
+          tool.tags[iTag].type === TAG_TYPES.Ribbon &&
+          !toolIdsSorted.includes(index)
+        ) {
+          isContainsRibbonTag = true;
+          break;
+        }
+      }
+
+      if (isContainsRibbonTag) {
+        toolIdsSorted.push(index);
+      }
+    }
+
+    for (let index = 0; index < copyOfOriginalArray.length; index++) {
+      const tool = copyOfOriginalArray[index];
+      isContainsTagTag = false;
+      for (let iTag = 0; iTag < tool.tags.length; iTag++) {
+        if (
+          tool.tags[iTag].type === TAG_TYPES.Tag &&
+          !toolIdsSorted.includes(index)
+        ) {
+          isContainsTagTag = true;
+          break;
+        }
+      }
+
+      if (isContainsTagTag) {
+        toolIdsSorted.push(index);
+      }
+    }
+
+    for (let index = 0; index < copyOfOriginalArray.length; index++) {
+      if (!toolIdsSorted.includes(index)) {
+        toolIdsSorted.push(index);
+      }
+    }
+
+    let sortedArray = Array(toolIdsSorted.length);
+    for (let index = 0; index < toolIdsSorted.length; index++) {
+      sortedArray[index] = copyOfOriginalArray[toolIdsSorted[index]];
+    }
+    return sortedArray;
+  };
+
   return (
     <div className="container h-100 d-flex flex-column pt-3">
       <Helmet>
@@ -199,7 +255,7 @@ export default function ListTools() {
         {isToolsFound ? (
           subCategory.tools.length > 0 ? (
             <div className="row row-cols-1 g-2">
-              {subCategory.tools.map((tool, index) => (
+              {sortByRibbonTag(subCategory.tools).map((tool, index) => (
                 <ToolItem
                   urlCategory={urlCategory}
                   urlSubCategory={urlSubCategory}

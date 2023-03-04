@@ -9,7 +9,6 @@ import { TAG_TYPES } from "../dashboard/admin/tags/const";
 
 export default function ToolItem(props) {
   let navigate = useNavigate();
-  console.log("TAG : ", props.tool.tags);
 
   return (
     <div className="col ">

@@ -20,38 +20,6 @@ export default function EditTool(props) {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const [isRequesting, setIsRequesting] = useState(false);
-  const [initialSubCategoriesIds, setInitialSubCategoriesIds] = useState(false);
-  const [initialTagsIds, setInitialTagsIds] = useState(false);
-
-  const handleShow = (user) => {
-    setShow(true);
-    if (!initialSubCategoriesIds) {
-      setIsRequesting(true);
-      AXIOS.get("/admin/tool/" + props.tool.id + "/get-subcategories-id")
-        .then((res) => {
-          setInitialSubCategoriesIds(res.data);
-        })
-        .catch((e) => {
-          console.log("error: ", e);
-        })
-        .finally(() => {
-          if (!initialTagsIds) {
-            setInitialTagsIds(getIdsFromTags(props.tool.tags));
-          }
-          setIsRequesting(false);
-        });
-    } else {
-      if (!initialTagsIds) {
-        setInitialTagsIds(getIdsFromTags(props.tool.tags));
-      }
-    }
-  };
-
-  const getIdsFromTags = (tags) => {
-    const tagsIds = tags.map((tag) => tag.id);
-    console.log("tagsIds: ", tagsIds);
-    return tagsIds;
-  };
 
   const initialStateFormEditTool = {
     name: props.tool.name ? props.tool.name : "",
@@ -63,22 +31,57 @@ export default function EditTool(props) {
     affiliateRef: props.tool.affiliateRef ? props.tool.affiliateRef : "",
     codePromo: props.tool.codePromo ? props.tool.codePromo : "",
     imgUrl: props.tool.imgUrl ? props.tool.imgUrl : "",
-    subCategoriesIds: initialSubCategoriesIds,
-    initialSubCategoriesIds: initialSubCategoriesIds,
-    tagsIds: initialTagsIds,
-    initialTagsIds: initialTagsIds,
+    subCategoriesIds: [],
+    initialSubCategoriesIds: [],
+    tagsIds: [],
+    initialTagsIds: [],
   };
 
-  const getSubCategoriesIdsToRemove = (formEditTool) => {
+  const [formTool, setFormTool] = useState(initialStateFormEditTool);
+
+  const handleFormTool = (key, value) => {
+    setFormTool({ ...formTool, [key]: value });
+  };
+
+  const handleShow = () => {
+    setShow(true);
+    setIsRequesting(true);
+    AXIOS.get("/admin/tool/" + props.tool.id + "/get-subcategories-id")
+      .then((res) => {
+        setFormTool({
+          ...formTool,
+          subCategoriesIds: res.data,
+          initialSubCategoriesIds: res.data,
+          tagsIds: getIdsFromTags(props.tool.tags),
+          initialTagsIds: getIdsFromTags(props.tool.tags),
+        });
+        setIsRequesting(false);
+      })
+      .catch((e) => {
+        console.log(
+          "ERROR call /admin/tool/" + props.tool.id + "/get-subcategories-id",
+          e
+        );
+        setIsRequesting(false);
+      })
+      .finally(() => {});
+  };
+
+  const getIdsFromTags = (tags) => {
+    const tagsIds = tags.map((tag) => tag.id);
+    return tagsIds;
+  };
+
+  const getSubCategoriesIdsToRemove = () => {
     let subCategoriesIdsToRemove = [];
 
     for (
       let index = 0;
-      index < formEditTool.initialSubCategoriesIds.length;
+      index < formTool.initialSubCategoriesIds.length;
       index++
     ) {
-      const idSubCategory = formEditTool.initialSubCategoriesIds[index];
-      if (!formEditTool.subCategoriesIds.includes(idSubCategory)) {
+      const idSubCategory = formTool.initialSubCategoriesIds[index];
+      if (!formTool.subCategoriesIds.includes(idSubCategory)) {
         subCategoriesIdsToRemove.push(idSubCategory);
       }
     }
@@ -96,18 +99,16 @@ export default function EditTool(props) {
       }
     }
 
-    console.log("tagsIdsToRemove: ", tagsIdsToRemove);
-
     return tagsIdsToRemove;
   };
 
-  const handleClose = (isConfirmed, formEditTool) => {
+  const handleClose = (isConfirmed) => {
     if (isConfirmed) {
       setIsRequesting(true);
       let payload = {
-        ...formEditTool,
-        subCategoriesIdsToRemove: getSubCategoriesIdsToRemove(formEditTool),
-        tagsIdsToRemove: getTagsIdsToRemove(formEditTool),
+        ...formTool,
+        subCategoriesIdsToRemove: getSubCategoriesIdsToRemove(),
+        tagsIdsToRemove: getTagsIdsToRemove(formTool),
       };
 
       const id = toast.loading("Please wait...");
@@ -154,13 +155,14 @@ export default function EditTool(props) {
         </Button>
       </div>
 
-      {initialSubCategoriesIds ? (
+      {formTool ? (
         <ToolForm
           show={show}
           handleClose={handleClose}
-          initialStateForm={initialStateFormEditTool}
           type="EDIT"
           isRequesting={isRequesting}
+          handleFormTool={handleFormTool}
+          formTool={formTool}
         />
       ) : null}
     </div>
